@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.jsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Header from "./components/public/Header";
+
+// Public Pages
+import Inicio from "./pages/public/Inicio";
+import Mujer from "./pages/public/Mujer";
+import Hombre from "./pages/public/Hombre";
+import DetallesProducto from "./pages/public/DetallesProducto";
+import Carrito from "./pages/public/Carrito";
+
+// Auth Pages
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+
+// Admin Pages
+import Dashboard from "./pages/admin/Dashboard";
+import ProductosAdmin from "./pages/admin/ProductosAdmin";
+import ClientesAdmin from "./pages/admin/ClientesAdmin";
+import PedidosAdmin from "./pages/admin/PedidosAdmin";
+
+const isAuthenticated = () => {
+  return localStorage.getItem("token") ? true : false;
+};
+
+const PrivateRoute = ({ children }) => {
+  return isAuthenticated() ? children : <Navigate to="/auth/login" />;
+};
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/mujer" element={<Mujer />} />
+        <Route path="/hombre" element={<Hombre />} />
+        <Route path="/producto/:id" element={<DetallesProducto />} />
+        <Route path="/carrito" element={<Carrito />} />
+        
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
+        
+        <Route path="/admin/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/admin/productos" element={<PrivateRoute><ProductosAdmin /></PrivateRoute>} />
+        <Route path="/admin/clientes" element={<PrivateRoute><ClientesAdmin /></PrivateRoute>} />
+        <Route path="/admin/pedidos" element={<PrivateRoute><PedidosAdmin /></PrivateRoute>} />
+        
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
