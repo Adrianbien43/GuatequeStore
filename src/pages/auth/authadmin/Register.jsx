@@ -69,6 +69,9 @@ export default function Register() {
       <p>
         ¿Ya tienes cuenta? <Link to="/auth/login">Inicia sesión aquí</Link>
       </p>
+           <p>
+        ¿Quieres ir al inicio? <Link to="/">Pulsa aqui </Link>
+      </p>
     </div>
   );
 }

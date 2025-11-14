@@ -33,6 +33,7 @@ const PublicLayout = () => (
   <>
     <Header />
     <Outlet />
+    <Footer/>
   </>
 );
 

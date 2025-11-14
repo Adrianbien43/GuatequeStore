@@ -64,6 +64,9 @@ export default function Login() {
       <p>
         ¿No tienes cuenta? <Link to="/auth/register">Regístrate primero aquí</Link>
       </p>
+      <p>
+        ¿Quieres ir al inicio? <Link to="/">Pulsa aquí</Link>
+      </p>
     </div>
   );
 }
