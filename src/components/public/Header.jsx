@@ -20,6 +20,8 @@ export default function Header() {
           <Link to="/mujer">Mujer</Link> | 
           <Link to="/hombre">Hombre</Link> | 
           <Link to="/carrito">Carrito</Link>
+          <Link to="/administracion">Administracion</Link>
+          
         </div>
         
         <div>
@@ -33,8 +35,7 @@ export default function Header() {
           ) : (
             /* Si no hay usuario, mostrar opciones de login/registro */
             <div>
-              <Link to="/auth/login">Iniciar Sesión</Link> | 
-              <Link to="/auth/register">Registrarse</Link>
+           
             </div>
           )}
         </div>

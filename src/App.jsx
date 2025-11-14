@@ -20,6 +20,7 @@ import ProductosAdmin from "./pages/admin/ProductosAdmin";
 import ClientesAdmin from "./pages/admin/ClientesAdmin";
 import PedidosAdmin from "./pages/admin/PedidosAdmin";
 import ProveedoresAdmin from "./pages/admin/ProveedoresAdmin";
+import AccessAdmin from "./pages/admin/AdminAccess";
 
 // Función para verificar autenticación
 const isAuthenticated = () => {
@@ -52,6 +53,8 @@ function AppRoutes() {
         <Route path="/hombre" element={<Hombre />} />
         <Route path="/producto/:id" element={<DetallesProducto />} />
         <Route path="/carrito" element={<Carrito />} />
+        <Route path="/administracion" element={<AccessAdmin />} />
+
       </Route>
 
       {/* Rutas de autenticación */}
