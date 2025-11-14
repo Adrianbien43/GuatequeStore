@@ -1,6 +1,6 @@
 // App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Header from "./components/public/Header";
 
 // Public Pages
@@ -19,34 +19,56 @@ import Dashboard from "./pages/admin/Dashboard";
 import ProductosAdmin from "./pages/admin/ProductosAdmin";
 import ClientesAdmin from "./pages/admin/ClientesAdmin";
 import PedidosAdmin from "./pages/admin/PedidosAdmin";
+import ProveedoresAdmin from "./pages/admin/ProveedoresAdmin";
 
+// Función para verificar autenticación
 const isAuthenticated = () => {
   return localStorage.getItem("token") ? true : false;
 };
 
-const PrivateRoute = ({ children }) => {
-  return isAuthenticated() ? children : <Navigate to="/auth/login" />;
+// Layout público con Header
+const PublicLayout = () => (
+  <>
+    <Header />
+    <Outlet /> {/* Renderiza las rutas hijas */}
+  </>
+);
+
+// Layout admin con autenticación
+const AdminLayout = () => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/auth/login" />;
+  }
+  return <Outlet />; // Renderiza las rutas hijas de admin
 };
 
 function App() {
   return (
     <Router>
-      <Header />
       <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route path="/mujer" element={<Mujer />} />
-        <Route path="/hombre" element={<Hombre />} />
-        <Route path="/producto/:id" element={<DetallesProducto />} />
-        <Route path="/carrito" element={<Carrito />} />
-        
+        {/* Rutas públicas con Header */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/mujer" element={<Mujer />} />
+          <Route path="/hombre" element={<Hombre />} />
+          <Route path="/producto/:id" element={<DetallesProducto />} />
+          <Route path="/carrito" element={<Carrito />} />
+        </Route>
+
+        {/* Rutas de autenticación */}
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        
-        <Route path="/admin/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path="/admin/productos" element={<PrivateRoute><ProductosAdmin /></PrivateRoute>} />
-        <Route path="/admin/clientes" element={<PrivateRoute><ClientesAdmin /></PrivateRoute>} />
-        <Route path="/admin/pedidos" element={<PrivateRoute><PedidosAdmin /></PrivateRoute>} />
-        
+
+        {/* Rutas de admin con autenticación */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="productos" element={<ProductosAdmin />} />
+          <Route path="clientes" element={<ClientesAdmin />} />
+          <Route path="pedidos" element={<PedidosAdmin />} />
+           <Route path="proveedores" element={<ProveedoresAdmin />} />
+        </Route>
+
+        {/* Ruta catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
