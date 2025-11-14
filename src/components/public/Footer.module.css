@@ -1,0 +1,30 @@
+.footer {
+  width: 100%;
+  background: #111;
+  color: white;
+  padding: 2rem 0;
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columnas */
+  gap: 2rem;
+  transition: all 0.25s ease-out;
+}
+
+@media (max-width: 700px) {
+  .contenedor {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Cuando baja de 500px → 1 columna */
+@media (max-width: 500px) {
+  .contenedor {
+    grid-template-columns: 1fr;
+  }
+}

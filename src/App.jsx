@@ -2,6 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/public/Header";
+import Footer from "./components/public/Footer";
 
 // Public Pages
 import Inicio from "./pages/public/Inicio";
@@ -49,6 +50,7 @@ function App() {
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
