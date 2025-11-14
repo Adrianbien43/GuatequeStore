@@ -2,7 +2,6 @@
   position: relative;
   width: 20vw;
   aspect-ratio: 1 / 1;
-  border: 2px solid #aaa;
   border-radius: 12px;
   overflow: hidden;
 }
