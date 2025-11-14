@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import FormularioRegister from "../../components/public/FormularioRegister";
+import { useAuth } from "../../../context/AuthContext";
+import FormularioRegister from "../../../components/public/adminpubliclogin/FormularioRegister";
 
 export default function Register() {
   // Obtener funciones del contexto de autenticación

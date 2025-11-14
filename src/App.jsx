@@ -11,8 +11,8 @@ import DetallesProducto from "./pages/public/DetallesProducto";
 import Carrito from "./pages/public/Carrito";
 
 // Auth Pages
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
+import Login from "./pages/auth/authadmin/Login";
+import Register from "./pages/auth/authadmin/Register";
 
 // Admin Pages
 import Dashboard from "./pages/admin/Dashboard";
