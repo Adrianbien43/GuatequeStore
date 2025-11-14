@@ -10,6 +10,7 @@ export default function Dashboard() {
         <Link to="/admin/productos">Gestionar Productos</Link> | 
         <Link to="/admin/clientes">Gestionar Clientes</Link> | 
         <Link to="/admin/pedidos">Ver Pedidos</Link> | 
+          <Link to="/admin/proveedores">Ver Proveedores</Link> | 
         <Link to="/">Ir al Sitio Público</Link>
       </nav>
     </div>
