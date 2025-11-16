@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "./Inicio.module.css"
 
 export default function Inicio() {
   return (
-    <div>
+    <div className={styles.contenedor1}>
       <h1>Página de Inicio</h1>
       <p>Bienvenido a nuestra tienda online - Tu estilo, nuestra pasión</p>
       <nav>

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/public/Header";
 import Footer from "./components/public/Footer";
+import styles from "./App.module.css";
 
 // Public Pages
 import Inicio from "./pages/public/Inicio";
@@ -31,18 +32,24 @@ const isAuthenticated = () => {
 // Layout público con Header
 const PublicLayout = () => (
   <>
-    <Header />
-    <Outlet />
+  <div className={styles.Body}>
+  <Header />
+  <Outlet />
+  <Footer />
+  </div>
   </>
 );
 
 // Layout admin con autenticación
 const AdminLayout = () => {
-  if (!isAuthenticated()) {
-    return <Navigate to="/auth/login" />;
-  }
-  return <Outlet />;
+  if (!isAuthenticated()) return <Navigate to="/auth/login" />;
+  return (
+    <div className={styles.adminContainer}>
+      <Outlet />
+    </div>
+  );
 };
+
 
 function AppRoutes() {
   return (

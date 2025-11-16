@@ -5,81 +5,71 @@ export default function Pompa() {
   const numPompas = 5;
   const pompasRef = useRef([]);
   const contenedorRef = useRef(null);
-  const sizeRef = useRef({ w: 0, h: 0 });
+  const posicionesRef = useRef([]);
+  const rafRef = useRef();
 
   useEffect(() => {
     const cont = contenedorRef.current;
-    sizeRef.current = {
-      w: cont.clientWidth,
-      h: cont.clientHeight
+    if (!cont) return;
+
+    const getSize = () => {
+      return { w: cont.clientWidth, h: cont.clientHeight };
     };
 
-    // Observa cambios del tamaño
-    const resizeObs = new ResizeObserver(() => {
-      sizeRef.current = {
-        w: cont.clientWidth,
-        h: cont.clientHeight
-      };
-    });
+    const { w, h } = getSize();
 
-    resizeObs.observe(cont);
-
-    const posiciones = Array(numPompas)
-      .fill(0)
-      .map(() => ({
-        x: Math.random(),
-        y: Math.random(),
-        velX: (Math.random() * 0.01 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
-        velY: (Math.random() * 0.01 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
-      }));
+    // posiciones iniciales
+    posicionesRef.current = Array(numPompas).fill(0).map(() => ({
+      x: Math.random(),
+      y: Math.random(),
+      velX: (Math.random() * 0.01 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
+      velY: (Math.random() * 0.01 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
+    }));
 
     const mover = () => {
-      const { w, h } = sizeRef.current;
+      const { w, h } = getSize();
 
       pompasRef.current.forEach((pompa, i) => {
         if (!pompa) return;
 
-        const pompaW = pompa.clientWidth;
-        const pompaH = pompa.clientHeight;
+        const pos = posicionesRef.current[i];
+        const pompaW = pompa.offsetWidth;
+        const pompaH = pompa.offsetHeight;
 
-        posiciones[i].x += posiciones[i].velX;
-        posiciones[i].y += posiciones[i].velY;
+        pos.x += pos.velX;
+        pos.y += pos.velY;
 
-        if (posiciones[i].x < 0 || posiciones[i].x > 1) posiciones[i].velX *= -1;
-        if (posiciones[i].y < 0 || posiciones[i].y > 1) posiciones[i].velY *= -1;
+        if (pos.x < 0) { pos.x = 0; pos.velX *= -1; }
+        if (pos.x > 1) { pos.x = 1; pos.velX *= -1; }
+        if (pos.y < 0) { pos.y = 0; pos.velY *= -1; }
+        if (pos.y > 1) { pos.y = 1; pos.velY *= -1; }
 
-        // Convertir a px correctamente sin saltos
-        const pxX = posiciones[i].x * (w - pompaW);
-        const pxY = posiciones[i].y * (h - pompaH);
-
-        pompa.style.transform = `translate(${pxX}px, ${pxY}px)`;
+        pompa.style.transform = `translate(${pos.x * (w - pompaW)}px, ${pos.y * (h - pompaH)}px)`;
       });
 
-      requestAnimationFrame(mover);
+      rafRef.current = requestAnimationFrame(mover);
     };
 
     mover();
 
-    return () => resizeObs.disconnect();
+    return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
   return (
     <div className={styles.contenedor} ref={contenedorRef}>
-      {Array(numPompas)
-        .fill(0)
-        .map((_, i) => {
-          const widthPercent = 8 + Math.random() * 18;
-          return (
-            <img
-              key={i}
-              ref={(el) => (pompasRef.current[i] = el)}
-              src="../../src/assets/icons/ponpa.png"
-              alt={`pompa-${i}`}
-              className={styles.pompa}
-              style={{ width: `${widthPercent}%`, height: "auto" }}
-            />
-          );
-        })}
+      {Array(numPompas).fill(0).map((_, i) => {
+        const widthPercent = 8 + Math.random() * 18;
+        return (
+          <img
+            key={i}
+            ref={(el) => (pompasRef.current[i] = el)}
+            src="../../src/assets/icons/ponpa.png"
+            alt={`pompa-${i}`}
+            className={styles.pompa}
+            style={{ width: `${widthPercent}%`, height: "auto" }}
+          />
+        );
+      })}
     </div>
   );
 }
