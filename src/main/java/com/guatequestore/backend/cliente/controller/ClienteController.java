@@ -1,41 +1,44 @@
 package com.guatequestore.backend.cliente.controller;
 
 import com.guatequestore.backend.cliente.model.Cliente;
-import com.guatequestore.backend.cliente.repository.ClienteRepository;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.guatequestore.backend.cliente.service.ClienteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/clientes")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/clientes")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200", "http://localhost:5173"})
 public class ClienteController {
 
-    private final ClienteRepository clienteRepository;
+    private final ClienteService service;
 
-    public ClienteController(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
+    public ClienteController(ClienteService service) {
+        this.service = service;
     }
 
     @GetMapping
     public List<Cliente> getAll() {
-        return clienteRepository.findAll();
-    }
-
-    @PostMapping
-    public ResponseEntity<Cliente> create(@Valid @RequestBody Cliente cliente) {
-        // Aquí se debería hashear la contraseña antes de guardar (BCrypt)
-        return new ResponseEntity<>(clienteRepository.save(cliente), HttpStatus.CREATED);
+        return service.getAllClientes();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getById(@PathVariable Long id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        return cliente.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Cliente getById(@PathVariable Long id) {
+        return service.getClienteById(id);
+    }
+
+    @PostMapping
+    public Cliente create(@RequestBody Cliente cliente) {
+        return service.createCliente(cliente);
+    }
+
+    @PutMapping("/{id}")
+    public Cliente update(@PathVariable Long id, @RequestBody Cliente cliente) {
+        return service.updateCliente(id, cliente);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.deleteCliente(id);
     }
 }
