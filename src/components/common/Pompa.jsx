@@ -22,8 +22,8 @@ export default function Pompa() {
     posicionesRef.current = Array(numPompas).fill(0).map(() => ({
       x: Math.random(),
       y: Math.random(),
-      velX: (Math.random() * 0.01 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
-      velY: (Math.random() * 0.01 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
+      velX: (Math.random() * 0.001 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
+      velY: (Math.random() * 0.001 + 0.005) * (Math.random() < 0.5 ? 1 : -1),
     }));
 
     const mover = () => {
@@ -58,7 +58,7 @@ export default function Pompa() {
   return (
     <div className={styles.contenedor} ref={contenedorRef}>
       {Array(numPompas).fill(0).map((_, i) => {
-        const widthPercent = 8 + Math.random() * 18;
+        const widthPercent = 10 + Math.random() * 20;
         return (
           <img
             key={i}

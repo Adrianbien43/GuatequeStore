@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import styles from "./Header.module.css"
 
 export default function Header() {
   // Obtener el usuario y la función logout del contexto
@@ -11,10 +12,10 @@ export default function Header() {
   };
 
   return (
-    <header>
+    <header className={styles.header}>
       {/* Navegación principal */}
       <nav>
-        <div>
+        <div className={styles.navegacion}>
           {/* Enlaces de navegación */}
           <Link to="/">Inicio</Link> | 
           <Link to="/mujer">Mujer</Link> | 

@@ -16,11 +16,11 @@
 
 .contenedor3 {
   position: relative;
-  width: 19vw;      /* tu ancho original */
+  width: 19vw;      
   max-width: 220px;
   min-width: 120px;
-  height: 120px;    /* controla altura */
-  overflow: hidden; /* recorta todo lo que sobresalga */
+  height: 120px;    
+  overflow: hidden; 
   border-radius: 12px;
 }
 
@@ -32,7 +32,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-  width: 19vw;      /* tu ancho original */
+  width: 19vw;      
   max-width: 220px;
   min-width: 120px;
   height: 120px;
@@ -47,7 +47,7 @@
   transition: filter 0.3s ease, transform 0.3s ease;
 }
 
-/* 🎇 EFECTO NEÓN AL PASAR EL RATÓN */
+
 .extra:hover {
   box-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff, 0 0 15px #00f0ff;
   transform: scale(0.99);
@@ -59,6 +59,9 @@
           drop-shadow(0 0 10px #00f0ff);
   transform: scale(1);
 }
+
+
+
 
 @media (max-width: 700px) {
   .contenedor {
