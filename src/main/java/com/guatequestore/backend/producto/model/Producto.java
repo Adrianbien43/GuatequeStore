@@ -1,6 +1,5 @@
 package com.guatequestore.backend.producto.model;
 
-package com.pgv.tienda.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
