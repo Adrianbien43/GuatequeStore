@@ -19,6 +19,7 @@ public class TelefonoCliente {
     private Cliente cliente;
 
     public TelefonoCliente() {}
+
     public TelefonoCliente(String numero, TipoTelefono tipo) {
         this.numero = numero;
         this.tipo = tipo;

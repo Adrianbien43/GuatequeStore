@@ -20,7 +20,7 @@ public class Cliente {
 
     @NotBlank @Size(min = 8)
     @Column(nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // no se expone al devolver JSON
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Size(max = 255)
@@ -35,6 +35,7 @@ public class Cliente {
 
     // Constructores
     public Cliente() {}
+
     public Cliente(String nombre, String password, String direccion, String email) {
         this.nombre = nombre;
         this.password = password;
@@ -42,7 +43,7 @@ public class Cliente {
         this.email = email;
     }
 
-    // Getters y Setters
+    // Getters and Setters
     public Long getId() { return id; }
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -55,7 +56,7 @@ public class Cliente {
     public Set<TelefonoCliente> getTelefonos() { return telefonos; }
     public void setTelefonos(Set<TelefonoCliente> telefonos) { this.telefonos = telefonos; }
 
-    // Utilidades para la relación bidireccional
+    //Metodos
     public void addTelefono(TelefonoCliente telefono) {
         telefonos.add(telefono);
         telefono.setCliente(this);
