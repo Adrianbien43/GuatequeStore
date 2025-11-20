@@ -22,34 +22,32 @@ import ProductosAdmin from "./pages/admin/ProductosAdmin";
 import ClientesAdmin from "./pages/admin/ClientesAdmin";
 import PedidosAdmin from "./pages/admin/PedidosAdmin";
 import ProveedoresAdmin from "./pages/admin/ProveedoresAdmin";
-import AccessAdmin from "./pages/admin/AdminAccess";
-
-// Función para verificar autenticación
-const isAuthenticated = () => {
-  return localStorage.getItem("user") ? true : false;
-};
+import AdminAccess from "./pages/admin/AdminAccess";
+import AccessDenied from "./pages/admin/AccessDenied";
 
 // Layout público con Header
 const PublicLayout = () => (
   <>
-  <div className={styles.Body}>
-  <Header />
-  <Outlet />
-  <Footer />
-  </div>
+    <div className={styles.Body}>
+      <Header />
+      <Outlet />
+      <Footer />
+    </div>
   </>
 );
 
-// Layout admin con autenticación
+// Layout admin con autenticación mejorada
 const AdminLayout = () => {
-  if (!isAuthenticated()) return <Navigate to="/auth/login" />;
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  if (!user || user.role !== "admin") {
+    return <Navigate to="/acceso-denegado" replace />;
+  }
   return (
     <div className={styles.adminContainer}>
       <Outlet />
     </div>
   );
 };
-
 
 function AppRoutes() {
   return (
@@ -61,13 +59,15 @@ function AppRoutes() {
         <Route path="/hombre" element={<Hombre />} />
         <Route path="/producto/:id" element={<DetallesProducto />} />
         <Route path="/carrito" element={<Carrito />} />
-        <Route path="/administracion" element={<AccessAdmin />} />
-
+        <Route path="/administracion" element={<AdminAccess />} />
       </Route>
 
       {/* Rutas de autenticación */}
       <Route path="/auth/login" element={<Login />} />
       <Route path="/auth/register" element={<Register />} />
+      
+      {/* Ruta de acceso denegado */}
+      <Route path="/acceso-denegado" element={<AccessDenied />} />
 
       {/* Rutas de admin con autenticación */}
       <Route path="/admin" element={<AdminLayout />}>

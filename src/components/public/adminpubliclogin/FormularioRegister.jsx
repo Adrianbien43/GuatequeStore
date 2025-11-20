@@ -1,28 +1,23 @@
 import { useState } from "react";
 
 export default function FormularioRegister({ onSubmit, loading }) {
-  // Estados para los campos del formulario
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Función que se ejecuta al enviar el formulario
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+    e.preventDefault();
     
-    // Verificar que las contraseñas coincidan
     if (password !== confirmPassword) {
       alert("Las contraseñas no coinciden");
       return;
     }
     
-    // Verificar que todos los campos estén llenos
     if (!username || !password) {
       alert("Todos los campos son requeridos");
       return;
     }
     
-    // Llamar a la función onSubmit que viene desde el componente padre
     onSubmit(username, password);
   };
 

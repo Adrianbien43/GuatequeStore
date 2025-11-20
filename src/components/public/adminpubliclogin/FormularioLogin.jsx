@@ -1,21 +1,17 @@
 import { useState } from "react";
 
 export default function FormularioLogin({ onSubmit, loading }) {
-  // Estados para los campos del formulario
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // Función que se ejecuta al enviar el formulario
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevenir el comportamiento por defecto
+    e.preventDefault();
     
-    // Verificar que los campos no estén vacíos
     if (!username || !password) {
       alert("Usuario y contraseña son requeridos");
       return;
     }
     
-    // Llamar a la función onSubmit que viene desde el componente padre
     onSubmit(username, password);
   };
 
