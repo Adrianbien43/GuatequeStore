@@ -1,38 +1,35 @@
 package com.guatequestore.backend.inventario.model;
 
-
 import com.guatequestore.backend.almacen.model.Almacen;
 import com.guatequestore.backend.producto.model.Producto;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "inventario")
-@IdClass(InventarioId.class)
+@IdClass(InventarioId.class) // ✅ Usa tu clase InventarioId
 public class Inventario {
 
     // ------------------------------------------------------------
-    // Parte 1 de la clave primaria compuesta (ID_Almacen)
+    // CLAVE PRIMARIA COMPUESTA - Parte 1
     // ------------------------------------------------------------
     @Id
     @Column(name = "id_almacen")
     private Long almacenId;
 
     // ------------------------------------------------------------
-    // Parte 2 de la clave primaria compuesta (ID_Producto)
+    // CLAVE PRIMARIA COMPUESTA - Parte 2
     // ------------------------------------------------------------
     @Id
     @Column(name = "id_producto")
     private Long productoId;
 
     // ------------------------------------------------------------
-    // Cantidad disponible (INT)
+    // Atributos normales
     // ------------------------------------------------------------
     private Integer cantidad;
 
     // ------------------------------------------------------------
-    // Relaciones opcionales para navegación
-    // insertable = false, updatable = false
-    // porque los IDs forman parte de la clave primaria
+    // Relaciones bidireccionales (solo para navegación)
     // ------------------------------------------------------------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_almacen", insertable = false, updatable = false)
@@ -43,37 +40,61 @@ public class Inventario {
     private Producto producto;
 
     // ------------------------------------------------------------
-    // Getters y Setters
+    // Constructores
     // ------------------------------------------------------------
-    public Long getAlmacenId() {
-        return almacenId;
-    }
+    public Inventario() {}
 
-    public void setAlmacenId(Long almacenId) {
+    public Inventario(Long almacenId, Long productoId, Integer cantidad) {
         this.almacenId = almacenId;
-    }
-
-    public Long getProductoId() {
-        return productoId;
-    }
-
-    public void setProductoId(Long productoId) {
         this.productoId = productoId;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public Almacen getAlmacen() {
-        return almacen;
+    public Inventario(Almacen almacen, Producto producto, Integer cantidad) {
+        this.almacen = almacen;
+        this.producto = producto;
+        this.almacenId = almacen.getId();
+        this.productoId = producto.getId();
+        this.cantidad = cantidad;
     }
 
-    public Producto getProducto() {
-        return producto;
+    // ------------------------------------------------------------
+    // Getters y Setters
+    // ------------------------------------------------------------
+    public Long getAlmacenId() { return almacenId; }
+    public void setAlmacenId(Long almacenId) { this.almacenId = almacenId; }
+
+    public Long getProductoId() { return productoId; }
+    public void setProductoId(Long productoId) { this.productoId = productoId; }
+
+    public Integer getCantidad() { return cantidad; }
+    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
+
+    public Almacen getAlmacen() { return almacen; }
+    public void setAlmacen(Almacen almacen) {
+        this.almacen = almacen;
+        if (almacen != null) {
+            this.almacenId = almacen.getId();
+        }
+    }
+
+    public Producto getProducto() { return producto; }
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+        if (producto != null) {
+            this.productoId = producto.getId();
+        }
+    }
+
+    // ------------------------------------------------------------
+    // Métodos utilitarios
+    // ------------------------------------------------------------
+    public InventarioId getId() {
+        return new InventarioId(almacenId, productoId);
+    }
+
+    public void setId(InventarioId id) {
+        this.almacenId = id.getAlmacenId();
+        this.productoId = id.getProductoId();
     }
 }

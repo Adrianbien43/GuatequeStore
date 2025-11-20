@@ -23,11 +23,13 @@ public class Pedido {
     @Column(nullable = false)
     private EstadoPedido estadoPedido;
 
+    // RELACIÓN BIDIRECCIONAL CON CLIENTE
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
+    // RELACIÓN BIDIRECCIONAL CON ALMACEN
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "almacen_id", nullable = false)
@@ -55,4 +57,9 @@ public class Pedido {
 
     public Almacen getAlmacen() { return almacen; }
     public void setAlmacen(Almacen almacen) { this.almacen = almacen; }
+
+    // ENUM
+    public enum EstadoPedido {
+        PENDIENTE, CONFIRMADO, EN_PREPARACION, ENVIADO, ENTREGADO, CANCELADO
+    }
 }
