@@ -2,12 +2,15 @@ package com.guatequestore.backend.pedido.model;
 
 import com.guatequestore.backend.almacen.model.Almacen;
 import com.guatequestore.backend.cliente.model.Cliente;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "pedidos")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Pedido {
 
     @Id
@@ -25,14 +28,16 @@ public class Pedido {
 
     // RELACIÓN BIDIRECCIONAL CON CLIENTE
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) // ← CAMBIA a EAGER
     @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "pedidos", "telefonos", "password"})
     private Cliente cliente;
 
     // RELACIÓN BIDIRECCIONAL CON ALMACEN
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) // ← CAMBIA a EAGER
     @JoinColumn(name = "almacen_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "pedidos", "inventarios"})
     private Almacen almacen;
 
     public Pedido() {}
@@ -57,6 +62,18 @@ public class Pedido {
 
     public Almacen getAlmacen() { return almacen; }
     public void setAlmacen(Almacen almacen) { this.almacen = almacen; }
+
+    // Método toString() seguro
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", fechaPedido=" + fechaPedido +
+                ", estadoPedido=" + estadoPedido +
+                ", clienteId=" + (cliente != null ? cliente.getId() : null) +
+                ", almacenId=" + (almacen != null ? almacen.getId() : null) +
+                '}';
+    }
 
     // ENUM
     public enum EstadoPedido {

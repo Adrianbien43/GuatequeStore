@@ -13,32 +13,38 @@ public class PedidoController {
 
     private final PedidoService service;
 
+    // Constructor que recibe el servicio
     public PedidoController(PedidoService service) {
         this.service = service;
     }
 
+    // OBTENER TODOS LOS PEDIDOS
     @GetMapping
-    public List<Pedido> getAll() {
+    public List<Pedido> getAllPedidos() {
         return service.getAllPedidos();
     }
 
+    // OBTENER UN PEDIDO POR SU ID
     @GetMapping("/{id}")
-    public Pedido getById(@PathVariable Long id) {
+    public Pedido getPedidoById(@PathVariable Long id) {
         return service.getPedidoById(id);
     }
 
+    // CREAR UN NUEVO PEDIDO
     @PostMapping
-    public Pedido create(@RequestBody Pedido pedido) {
+    public Pedido createPedido(@RequestBody Pedido pedido) {
         return service.createPedido(pedido);
     }
 
+    // ACTUALIZAR UN PEDIDO EXISTENTE
     @PutMapping("/{id}")
-    public Pedido update(@PathVariable Long id, @RequestBody Pedido pedido) {
+    public Pedido updatePedido(@PathVariable Long id, @RequestBody Pedido pedido) {
         return service.updatePedido(id, pedido);
     }
 
+    // ELIMINAR UN PEDIDO
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deletePedido(@PathVariable Long id) {
         service.deletePedido(id);
     }
 }
