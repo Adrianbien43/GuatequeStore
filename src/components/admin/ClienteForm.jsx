@@ -1,4 +1,3 @@
-// src/components/ClienteCrud.js
 import { useState, useEffect } from 'react';
 import { getClientes, createCliente, updateCliente, deleteCliente } from '../../services/clientesService';
 
@@ -47,7 +46,7 @@ function ClienteForm() {
     setNombre(c.nombre);
     setEmail(c.email);
     setDireccion(c.direccion || '');
-    setPassword(''); // no traemos password
+    setPassword('');
     setEditingId(c.id);
   };
 
