@@ -10,35 +10,46 @@ public class PedidoService {
 
     private final PedidoRepository repository;
 
+    // Inyectamos el repository mediante constructor
     public PedidoService(PedidoRepository repository) {
         this.repository = repository;
     }
 
+    // OBTENER TODOS LOS PEDIDOS
     public List<Pedido> getAllPedidos() {
         return repository.findAll();
     }
 
+    // OBTENER UN PEDIDO POR ID
     public Pedido getPedidoById(Long id) {
+        // Busca el pedido por ID, si no existe devuelve null
         return repository.findById(id).orElse(null);
     }
 
+    // CREAR UN NUEVO PEDIDO
     public Pedido createPedido(Pedido pedido) {
+        // Guarda el pedido en la base de datos
         return repository.save(pedido);
     }
 
-    public Pedido updatePedido(Long id, Pedido pedido) {
-        return repository.findById(id).map(p -> {
-            p.setFechaPedido(pedido.getFechaPedido());
-            p.setEstadoPedido(pedido.getEstadoPedido());
-            p.setCliente(pedido.getCliente());
-            return repository.save(p);
-        }).orElse(null);
+    // ACTUALIZAR UN PEDIDO EXISTENTE
+    public Pedido updatePedido(Long id, Pedido pedidoActualizado) {
+        // Busca el pedido existente
+        return repository.findById(id).map(pedidoExistente -> {
+            // Actualiza solo los campos permitidos
+            pedidoExistente.setFechaPedido(pedidoActualizado.getFechaPedido());
+            pedidoExistente.setEstadoPedido(pedidoActualizado.getEstadoPedido());
+            pedidoExistente.setCliente(pedidoActualizado.getCliente());
+            pedidoExistente.setAlmacen(pedidoActualizado.getAlmacen());
+
+            // Guarda los cambios
+            return repository.save(pedidoExistente);
+        }).orElse(null); // Si no encuentra el pedido, devuelve null
     }
 
-    public boolean deletePedido(Long id) {
-        return repository.findById(id).map(p -> {
-            repository.delete(p);
-            return true;
-        }).orElse(false);
+    // ELIMINAR UN PEDIDO
+    public void deletePedido(Long id) {
+        // Elimina el pedido de la base de datos
+        repository.deleteById(id);
     }
 }

@@ -2,6 +2,7 @@ package com.guatequestore.backend.almacen.model;
 
 import com.guatequestore.backend.pedido.model.Pedido;
 import com.guatequestore.backend.inventario.model.Inventario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -28,10 +29,12 @@ public class Almacen {
 
     // RELACIÓN BIDIRECCIONAL CON PEDIDO
     @OneToMany(mappedBy = "almacen", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // ← EVITA RECURSIVIDAD EN JSON
     private Set<Pedido> pedidos = new HashSet<>();
 
     // NUEVA RELACIÓN BIDIRECCIONAL CON INVENTARIO
     @OneToMany(mappedBy = "almacen", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // ← EVITA RECURSIVIDAD EN JSON
     private Set<Inventario> inventarios = new HashSet<>();
 
     public Almacen() {}
@@ -80,5 +83,16 @@ public class Almacen {
     public void removeInventario(Inventario inventario) {
         inventarios.remove(inventario);
         inventario.setAlmacen(null);
+    }
+
+    // Método toString() seguro
+    @Override
+    public String toString() {
+        return "Almacen{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", capacidad=" + capacidad +
+                ", direccion='" + direccion + '\'' +
+                '}';
     }
 }

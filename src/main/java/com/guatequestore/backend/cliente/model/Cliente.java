@@ -36,13 +36,14 @@ public class Cliente {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Relación con teléfonos - SIN problemas de recursividad
+    // Relación con teléfonos
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // ← AGREGADO: Evita recursividad
     private Set<TelefonoCliente> telefonos = new HashSet<>();
 
-    // Relación con pedidos - CON JsonIgnore para evitar recursividad
+    // Relación con pedidos
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // ← Esto evita que se serialicen los pedidos en el JSON
+    @JsonIgnore // ← Ya estaba, se mantiene
     private Set<Pedido> pedidos = new HashSet<>();
 
     // Constructores
