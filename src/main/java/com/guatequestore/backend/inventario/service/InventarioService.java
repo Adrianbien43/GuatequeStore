@@ -7,12 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+/**
+ * Servicio que gestiona la logica del inventario
+ *
+ * @author Gorka Jesus
+ * @version 1.0
+ */
 @Service
 @Transactional
 public class InventarioService {
 
     private final InventarioRepository repository;
 
+    //Este es el constructor que recibe por inyeccion de dependencias el repositorio
     public InventarioService(InventarioRepository repository) {
         this.repository = repository;
     }

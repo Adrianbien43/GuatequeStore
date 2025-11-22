@@ -9,6 +9,13 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.HashSet;
 
+/**
+ * Modelo para los productos en la tienda
+ *
+ * @author Gorka Jesus
+ * @version 1.0.1
+ */
+
 @Entity
 @Table(name = "producto")
 public class Producto {
@@ -37,11 +44,12 @@ public class Producto {
     @Column(name = "Marca")
     private String marca;
 
+    //Relacion con Proveedor
     @ManyToOne
     @JoinColumn(name = "ID_Proveedor")
     private Proveedor proveedor;
 
-    // NUEVA: Relación bidireccional con Inventario
+    //Relacion con Inventario
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore // ← Evita que se serialice en JSON
     private Set<Inventario> inventarios = new HashSet<>();
@@ -106,7 +114,7 @@ public class Producto {
         inventario.setProducto(null);
     }
 
-    // Método para obtener stock total en todos los almacenes
+    // Metodo de calculo
     @Transient // No se persiste en la base de datos
     public Integer getStockTotal() {
         if (inventarios == null || inventarios.isEmpty()) {

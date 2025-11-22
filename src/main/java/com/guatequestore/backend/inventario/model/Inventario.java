@@ -4,33 +4,29 @@ import com.guatequestore.backend.almacen.model.Almacen;
 import com.guatequestore.backend.producto.model.Producto;
 import jakarta.persistence.*;
 
+
+/**
+ * Modelo para el stock donde estan los productos.
+ *
+ * @author Gorka Jesus
+ * @version 1.0.2
+ */
+
 @Entity
 @Table(name = "inventario")
-@IdClass(InventarioId.class) // ✅ Usa tu clase InventarioId
+@IdClass(InventarioId.class)
 public class Inventario {
 
-    // ------------------------------------------------------------
-    // CLAVE PRIMARIA COMPUESTA - Parte 1
-    // ------------------------------------------------------------
     @Id
     @Column(name = "id_almacen")
     private Long almacenId;
 
-    // ------------------------------------------------------------
-    // CLAVE PRIMARIA COMPUESTA - Parte 2
-    // ------------------------------------------------------------
     @Id
     @Column(name = "id_producto")
     private Long productoId;
 
-    // ------------------------------------------------------------
-    // Atributos normales
-    // ------------------------------------------------------------
     private Integer cantidad;
 
-    // ------------------------------------------------------------
-    // Relaciones bidireccionales (solo para navegación)
-    // ------------------------------------------------------------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_almacen", insertable = false, updatable = false)
     private Almacen almacen;
@@ -39,9 +35,9 @@ public class Inventario {
     @JoinColumn(name = "id_producto", insertable = false, updatable = false)
     private Producto producto;
 
-    // ------------------------------------------------------------
+
     // Constructores
-    // ------------------------------------------------------------
+
     public Inventario() {}
 
     public Inventario(Long almacenId, Long productoId, Integer cantidad) {
@@ -58,9 +54,7 @@ public class Inventario {
         this.cantidad = cantidad;
     }
 
-    // ------------------------------------------------------------
     // Getters y Setters
-    // ------------------------------------------------------------
     public Long getAlmacenId() { return almacenId; }
     public void setAlmacenId(Long almacenId) { this.almacenId = almacenId; }
 
@@ -86,9 +80,8 @@ public class Inventario {
         }
     }
 
-    // ------------------------------------------------------------
     // Métodos utilitarios
-    // ------------------------------------------------------------
+
     public InventarioId getId() {
         return new InventarioId(almacenId, productoId);
     }
