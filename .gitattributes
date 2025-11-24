@@ -1,8 +1,0 @@
-<<<<<<< HEAD
-/mvnw text eol=lf
-*.cmd text eol=crlf
-=======
-/gradlew text eol=lf
-*.bat text eol=crlf
-*.jar binary
->>>>>>> origin/Backend-v
