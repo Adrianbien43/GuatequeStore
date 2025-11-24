@@ -34,10 +34,8 @@ public class ProveedorService {
         }).orElse(null);
     }
 
-    public boolean deleteProveedor(Long id) {
-        return repository.findById(id).map(p -> {
-            repository.delete(p);
-            return true;
-        }).orElse(false);
+    public void deleteProveedor(Long id) {
+        repository.findById(id).ifPresent(repository::delete);
     }
+
 }

@@ -54,10 +54,8 @@ public class ProductoService {
         }).orElse(null);
     }
 
-    public boolean deleteProducto(Long id) {
-        return repository.findById(id).map(p -> {
-            repository.delete(p);
-            return true;
-        }).orElse(false);
+    public void deleteProducto(Long id) {
+        repository.findById(id).ifPresent(repository::delete);
     }
+
 }
