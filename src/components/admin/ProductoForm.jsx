@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getProductos, createProducto, updateProducto, deleteProducto } from '../../services/productosService';
 import { getProveedores } from '../../services/proovedoresService';
 
-// ESTAS SON LAS ÚNICAS DOS CATEGORÍAS QUE EXISTEN EN TU BACKEND
+
 const CATEGORIAS = ['HOMBRE', 'MUJER'];
 
 function ProductoForm() {
