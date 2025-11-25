@@ -1,28 +1,34 @@
+// src/components/maincomponents/header/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { authService } from '../../../services/authService';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState(authService.getCurrentUser());
+  const [isAdmin, setIsAdmin] = useState(authService.isAdmin());
   const navigate = useNavigate();
 
+  // ←←← ACTUALIZACIÓN INSTANTÁNEA ←←←
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = () => {
-    if (authService.isAuthenticated()) {
-      const currentUser = authService.getCurrentUser();
-      setUser(currentUser);
+    const updateHeader = () => {
+      setUser(authService.getCurrentUser());
       setIsAdmin(authService.isAdmin());
-    }
-  };
+    };
+
+    // Carga inicial
+    updateHeader();
+
+    // Escucha el evento mágico (disparado en login/logout)
+    window.addEventListener('auth-change', updateHeader);
+
+    // Limpieza
+    return () => {
+      window.removeEventListener('auth-change', updateHeader);
+    };
+  }, []);
 
   const handleLogout = () => {
     authService.logout();
-    setUser(null);
-    setIsAdmin(false);
     navigate('/');
   };
 
@@ -53,7 +59,7 @@ const Header = () => {
         <div>
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <span>Bienvenido, {user.name}</span>
+              <span>Bienvenido, {user.nombre}</span>
               <button 
                 onClick={handleLogout}
                 style={{ 
@@ -70,23 +76,10 @@ const Header = () => {
             </div>
           ) : (
             <div>
-              <Link 
-                to="/register" 
-                style={{ 
-                  marginRight: '1rem', 
-                  textDecoration: 'none', 
-                  color: '#007bff' 
-                }}
-              >
+              <Link to="/register" style={{ marginRight: '1rem', textDecoration: 'none', color: '#007bff' }}>
                 Registro
               </Link>
-              <Link 
-                to="/login" 
-                style={{ 
-                  textDecoration: 'none', 
-                  color: '#007bff' 
-                }}
-              >
+              <Link to="/login" style={{ textDecoration: 'none', color: '#007bff' }}>
                 Iniciar sesión
               </Link>
             </div>

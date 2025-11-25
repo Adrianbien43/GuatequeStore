@@ -8,10 +8,10 @@ const Home = () => {
       <div style={{ marginTop: '2rem' }}>
         <h2>Características:</h2>
         <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li>✅ Productos para Hombre y Mujer</li>
-          <li>✅ Sistema de autenticación seguro</li>
-          <li>✅ Panel de administración</li>
-          <li>✅ Gestión completa de inventario</li>
+          <li>Productos para Hombre y Mujer</li>
+          <li>Sistema de autenticación seguro</li>
+          <li>Panel de administración</li>
+          <li>Gestión completa de inventario</li>
         </ul>
       </div>
     </div>
