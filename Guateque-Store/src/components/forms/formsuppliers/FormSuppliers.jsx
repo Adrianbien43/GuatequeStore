@@ -1,117 +1,124 @@
-import React, { useState } from 'react';
-import { supplierService } from '../../../services/supplierService';
+import React, { useState, useEffect } from 'react';
+import { getProveedores, createProveedor, updateProveedor, deleteProveedor } from '../../../services/supplierService';
 
-const FormSuppliers = () => {
-  const [supplier, setSupplier] = useState({
-    name: '',
-    address: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+function FormSuppliers() {
+  // Lista de proveedores
+  const [proveedores, setProveedores] = useState([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
+  // Campos del formulario (solo los que existen en el modelo)
+  const [nombre, setNombre] = useState('');
+  const [direccion, setDireccion] = useState('');
 
+  // ID del proveedor en edición
+  const [editingId, setEditingId] = useState(null);
+
+  // Carga inicial
+  useEffect(() => {
+    cargarProveedores();
+  }, []);
+
+  // Obtener todos los proveedores
+  const cargarProveedores = async () => {
     try {
-      await supplierService.create(supplier);
-      setMessage('✅ Proveedor creado exitosamente');
-      setSupplier({ name: '', address: '' });
-    } catch (error) {
-      setMessage('❌ Error: ' + error.message);
-      console.error('Error detallado:', error);
-    } finally {
-      setLoading(false);
+      const res = await getProveedores();
+      setProveedores(res.data);
+    } catch (err) {
+      console.error('Error al cargar proveedores', err);
     }
   };
 
-  const handleChange = (e) => {
-    setSupplier({
-      ...supplier,
-      [e.target.name]: e.target.value
-    });
+  // Envío del formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Objeto exactamente como lo espera el backend
+    const payload = {
+      nombre: nombre,
+      direccion: direccion || null
+    };
+
+    try {
+      if (editingId) {
+        await updateProveedor(editingId, payload);
+      } else {
+        await createProveedor(payload);
+      }
+      limpiarFormulario();
+      cargarProveedores();
+    } catch (err) {
+      alert('Error al guardar proveedor');
+      console.error(err);
+    }
+  };
+
+  // Limpiar formulario
+  const limpiarFormulario = () => {
+    setNombre('');
+    setDireccion('');
+    setEditingId(null);
+  };
+
+  // Cargar datos para edición
+  const editar = (proveedor) => {
+    setNombre(proveedor.nombre);
+    setDireccion(proveedor.direccion || '');
+    setEditingId(proveedor.id);
+  };
+
+  // Eliminar proveedor
+  const eliminar = async (id) => {
+    if (!window.confirm('¿Eliminar este proveedor?')) return;
+    try {
+      await deleteProveedor(id);
+      cargarProveedores();
+    } catch (err) {
+      alert('Error al eliminar');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto', padding: '20px' }}>
-      <h3>Gestión de Proveedores</h3>
-      
-      {message && (
-        <div style={{
-          padding: '10px',
-          marginBottom: '15px',
-          borderRadius: '4px',
-          backgroundColor: message.includes('✅') ? '#d4edda' : '#f8d7da',
-          color: message.includes('✅') ? '#155724' : '#721c24',
-          border: `1px solid ${message.includes('✅') ? '#c3e6cb' : '#f5c6cb'}`
-        }}>
-          {message}
-        </div>
-      )}
+    <div>
+      <h2>Gestión de Proveedores</h2>
 
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          Nombre: *
-        </label>
+      {/* Formulario */}
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
-          name="name"
-          value={supplier.name}
-          onChange={handleChange}
+          placeholder="Nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
           required
-          disabled={loading}
-          placeholder="Ingrese el nombre del proveedor"
-          style={{ 
-            width: '100%', 
-            padding: '0.75rem', 
-            border: '1px solid #ccc', 
-            borderRadius: '4px',
-            fontSize: '16px'
-          }}
         />
-      </div>
+        <br /><br />
 
-      <div style={{ marginBottom: '1.5rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          Dirección:
-        </label>
         <input
           type="text"
-          name="address"
-          value={supplier.address}
-          onChange={handleChange}
-          disabled={loading}
-          placeholder="Dirección del proveedor"
-          style={{ 
-            width: '100%', 
-            padding: '0.75rem', 
-            border: '1px solid #ccc', 
-            borderRadius: '4px',
-            fontSize: '16px'
-          }}
+          placeholder="Dirección (opcional)"
+          value={direccion}
+          onChange={(e) => setDireccion(e.target.value)}
         />
-      </div>
+        <br /><br />
 
-      <button 
-        type="submit"
-        disabled={loading || !supplier.name.trim()}
-        style={{ 
-          width: '100%',
-          padding: '0.75rem', 
-          background: (loading || !supplier.name.trim()) ? '#6c757d' : '#28a745', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '4px',
-          cursor: (loading || !supplier.name.trim()) ? 'not-allowed' : 'pointer',
-          fontSize: '16px',
-          fontWeight: 'bold'
-        }}
-      >
-        {loading ? '⏳ Creando...' : '🏭 Crear Proveedor'}
-      </button>
-    </form>
+        <button type="submit">{editingId ? 'Actualizar' : 'Crear'}</button>
+        {editingId && <button type="button" onClick={limpiarFormulario}>Cancelar</button>}
+      </form>
+
+      <hr />
+
+      {/* Lista de proveedores */}
+      <h3>Proveedores</h3>
+      <ul>
+        {proveedores.map(p => (
+          <li key={p.id}>
+            {p.nombre}
+            {p.direccion && ` - ${p.direccion}`}
+            <button onClick={() => editar(p)}>Editar</button>
+            <button onClick={() => eliminar(p.id)}>Eliminar</button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-};
+}
 
 export default FormSuppliers;

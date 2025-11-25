@@ -1,140 +1,134 @@
-import React, { useState } from 'react';
-import { warehouseService } from '../../../services/warehouseService';
+import React, { useState, useEffect } from 'react';
+import { getAlmacenes, createAlmacen, updateAlmacen, deleteAlmacen } from '../../../services/warehouseService';
 
-const FormWarehouses = () => {
-  const [warehouse, setWarehouse] = useState({
-    name: '',
-    capacity: '',
-    address: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+function FormWarehouses() {
+  const [almacenes, setAlmacenes] = useState([]);
+  const [nombre, setNombre] = useState('');
+  const [capacidad, setCapacidad] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [editandoId, setEditandoId] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
+  // Carga almacenes al iniciar
+  useEffect(() => {
+    cargar();
+  }, []);
 
+  const cargar = async () => {
     try {
-      await warehouseService.create(warehouse);
-      setMessage('✅ Almacén creado exitosamente');
-      setWarehouse({ name: '', capacity: '', address: '' });
+      const res = await getAlmacenes();
+      setAlmacenes(res.data);
     } catch (error) {
-      setMessage('❌ Error: ' + error.message);
-      console.error('Error detallado:', error);
-    } finally {
-      setLoading(false);
+      alert('Error al cargar almacenes');
     }
   };
 
-  const handleChange = (e) => {
-    setWarehouse({
-      ...warehouse,
-      [e.target.name]: e.target.value
-    });
+  const guardar = async (e) => {
+    e.preventDefault();
+
+    const datos = {
+      nombre: nombre.trim(),
+      capacidad: capacidad ? Number(capacidad) : null,
+      direccion: direccion.trim() || null
+    };
+
+    try {
+      if (editandoId) {
+        await updateAlmacen(editandoId, datos);
+        alert('Almacén actualizado');
+      } else {
+        await createAlmacen(datos);
+        alert('Almacén creado');
+      }
+      limpiar();
+      cargar();
+    } catch (error) {
+      alert('Error al guardar');
+    }
+  };
+
+  const limpiar = () => {
+    setNombre('');
+    setCapacidad('');
+    setDireccion('');
+    setEditandoId(null);
+  };
+
+  const editar = (a) => {
+    setNombre(a.nombre);
+    setCapacidad(a.capacidad || '');
+    setDireccion(a.direccion || '');
+    setEditandoId(a.id);
+  };
+
+  const eliminar = async (id) => {
+    if (!confirm('¿Eliminar este almacén?')) return;
+    try {
+      await deleteAlmacen(id);
+      cargar();
+    } catch (error) {
+      alert('Error al eliminar');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto', padding: '20px' }}>
-      <h3>Gestión de Almacenes</h3>
-      
-      {message && (
-        <div style={{
-          padding: '10px',
-          marginBottom: '15px',
-          borderRadius: '4px',
-          backgroundColor: message.includes('✅') ? '#d4edda' : '#f8d7da',
-          color: message.includes('✅') ? '#155724' : '#721c24',
-          border: `1px solid ${message.includes('✅') ? '#c3e6cb' : '#f5c6cb'}`
-        }}>
-          {message}
-        </div>
-      )}
+    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
+      <h2>Gestión de Almacenes</h2>
 
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          Nombre: *
-        </label>
+      <form onSubmit={guardar}>
         <input
           type="text"
-          name="name"
-          value={warehouse.name}
-          onChange={handleChange}
+          placeholder="Nombre del almacén"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
           required
-          disabled={loading}
-          placeholder="Ingrese el nombre del almacén"
-          style={{ 
-            width: '100%', 
-            padding: '0.75rem', 
-            border: '1px solid #ccc', 
-            borderRadius: '4px',
-            fontSize: '16px'
-          }}
+          style={{ width: '300px', padding: '10px', margin: '5px' }}
         />
-      </div>
-
-      <div style={{ marginBottom: '1rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          Capacidad:
-        </label>
+        <br />
         <input
           type="number"
-          name="capacity"
-          value={warehouse.capacity}
-          onChange={handleChange}
-          disabled={loading}
-          placeholder="Capacidad del almacén"
-          min="0"
-          style={{ 
-            width: '100%', 
-            padding: '0.75rem', 
-            border: '1px solid #ccc', 
-            borderRadius: '4px',
-            fontSize: '16px'
-          }}
+          placeholder="Capacidad (opcional)"
+          value={capacidad}
+          onChange={(e) => setCapacidad(e.target.value)}
+          style={{ width: '300px', padding: '10px', margin: '5px' }}
         />
-      </div>
-
-      <div style={{ marginBottom: '1.5rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-          Dirección:
-        </label>
+        <br />
         <input
           type="text"
-          name="address"
-          value={warehouse.address}
-          onChange={handleChange}
-          disabled={loading}
-          placeholder="Dirección del almacén"
-          style={{ 
-            width: '100%', 
-            padding: '0.75rem', 
-            border: '1px solid #ccc', 
-            borderRadius: '4px',
-            fontSize: '16px'
-          }}
+          placeholder="Dirección (opcional)"
+          value={direccion}
+          onChange={(e) => setDireccion(e.target.value)}
+          style={{ width: '300px', padding: '10px', margin: '5px' }}
         />
-      </div>
+        <br /><br />
+        <button type="submit" style={{ padding: '10px 20px', background: '#0066ff', color: 'white', border: 'none' }}>
+          {editandoId ? 'Actualizar' : 'Crear'}
+        </button>
+        {editandoId && (
+          <button type="button" onClick={limpiar} style={{ padding: '10px 20px', background: '#666', color: 'white', marginLeft: '10px' }}>
+            Cancelar
+          </button>
+        )}
+      </form>
 
-      <button 
-        type="submit"
-        disabled={loading || !warehouse.name.trim()}
-        style={{ 
-          width: '100%',
-          padding: '0.75rem', 
-          background: (loading || !warehouse.name.trim()) ? '#6c757d' : '#007bff', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '4px',
-          cursor: (loading || !warehouse.name.trim()) ? 'not-allowed' : 'pointer',
-          fontSize: '16px',
-          fontWeight: 'bold'
-        }}
-      >
-        {loading ? '⏳ Creando...' : '🚀 Crear Almacén'}
-      </button>
-    </form>
+      <h3 style={{ marginTop: '40px' }}>Lista de Almacenes</h3>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {almacenes.map((a) => (
+          <li key={a.id} style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
+            <strong>{a.nombre}</strong>
+            {a.capacidad && ` - Capacidad: ${a.capacidad}`}
+            {a.direccion && ` - ${a.direccion}`}
+            <button onClick={() => editar(a)} style={{ marginLeft: '20px', background: 'green', color: 'white', border: 'none', padding: '5px 10px' }}>
+              Editar
+            </button>
+            <button onClick={() => eliminar(a.id)} style={{ marginLeft: '10px', background: 'red', color: 'white', border: 'none', padding: '5px 10px' }}>
+              Eliminar
+            </button>
+          </li>
+        ))}
+      </ul>
+      {almacenes.length === 0 && <p>No hay almacenes aún.</p>}
+    </div>
   );
-};
+}
 
 export default FormWarehouses;
