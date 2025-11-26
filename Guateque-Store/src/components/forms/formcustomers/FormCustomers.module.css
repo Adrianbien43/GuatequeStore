@@ -1,76 +1,190 @@
+/* Estilos para formularios con paleta blanca y grises - Versión consistente */
+
 .container {
   max-width: 800px;
   margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
 }
 
 .error {
-  color: red;
-  background-color: #ffe6e6;
-  padding: 0.5rem;
-  border-radius: 4px;
+  color: #8b0000;
+  background-color: #fafafa;
+  padding: 1rem;
+  border-radius: 8px;
   margin-bottom: 1rem;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 1rem;
 }
 
 .form {
   margin-bottom: 2rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 2rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
 }
 
 .formGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  color: #333333;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #a0a0a0;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(160, 160, 160, 0.1);
+}
+
+.input::placeholder {
+  color: #999999;
 }
 
 .submitButton {
   margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  background: #007bff;
+  padding: 12px 24px;
+  background: #404040;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(64, 64, 64, 0.2);
 }
 
 .submitButtonDisabled {
-  background: #aaa;
+  background: #8c8c8c;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.submitButtonDisabled:hover {
+  background: #8c8c8c;
+  transform: none;
+  box-shadow: none;
 }
 
 .listContainer {
   max-height: 400px;
   overflow-y: auto;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
 }
 
 .listItem {
-  border: 1px solid #eee;
+  border: 1px solid #f0f0f0;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+}
+
+.listItem:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .deleteButton {
-  padding: 0.5rem 1rem;
-  background: #dc3545;
+  padding: 8px 16px;
+  background: #8c8c8c;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.deleteButton:hover {
+  background: #737373;
+  transform: translateY(-1px);
 }
 
 .label {
   display: block;
   margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #404040;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .form {
+    padding: 1.5rem;
+  }
+  
+  .formGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .listItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .deleteButton {
+    align-self: flex-end;
+  }
+}
+
+/* Mejoras de accesibilidad */
+.input:required {
+  border-left: 3px solid #a0a0a0;
+}
+
+.input:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: #c0c0c0;
+  background-color: #f9f9f9;
+}
+
+/* Estados de carga (si los necesitas) */
+.loading {
+  padding: 4rem;
+  text-align: center;
+  color: #666666;
+  font-size: 1.1rem;
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin: 2rem;
 }
