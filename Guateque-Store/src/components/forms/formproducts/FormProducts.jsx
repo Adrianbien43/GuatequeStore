@@ -1,156 +1,290 @@
-import React, { useState, useEffect } from 'react';
-import { getProductos, createProducto, updateProducto, deleteProducto } from '../../../services/productService';
-import { getProveedores } from '../../../services/supplierService';
+// Componente principal de gestión de productos - Coordina todos los elementos
+import React from 'react';
 
-const CATEGORIAS = ['HOMBRE', 'MUJER'];
+// Importamos nuestro hook personalizado para manejar la lógica de negocio
+import { useProductsManagement } from '../../../hooks/useProductsManagement';
 
-function FormProducts() {
-  const [productos, setProductos] = useState([]);
-  const [proveedores, setProveedores] = useState([]);
+// Importamos el componente de lista
+import ProductsList from '../../forms/formproducts/ProductsList';
 
-  const [form, setForm] = useState({
-    nombre: '',
-    categoria: 'HOMBRE',
-    talla: '',
-    precioUnitario: '',
-    marca: '',
-    fechaFabricacion: '',
-    proveedor: ''
-  });
+// Componente para mostrar cuando los datos están cargando
+const LoadingState = () => (
+  <div style={{ padding: '4rem', textAlign: 'center' }}>
+    Cargando productos y proveedores...
+  </div>
+);
 
-  const [editingId, setEditingId] = useState(null);
+// Componente para mostrar mensajes de error
+const ErrorState = ({ message }) => (
+  <div style={{ padding: '2rem', color: 'red', textAlign: 'center' }}>
+    {message}
+  </div>
+);
 
-  useEffect(() => {
-    cargarDatos();
-  }, []);
+// Estilos para los elementos de la interfaz
+const styles = {
+  container: {
+    padding: '2rem',
+    maxWidth: '800px',
+    margin: '0 auto',
+    fontFamily: 'Arial, sans-serif'
+  },
+  title: {
+    fontSize: '2rem',
+    marginBottom: '2rem',
+    color: '#333',
+    textAlign: 'center'
+  },
+  formContainer: {
+    backgroundColor: '#fff',
+    padding: '2rem',
+    borderRadius: '12px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+    marginBottom: '2rem'
+  },
+  formTitle: {
+    marginTop: 0,
+    color: '#1976d2',
+    fontSize: '1.5rem'
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem'
+  },
+  formRow: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '1rem'
+  },
+  field: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem'
+  },
+  label: {
+    fontWeight: 'bold',
+    color: '#333',
+    fontSize: '0.9rem'
+  },
+  input: {
+    padding: '12px',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    fontSize: '1rem',
+    width: '100%',
+    boxSizing: 'border-box'
+  },
+  select: {
+    padding: '12px',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    fontSize: '1rem',
+    width: '100%',
+    boxSizing: 'border-box',
+    backgroundColor: 'white'
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '1rem',
+    marginTop: '1rem'
+  },
+  primaryButton: {
+    backgroundColor: '#1976d2',
+    color: 'white',
+    border: 'none',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: '600'
+  },
+  secondaryButton: {
+    backgroundColor: '#6c757d',
+    color: 'white',
+    border: 'none',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: '600'
+  }
+};
 
-  const cargarDatos = async () => {
-    try {
-      const [prod, prov] = await Promise.all([getProductos(), getProveedores()]);
-      setProductos(prod.data);
-      setProveedores(prov.data);
-    } catch (err) {
-      console.error(err);
-    }
+// Componente principal que une toda la funcionalidad
+const FormProducts = () => {
+  // Usamos nuestro hook personalizado que contiene toda la lógica
+  const {
+    products,
+    suppliers,
+    loading,
+    error,
+    formData,
+    editingId,
+    CATEGORIAS,
+    updateFormField,
+    resetForm,
+    prepareEdit,
+    saveProduct,
+    deleteProduct
+  } = useProductsManagement();
+
+  // Función que se ejecuta cuando se envía el formulario
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); // Prevenimos el comportamiento por defecto del formulario
+    
+    // Enviamos los datos del formulario a la función de guardar
+    saveProduct();
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Si está cargando, mostramos el componente de carga
+  if (loading) return <LoadingState />;
+  
+  // Si hay error, mostramos el componente de error
+  if (error) return <ErrorState message={error} />;
 
-    const payload = {
-      nombre: form.nombre,
-      categoria: form.categoria,
-      talla: form.talla || null,
-      precioUnitario: parseFloat(form.precioUnitario),
-      marca: form.marca || null,
-      fechaFabricacion: form.fechaFabricacion || null,
-      proveedor: form.proveedor ? { id: parseInt(form.proveedor) } : null
-    };
-
-    try {
-      if (editingId) {
-        await updateProducto(editingId, payload);
-      } else {
-        await createProducto(payload);
-      }
-      resetForm();
-      cargarDatos();
-    } catch (err) {
-      alert('Error al guardar');
-    }
-  };
-
-  const resetForm = () => {
-    setForm({
-      nombre: '',
-      categoria: 'HOMBRE',
-      talla: '',
-      precioUnitario: '',
-      marca: '',
-      fechaFabricacion: '',
-      proveedor: ''
-    });
-    setEditingId(null);
-  };
-
-  const editar = (p) => {
-    setForm({
-      nombre: p.nombre || '',
-      categoria: p.categoria || 'HOMBRE',
-      talla: p.talla || '',
-      precioUnitario: p.precioUnitario?.toString() || '',
-      marca: p.marca || '',
-      fechaFabricacion: p.fechaFabricacion || '',
-      proveedor: p.proveedor?.id?.toString() || ''
-    });
-    setEditingId(p.id);
-  };
-
-  const eliminar = async (id) => {
-    if (window.confirm('¿Eliminar producto?')) {
-      await deleteProducto(id);
-      cargarDatos();
-    }
-  };
-
+  // Renderizamos la interfaz completa
   return (
-    <div>
-      <h2>Gestión de Productos</h2>
+    <div style={styles.container}>
+      {/* Título principal de la página */}
+      <h1 style={styles.title}>Gestión de Productos</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Nombre" value={form.nombre}
-               onChange={e => setForm({...form, nombre: e.target.value})} required />
-        <br /><br />
+      {/* Sección del formulario para crear/editar productos */}
+      <div style={styles.formContainer}>
+        <h2 style={styles.formTitle}>
+          {editingId ? 'Editar Producto' : 'Nuevo Producto'}
+        </h2>
 
-        <select value={form.categoria}
-                onChange={e => setForm({...form, categoria: e.target.value})}>
-          <option value="HOMBRE">HOMBRE</option>
-          <option value="MUJER">MUJER</option>
-        </select>
-        <br /><br />
+        {/* Formulario con todos los campos necesarios */}
+        <form onSubmit={handleFormSubmit} style={styles.form}>
+          <div style={styles.formRow}>
+            {/* Campo para el nombre del producto */}
+            <div style={styles.field}>
+              <label style={styles.label}>Nombre del Producto *</label>
+              <input
+                type="text"
+                placeholder="Ingrese el nombre del producto"
+                value={formData.nombre}
+                onChange={(e) => updateFormField('nombre', e.target.value)}
+                required
+                style={styles.input}
+              />
+            </div>
 
-        <input type="text" placeholder="Talla" value={form.talla}
-               onChange={e => setForm({...form, talla: e.target.value})} />
-        <br /><br />
+            {/* Campo para la categoría del producto */}
+            <div style={styles.field}>
+              <label style={styles.label}>Categoría</label>
+              <select
+                value={formData.categoria}
+                onChange={(e) => updateFormField('categoria', e.target.value)}
+                style={styles.select}
+              >
+                {CATEGORIAS.map(categoria => (
+                  <option key={categoria} value={categoria}>
+                    {categoria}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-        <input type="number" step="0.01" placeholder="Precio" value={form.precioUnitario}
-               onChange={e => setForm({...form, precioUnitario: e.target.value})} required />
-        <br /><br />
+          <div style={styles.formRow}>
+            {/* Campo para la talla del producto */}
+            <div style={styles.field}>
+              <label style={styles.label}>Talla</label>
+              <input
+                type="text"
+                placeholder="Ej: S, M, L, 42, etc."
+                value={formData.talla}
+                onChange={(e) => updateFormField('talla', e.target.value)}
+                style={styles.input}
+              />
+            </div>
 
-        <input type="text" placeholder="Marca" value={form.marca}
-               onChange={e => setForm({...form, marca: e.target.value})} />
-        <br /><br />
+            {/* Campo para el precio unitario */}
+            <div style={styles.field}>
+              <label style={styles.label}>Precio Unitario *</label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+                value={formData.precioUnitario}
+                onChange={(e) => updateFormField('precioUnitario', e.target.value)}
+                required
+                style={styles.input}
+              />
+            </div>
+          </div>
 
-        <input type="date" value={form.fechaFabricacion}
-               onChange={e => setForm({...form, fechaFabricacion: e.target.value})} />
-        <br /><br />
+          <div style={styles.formRow}>
+            {/* Campo para la marca del producto */}
+            <div style={styles.field}>
+              <label style={styles.label}>Marca</label>
+              <input
+                type="text"
+                placeholder="Marca del producto"
+                value={formData.marca}
+                onChange={(e) => updateFormField('marca', e.target.value)}
+                style={styles.input}
+              />
+            </div>
 
-        <select value={form.proveedor}
-                onChange={e => setForm({...form, proveedor: e.target.value})}>
-          <option value="">Sin proveedor</option>
-          {proveedores.map(p => (
-            <option key={p.id} value={p.id}>{p.nombre}</option>
-          ))}
-        </select>
-        <br /><br />
+            {/* Campo para la fecha de fabricación */}
+            <div style={styles.field}>
+              <label style={styles.label}>Fecha de Fabricación</label>
+              <input
+                type="date"
+                value={formData.fechaFabricacion}
+                onChange={(e) => updateFormField('fechaFabricacion', e.target.value)}
+                style={styles.input}
+              />
+            </div>
+          </div>
 
-        <button type="submit">{editingId ? 'Actualizar' : 'Crear'}</button>
-        {editingId && <button type="button" onClick={resetForm}>Cancelar</button>}
-      </form>
+          {/* Campo para seleccionar proveedor */}
+          <div style={styles.field}>
+            <label style={styles.label}>Proveedor</label>
+            <select
+              value={formData.proveedor}
+              onChange={(e) => updateFormField('proveedor', e.target.value)}
+              style={styles.select}
+            >
+              <option value="">Sin proveedor</option>
+              {suppliers.map(proveedor => (
+                <option key={proveedor.id} value={proveedor.id}>
+                  {proveedor.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <h3>Lista de productos</h3>
-      <ul>
-        {productos.map(p => (
-          <li key={p.id}>
-            {p.nombre} - {p.categoria} - ${p.precioUnitario}
-            {p.proveedor && ` - ${p.proveedor.nombre}`} {/* ← Corregido el error de sintaxis */}
-            <button onClick={() => editar(p)}>Editar</button>
-            <button onClick={() => eliminar(p.id)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
+          {/* Botones de acción del formulario */}
+          <div style={styles.buttonGroup}>
+            <button type="submit" style={styles.primaryButton}>
+              {editingId ? 'Actualizar Producto' : 'Crear Producto'}
+            </button>
+            {editingId && (
+              <button 
+                type="button" 
+                onClick={resetForm} 
+                style={styles.secondaryButton}
+              >
+                Cancelar Edición
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+
+      {/* Sección de la lista con todos los productos */}
+      <ProductsList
+        products={products}
+        onEdit={prepareEdit}
+        onDelete={deleteProduct}
+      />
     </div>
   );
-}
+};
 
 export default FormProducts;
