@@ -1,116 +1,79 @@
 // src/components/WomenProducts.jsx
 import React, { useState, useEffect } from 'react';
 import { getProductos } from '../../../services/productService';
-import './WomenProducts.css'
+import { womanImageService } from '../../../services/womanImageService';
+import './WomenProducts.css';
 
-// Componente para mostrar productos de mujer
 const WomenProducts = () => {
-  // Estado para almacenar la lista de productos
   const [products, setProducts] = useState([]);
-  // Estado para controlar si está cargando los datos
   const [loading, setLoading] = useState(true);
-  // Estado para almacenar mensajes de error
   const [error, setError] = useState(null);
 
-  // Efecto que se ejecuta cuando el componente se monta
   useEffect(() => {
-    // Función asíncrona para cargar productos de mujer
-    const loadWomenProducts = async () => {
+    const loadProducts = async () => {
       try {
-        // Activo el estado de carga y reseteo errores
         setLoading(true);
-        setError(null);
-
-        // Llamo al servicio para obtener todos los productos
         const response = await getProductos();
-        const allProducts = response.data;
+        const allProducts = response.data || [];
 
-        // Filtro los productos para obtener solo los de categoría mujer
-        const womenProducts = allProducts.filter((product) => {
-          // Convierto la categoría a mayúsculas para comparación case-insensitive
-          const category = product.categoria.toUpperCase();
-          // Incluyo varias posibles formas de escribir la categoría mujer
-          return category === 'MUJER' || category === 'WOMEN' || category === 'WOMAN';
-        });
+        const womenProducts = allProducts.filter(p =>
+          p.categoria && /mujer|women|woman|femenino|femme/i.test(p.categoria)
+        );
 
-        // Actualizo el estado con los productos filtrados
         setProducts(womenProducts);
       } catch (err) {
-        // Manejo errores de la petición
-        console.error('Error cargando productos de mujer:', err);
-        setError('No se pudieron cargar los productos. Por favor, intenta más tarde.');
+        setError('No se pudieron cargar los productos');
       } finally {
-        // Desactivo el estado de carga
         setLoading(false);
       }
     };
+    loadProducts();
+  }, []);
 
-    // Ejecuto la función de carga
-    loadWomenProducts();
-  }, []); // Array de dependencias vacío = se ejecuta solo al montar el componente
+  if (loading) return <div className="loading">Cargando moda femenina...</div>;
+  if (error) return <div className="error">{error}</div>;
 
-  // Renderizado condicional para estado de carga
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <p>Cargando productos...</p>
-      </div>
-    );
-  }
-
-  // Renderizado condicional para estado de error
-  if (error) {
-    return (
-      <div className="error-container">
-        <p>{error}</p>
-      </div>
-    );
-  }
-
-  // Renderizado principal del componente
   return (
     <div className="women-products-container">
-      <h1 className="women-products-title">Productos para Mujer</h1>
+      <h1 className="title">Moda Femenina</h1>
+      <p className="subtitle">{products.length} productos disponibles</p>
 
-      {/* Verifico si hay productos para mostrar */}
-      {products.length === 0 ? (
-        <p className="no-products-message">
-          No hay productos disponibles en esta categoría en este momento.
-        </p>
-      ) : (
-        <div className="products-grid">
-          {/* Mapeo cada producto a su tarjeta correspondiente */}
-          {products.map((product) => (
-            <div key={product.id} className="product-card">
-              <h3 className="product-name">{product.nombre}</h3>
-              <p className="product-brand">
-                <strong>Marca:</strong> {product.marca}
-              </p>
-              <p className="product-price">
-                <strong>Precio:</strong> ${product.precioUnitario.toLocaleString('es-AR')}
-              </p>
-              <p className="product-size">
-                <strong>Talla:</strong> {product.talla}
-              </p>
-              <p className="product-manufacturing">
-                <strong>Fecha de fabricación:</strong> {product.fechaFabricacion}
-              </p>
-              <p className="product-stock">
-                <strong>Stock:</strong> {product.stockTotal}
-              </p>
-              <p className="product-supplier">
-                <strong>Proveedor:</strong> {product.proveedor.nombre}
-              </p>
-              <p className="product-supplier-address">
-                <strong>Dirección del proveedor:</strong> {product.proveedor.direccion}
-              </p>
+      <div className="products-grid">
+        {products.map(product => (
+          <article key={product.id} className="product-card">
+            <div className="image-wrapper">
+              <img
+                src={womanImageService.getOptimizedImage(product)}
+                alt={product.nombre || 'Producto'}
+                className="product-image"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.src = womanImageService.getDefaultImage();
+                }}
+              />
             </div>
-          ))}
-        </div>
-      )}
+
+            <div className="product-info">
+              <h3 className="product-name">{product.nombre || 'Sin nombre'}</h3>
+              <p className="product-brand">{product.marca || 'Marca exclusiva'}</p>
+              <p className="product-category">{product.categoria || 'Categoría'}</p>
+              {product.talla && <p className="product-size">Talla: {product.talla}</p>}
+
+              <div className="price-section">
+                <span className="price">
+                  ${product.precioUnitario?.toLocaleString('es-AR') || '0'}
+                </span>
+              </div>
+
+              <button className="add-to-cart-btn">
+                Añadir al carrito
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 };
 
-// Exporto el componente para poder usarlo en otros archivos
 export default WomenProducts;
