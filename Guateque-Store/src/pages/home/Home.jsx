@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef } from "react";
+import './Home.css';
 
-const Home = () => {
+export default function Home() {
+  const contenedorRef = useRef(null);
+
+  useEffect(() => {
+    const cont = contenedorRef.current;
+    if (!cont) return;
+
+    let speed = 0;
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      // POWER SCROLL HORIZONTAL
+      speed += e.deltaY * 50; // Ajusta velocidad (mayor número = más rápido)
+    };
+
+    const animate = () => {
+      cont.scrollLeft += speed;
+      speed *= 0.9; // fricción
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    cont.addEventListener("wheel", onWheel, { passive: false });
+
+    return () => cont.removeEventListener("wheel", onWheel);
+  }, []);
+
   return (
-    <div style={{ textAlign: 'center', padding: '2rem' }}>
-      <h1>Bienvenido a Guateque Store</h1>
-      <p>Tu tienda de confianza para productos de calidad</p>
-      <div style={{ marginTop: '2rem' }}>
-        <h2>Características:</h2>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li>Productos para Hombre y Mujer</li>
-          <li>Sistema de autenticación seguro</li>
-          <li>Panel de administración</li>
-          <li>Gestión completa de inventario</li>
-        </ul>
+    <div className="home-container">
+      <div ref={contenedorRef} className="horizontal-scroll">
+        <section className="section section1">Pantalla 1</section>
+        <section className="section section2">Pantalla 2</section>
+        <section className="section section3">Pantalla 3</section>
       </div>
     </div>
   );
-};
-
-export default Home;
+}

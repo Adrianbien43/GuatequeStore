@@ -1,0 +1,53 @@
+/* CONTENEDOR PRINCIPAL HOME */
+.home-container {           /* ocupar todo el espacio disponible y crecer */
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;         /* bloquea scroll vertical */
+  background-color: #fff;
+  min-height: 0;            /* permite que flex crezca correctamente dentro de <main> */
+}
+
+/* CONTENEDOR HORIZONTAL */
+.horizontal-scroll {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;           /* ocupa todo el espacio disponible */
+  overflow-x: auto;          /* scroll horizontal */
+  overflow-y: hidden;        /* bloquea scroll vertical */
+  scroll-behavior: smooth;
+  background-color: #fff;
+  min-height: 0;            /* importante para que flex funcione dentro de contenedores con padding */
+}
+
+/* SECCIONES */
+.section { 
+  min-width: 100vw;          /* ancho completo */
+  height: 100%;              /* altura completa del contenedor */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: #000;               /* letras negras */
+  background-color: #fff;    /* fondo blanco */
+  font-family: sans-serif;
+}
+
+/* BARRA DE SCROLL HORIZONTAL */
+.horizontal-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background: #eee;
+  border-radius: 10px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+}
