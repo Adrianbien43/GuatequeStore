@@ -29,9 +29,9 @@ const PublicRoute = ({ children }) => {
 function App() {
   return (
     <Router>
-      <div className="App" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div className="App" style={{ maxHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Header />
-        <main style={{ flex: 1, padding: '2rem' }}>
+        <main >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route 

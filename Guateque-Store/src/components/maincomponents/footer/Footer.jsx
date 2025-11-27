@@ -5,7 +5,6 @@ const Footer = () => {
     <footer style={{ 
       padding: '1rem', 
       borderTop: '1px solid #ccc', 
-      marginTop: '2rem',
       textAlign: 'center',
       background: '#f5f5f5'
     }}>
