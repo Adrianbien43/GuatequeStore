@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import './Home.css';
+import Homeletter from '../../components/maincomponents/homeletters/Homeletter';
 
 export default function Home() {
   const contenedorRef = useRef(null);
@@ -32,10 +33,15 @@ export default function Home() {
   return (
     <div className="home-container">
       <div ref={contenedorRef} className="horizontal-scroll">
-        <section className="section section1">Pantalla 1</section>
+        <section className="section section1"><Homeletter></Homeletter></section>
+        <div style={{position: 'relative', height: '300px'}}>
+
+</div>
         <section className="section section2">Pantalla 2</section>
         <section className="section section3">Pantalla 3</section>
+
       </div>
+    
     </div>
   );
 }
