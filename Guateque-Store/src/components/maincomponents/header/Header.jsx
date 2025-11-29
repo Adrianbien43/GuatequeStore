@@ -39,16 +39,16 @@ const Header = () => {
           <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
             Inicio
           </Link>
-          {user && (
-            <>
+          
+            
               <Link to="/men" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
                 Hombre
               </Link>
               <Link to="/women" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
                 Mujer
               </Link>
-            </>
-          )}
+            
+          
           {isAdmin && (
             <Link to="/panel" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
               Panel

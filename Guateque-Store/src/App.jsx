@@ -9,6 +9,10 @@ import Login from './pages/login/Login';
 import Men from './pages/men/Men';
 import Women from './pages/women/Women';
 import Panel from './pages/panel/Panel';
+
+// AÑADIDO: componente de detalle del producto
+import ProductDetail from './components/clotheitem/ProductDetail'; // Crea este archivo (te lo doy abajo)
+
 import { authService } from './services/authService';
 import './App.css';
 
@@ -31,9 +35,23 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/men" element={<ProtectedRoute><Men /></ProtectedRoute>} />
-            <Route path="/women" element={<ProtectedRoute><Women /></ProtectedRoute>} />
             <Route path="/panel" element={<AdminRoute><Panel /></AdminRoute>} />
+
+            {/* RUTAS DE HOMBRE - con detalle dinámico */}
+            <Route path="/men">
+              {/* Esta ruta va PRIMERO: /men/5, /men/23, etc. */}
+              <Route path=":id" element={<PublicRoute><ProductDetail /></PublicRoute>} />
+              {/* Esta es la lista normal */}
+              <Route index element={<PublicRoute><Men /></PublicRoute>} />
+            </Route>
+
+            {/* RUTAS DE MUJER - con detalle dinámico */}
+            <Route path="/women">
+              {/* Esta ruta va PRIMERO: /women/12, /women/45, etc. */}
+              <Route path=":id" element={<PublicRoute><ProductDetail /></PublicRoute>} />
+              {/* Esta es la lista normal */}
+              <Route index element={<PublicRoute><Women /></PublicRoute>} />
+            </Route>
           </Routes>
         </main>
         <Footer />

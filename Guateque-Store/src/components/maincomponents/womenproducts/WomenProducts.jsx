@@ -1,5 +1,6 @@
-// src/components/WomenProducts.jsx
+// src/components/maincomponents/womenproducts/WomenProducts.jsx
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { getProductos } from '../../../services/productService';
 import { womanImageService } from '../../../services/womanImageService';
 import './WomenProducts.css';
@@ -40,36 +41,42 @@ const WomenProducts = () => {
 
       <div className="products-grid">
         {products.map(product => (
-          <article key={product.id} className="product-card">
-            <div className="image-wrapper">
-              <img
-                src={womanImageService.getOptimizedImage(product)}
-                alt={product.nombre || 'Producto'}
-                className="product-image"
-                loading="lazy"
-                onError={(e) => {
-                  e.target.src = womanImageService.getDefaultImage();
-                }}
-              />
-            </div>
-
-            <div className="product-info">
-              <h3 className="product-name">{product.nombre || 'Sin nombre'}</h3>
-              <p className="product-brand">{product.marca || 'Marca exclusiva'}</p>
-              <p className="product-category">{product.categoria || 'Categoría'}</p>
-              {product.talla && <p className="product-size">Talla: {product.talla}</p>}
-
-              <div className="price-section">
-                <span className="price">
-                  ${product.precioUnitario?.toLocaleString('es-AR') || '0'}
-                </span>
+          <NavLink
+            key={product.id}
+            to={`/women/${product.id}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <article className="product-card">
+              <div className="image-wrapper">
+                <img
+                  src={womanImageService.getOptimizedImage(product)}
+                  alt={product.nombre || 'Producto'}
+                  className="product-image"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.src = womanImageService.getDefaultImage();
+                  }}
+                />
               </div>
 
-              <button className="add-to-cart-btn">
-                Añadir al carrito
-              </button>
-            </div>
-          </article>
+              <div className="product-info">
+                <h3 className="product-name">{product.nombre || 'Sin nombre'}</h3>
+                <p className="product-brand">{product.marca || 'Marca exclusiva'}</p>
+                <p className="product-category">{product.categoria || 'Categoría'}</p>
+                {product.talla && <p className="product-size">Talla: {product.talla}</p>}
+
+                <div className="price-section">
+                  <span className="price">
+                    ${product.precioUnitario?.toLocaleString('es-AR') || '0'}
+                  </span>
+                </div>
+
+                <button className="add-to-cart-btn">
+                  Ver detalle
+                </button>
+              </div>
+            </article>
+          </NavLink>
         ))}
       </div>
     </div>
