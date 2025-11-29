@@ -1,13 +1,14 @@
-// src/pages/Men.jsx
 import React from 'react';
-import MenProducts from '../../components/maincomponents/menproducts/MenProducts'; // Ajusta la ruta según tu estructura
+import PageContainer from '../modelpage/PageContainer';
+import MenProducts from '../../components/maincomponents/menproducts/MenProducts';
 
-// Componente página de hombres - simplemente importa y usa el componente
 const Men = () => {
   return (
-    <div>
-      <MenProducts />
-    </div>
+    <PageContainer>
+      <section className="men-section">
+        <MenProducts />
+      </section>
+    </PageContainer>
   );
 };
 

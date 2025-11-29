@@ -1,53 +1,51 @@
-/* CONTENEDOR PRINCIPAL HOME */
-.home-container {           /* ocupar todo el espacio disponible y crecer */
+.home-container {
   display: flex;
   flex-direction: column;
-  width: auto;
-  height: 86.5vh;
-  overflow: hidden;         /* bloquea scroll vertical */
-  background-color: #fff;
-  min-height: 0;            /* permite que flex crezca correctamente dentro de <main> */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;  /* bloquea scroll vertical */
+  min-height: 0;
+  position: relative;
 }
 
-/* CONTENEDOR HORIZONTAL */
 .horizontal-scroll {
   display: flex;
   flex-direction: row;
-  height: 100%;           /* ocupa todo el espacio disponible */
-  overflow-x: auto;          /* scroll horizontal */
-  overflow-y: hidden;        /* bloquea scroll vertical */
-  scroll-behavior: smooth;
-  background-color: #fff;
-  min-height: 0;            /* importante para que flex funcione dentro de contenedores con padding */
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
+  overscroll-behavior-x: contain;
 }
 
-/* SECCIONES */
-.section { 
-  min-width: 100vw;          /* ancho completo */
-  height: 100%;              /* altura completa del contenedor */
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.section {
+  min-width: 100vw;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
-  color: #000;               /* letras negras */
-  background-color: #fff;    /* fondo blanco */
+  color: #000;
   font-family: sans-serif;
 }
 
-/* BARRA DE SCROLL HORIZONTAL */
-.horizontal-scroll::-webkit-scrollbar {
-  height: 10px;
+.spacer {
+  position: relative;
+  height: 300px;
+  min-width: 1px;
 }
 
-.horizontal-scroll::-webkit-scrollbar-track {
-  background: #fff;
-}
-
-.horizontal-scroll::-webkit-scrollbar-thumb {
-  background: #eee;
-  border-radius: 10px;
-}
-
-.horizontal-scroll::-webkit-scrollbar-thumb:hover {
-  background: #ccc;
+.overlay-dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }

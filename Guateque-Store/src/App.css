@@ -1,3 +1,4 @@
+/* App.css */
 * {
   margin: 0;
   padding: 0;
@@ -12,12 +13,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* App.css */
 .App {
-  min-height: 100vh;
+  height: 100vh; /* ocupa todo el viewport */
   display: flex;
   flex-direction: column;
+  overflow: visible; /* permitir que los hijos gestionen su propio scroll */
 }
 
 main {
   flex: 1;
+  position: relative;
+  overflow: visible; /* permitir que Home gestione scroll horizontal */
+  min-height: 0;     /* importante para que flex children puedan colapsar correctamente */
 }
+

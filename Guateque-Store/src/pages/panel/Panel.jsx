@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import PageContainer from '../modelpage/PageContainer';
 import FormCustomers from '../../components/forms/formcustomers/FormCustomers';
 import FormProducts from '../../components/forms/formproducts/FormProducts';
 import FormSuppliers from '../../components/forms/formsuppliers/FormSuppliers';
 import FormWarehouses from '../../components/forms/formwarehouses/FormWarehouses';
 import FormOrders from '../../components/forms/formorders/FormOrders';
+import './Panel.css';
 
 const Panel = () => {
   const [activeTab, setActiveTab] = useState('customers');
@@ -26,79 +28,48 @@ const Panel = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Panel de Administración</h1>
-      <div style={{ display: 'flex', marginBottom: '2rem', gap: '0.5rem', flexWrap: 'wrap' }}>
-        <button 
-          onClick={() => setActiveTab('customers')}
-          style={{ 
-            padding: '0.75rem 1.5rem', 
-            background: activeTab === 'customers' ? '#007bff' : '#6c757d', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          Clientes
-        </button>
-        <button 
-          onClick={() => setActiveTab('products')}
-          style={{ 
-            padding: '0.75rem 1.5rem', 
-            background: activeTab === 'products' ? '#007bff' : '#6c757d', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          Productos
-        </button>
-        <button 
-          onClick={() => setActiveTab('suppliers')}
-          style={{ 
-            padding: '0.75rem 1.5rem', 
-            background: activeTab === 'suppliers' ? '#007bff' : '#6c757d', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          Proveedores
-        </button>
-        <button 
-          onClick={() => setActiveTab('warehouses')}
-          style={{ 
-            padding: '0.75rem 1.5rem', 
-            background: activeTab === 'warehouses' ? '#007bff' : '#6c757d', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          Almacenes
-        </button>
-        <button 
-          onClick={() => setActiveTab('orders')}
-          style={{ 
-            padding: '0.75rem 1.5rem', 
-            background: activeTab === 'orders' ? '#007bff' : '#6c757d', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          Pedidos
-        </button>
-      </div>
-      <div>
-        {renderForm()}
-      </div>
-    </div>
+    <PageContainer>
+      <section className="panel-section">
+        <div className="panel-container">
+          <h1>Panel de Administración</h1>
+          <div className="panel-tabs">
+            <button 
+              onClick={() => setActiveTab('customers')}
+              className={activeTab === 'customers' ? 'tab-active' : 'tab-inactive'}
+            >
+              Clientes
+            </button>
+            <button 
+              onClick={() => setActiveTab('products')}
+              className={activeTab === 'products' ? 'tab-active' : 'tab-inactive'}
+            >
+              Productos
+            </button>
+            <button 
+              onClick={() => setActiveTab('suppliers')}
+              className={activeTab === 'suppliers' ? 'tab-active' : 'tab-inactive'}
+            >
+              Proveedores
+            </button>
+            <button 
+              onClick={() => setActiveTab('warehouses')}
+              className={activeTab === 'warehouses' ? 'tab-active' : 'tab-inactive'}
+            >
+              Almacenes
+            </button>
+            <button 
+              onClick={() => setActiveTab('orders')}
+              className={activeTab === 'orders' ? 'tab-active' : 'tab-inactive'}
+            >
+              Pedidos
+            </button>
+          </div>
+          <div className="panel-content">
+            {renderForm()}
+          </div>
+        </div>
+      </section>
+    </PageContainer>
   );
 };
 

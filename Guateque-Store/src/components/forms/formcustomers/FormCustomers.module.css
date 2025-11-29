@@ -1,4 +1,4 @@
-/* Estilos para formularios con paleta blanca y grises - Versión consistente */
+/* Estilos para formularios con paleta blanca y grises - Versión responsive mejorada */
 
 .container {
   max-width: 800px;
@@ -31,7 +31,7 @@
 
 .formGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
@@ -69,6 +69,7 @@
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .submitButton:hover {
@@ -78,10 +79,16 @@
 }
 
 .submitButtonDisabled {
+  margin-top: 1rem;
+  padding: 12px 24px;
   background: #8c8c8c;
+  color: white;
+  border: none;
+  border-radius: 8px;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%;
 }
 
 .submitButtonDisabled:hover {
@@ -97,6 +104,7 @@
   border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  padding: 0.5rem;
 }
 
 .listItem {
@@ -109,6 +117,7 @@
   align-items: center;
   background-color: #fafafa;
   transition: all 0.3s ease;
+  gap: 1rem;
 }
 
 .listItem:hover {
@@ -127,6 +136,8 @@
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .deleteButton:hover {
@@ -142,7 +153,44 @@
   font-size: 0.9rem;
 }
 
-/* Responsive */
+/* Mejoras de accesibilidad */
+.input:required {
+  border-left: 3px solid #a0a0a0;
+}
+
+.input:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: #c0c0c0;
+  background-color: #f9f9f9;
+}
+
+/* Estados de carga */
+.loading {
+  padding: 4rem;
+  text-align: center;
+  color: #666666;
+  font-size: 1.1rem;
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin: 2rem;
+}
+
+/* ============================================ */
+/* RESPONSIVE - Media Queries Mejorados */
+/* ============================================ */
+
+/* Tablets en horizontal y pantallas medianas */
+@media (max-width: 992px) {
+  .container {
+    padding: 1.5rem;
+  }
+  
+  .formGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+}
+
+/* Tablets en vertical */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
@@ -157,34 +205,79 @@
     gap: 1rem;
   }
   
+  .listContainer {
+    max-height: 500px;
+  }
+  
   .listItem {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
   }
   
   .deleteButton {
-    align-self: flex-end;
+    width: 100%;
+    align-self: stretch;
   }
 }
 
-/* Mejoras de accesibilidad */
-.input:required {
-  border-left: 3px solid #a0a0a0;
+/* Móviles */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+  
+  .form {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .formGrid {
+    gap: 0.75rem;
+  }
+  
+  .input {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+  
+  .submitButton,
+  .submitButtonDisabled {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .listItem {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .deleteButton {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .label {
+    font-size: 0.85rem;
+  }
+  
+  .error {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
 }
 
-.input:invalid:not(:focus):not(:placeholder-shown) {
-  border-color: #c0c0c0;
-  background-color: #f9f9f9;
-}
-
-/* Estados de carga (si los necesitas) */
-.loading {
-  padding: 4rem;
-  text-align: center;
-  color: #666666;
-  font-size: 1.1rem;
-  background-color: #fafafa;
-  border-radius: 8px;
-  margin: 2rem;
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+  .container {
+    padding: 0.5rem;
+  }
+  
+  .form {
+    padding: 0.75rem;
+  }
+  
+  .input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
 }

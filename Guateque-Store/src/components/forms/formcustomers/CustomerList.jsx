@@ -3,7 +3,7 @@ import React from "react";
 const CustomerList = ({ customers, loading, onDelete, styles }) => {
   if (loading) return <p>Cargando clientes...</p>;
   if (customers.length === 0) return <p>No hay clientes registrados</p>;
-
+  
   return (
     <div className={styles.listContainer}>
       {customers.map((c) => (
