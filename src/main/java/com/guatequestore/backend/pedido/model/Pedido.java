@@ -8,6 +8,16 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+
+/**
+ * Modelo para los pedidos que esta relacionado con los clientes por ahora.
+ * Representan los pedidos.
+ * @author Gorka Jesus
+ * @version 1.0.2
+ */
+
+
+
 @Entity // Entidad JPA
 @Table(name = "pedidos") // Tabla 'pedidos'
 @JsonInclude(JsonInclude.Include.NON_NULL) // omite null en JSON
@@ -67,11 +77,11 @@ public class Pedido { // Clase Pedido
     @Override
     public String toString() {
         return "Pedido{" +
-                "id=" + id + // id
-                ", fechaPedido=" + fechaPedido + // fecha
-                ", estadoPedido=" + estadoPedido + // estado
-                ", clienteId=" + (cliente != null ? cliente.getId() : null) + // id cliente
-                ", almacenId=" + (almacen != null ? almacen.getId() : null) + // id almacen
+                "id=" + id +
+                ", fechaPedido=" + fechaPedido +
+                ", estadoPedido=" + estadoPedido +
+                ", clienteId=" + (cliente != null ? cliente.getId() : null) +
+                ", almacenId=" + (almacen != null ? almacen.getId() : null) +
                 '}';
     }
 

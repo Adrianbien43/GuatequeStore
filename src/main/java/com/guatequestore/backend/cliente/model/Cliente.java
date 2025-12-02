@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
  * @author Adrian Bienvenido
  * @version 1.0.5
  */
+
+
 @Entity // Entidad JPA
 @Table(name = "clientes") // Tabla 'clientes'
 public class Cliente { // Clase Cliente

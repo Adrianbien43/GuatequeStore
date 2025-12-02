@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import com.guatequestore.backend.producto.model.Producto;
 
+
+/**
+ * @author Adrián Bienvenido
+ * @version 1.0.2
+ */
+
+
 @Entity // Entidad JPA
 @Table(name = "proveedor") // Tabla 'proveedor'
 public class Proveedor { // Clase Proveedor

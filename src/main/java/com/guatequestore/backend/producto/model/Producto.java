@@ -16,6 +16,8 @@ import java.util.HashSet;
  * @version 1.0.1
  */
 
+
+
 @Entity // Entidad JPA
 @Table(name = "producto") // Tabla 'producto'
 public class Producto { // Clase Producto
@@ -60,7 +62,7 @@ public class Producto { // Clase Producto
     }
 
     // Constructores
-    public Producto() {} // ctor vacío
+    public Producto() {} // constructor vacío
 
     public Producto(String nombre, Categoria categoria, BigDecimal precioUnitario) {
         this.nombre = nombre; // asigna nombre
@@ -129,12 +131,12 @@ public class Producto { // Clase Producto
     @Override
     public String toString() {
         return "Producto{" +
-                "id=" + id + // id
-                ", nombre='" + nombre + '\'' + // nombre
-                ", categoria=" + categoria + // categoria
-                ", precioUnitario=" + precioUnitario + // precio
-                ", marca='" + marca + '\'' + // marca
-                ", cantidadInventarios=" + (inventarios != null ? inventarios.size() : 0) + // cuenta inventarios
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", categoria=" + categoria +
+                ", precioUnitario=" + precioUnitario +
+                ", marca='" + marca + '\'' +
+                ", cantidadInventarios=" + (inventarios != null ? inventarios.size() : 0) +
                 '}';
     }
 }
