@@ -10,18 +10,22 @@ import Men from './pages/men/Men';
 import Women from './pages/women/Women';
 import Panel from './pages/panel/Panel';
 
-// AÑADIDO: componente de detalle del producto
+//Componente donde veremos los detalles de cada producto
 import ProductDetail from './components/clotheitem/ProductDetail'; // Crea este archivo (te lo doy abajo)
 
+//Funciones 
 import { authService } from './services/authService';
 import './App.css';
 
+//Rutas protegidas
 const ProtectedRoute = ({ children }) =>
   authService.isAuthenticated() ? children : <Navigate to="/login" />;
 
+//Solo para administradores
 const AdminRoute = ({ children }) =>
   authService.isAuthenticated() && authService.isAdmin() ? children : <Navigate to="/" />;
 
+// Solo para usuarios no logueados
 const PublicRoute = ({ children }) =>
   !authService.isAuthenticated() ? children : <Navigate to="/" />;
 
@@ -37,19 +41,17 @@ function App() {
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/panel" element={<AdminRoute><Panel /></AdminRoute>} />
 
-            {/* RUTAS DE HOMBRE - con detalle dinámico */}
+            {/* Rutas para la seccion de hombres */}
             <Route path="/men">
-              {/* Esta ruta va PRIMERO: /men/5, /men/23, etc. */}
+              {/* Esta muestra un producto */}
               <Route path=":id" element={<PublicRoute><ProductDetail /></PublicRoute>} />
-              {/* Esta es la lista normal */}
+              {/* Muestra todos los productos de hombres */}
               <Route index element={<PublicRoute><Men /></PublicRoute>} />
             </Route>
 
-            {/* RUTAS DE MUJER - con detalle dinámico */}
+            {/* Lo mismo pero la seccion de mujeres */}
             <Route path="/women">
-              {/* Esta ruta va PRIMERO: /women/12, /women/45, etc. */}
               <Route path=":id" element={<PublicRoute><ProductDetail /></PublicRoute>} />
-              {/* Esta es la lista normal */}
               <Route index element={<PublicRoute><Women /></PublicRoute>} />
             </Route>
           </Routes>

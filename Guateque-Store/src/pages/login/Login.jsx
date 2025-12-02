@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { authService } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
-import PageContainer from '../modelpage/PageContainer';
 import './Login.css';
 
 const Login = () => {
@@ -32,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <PageContainer>
+    
       <section className="login-section">
         <div className="login-container">
           <h1>Iniciar Sesión</h1>
@@ -96,7 +95,7 @@ const Login = () => {
           </div>
         </div>
       </section>
-    </PageContainer>
+    
   );
 };
 

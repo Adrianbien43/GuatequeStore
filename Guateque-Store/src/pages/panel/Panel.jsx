@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PageContainer from '../modelpage/PageContainer';
 import FormCustomers from '../../components/forms/formcustomers/FormCustomers';
 import FormProducts from '../../components/forms/formproducts/FormProducts';
 import FormSuppliers from '../../components/forms/formsuppliers/FormSuppliers';
@@ -28,48 +27,48 @@ const Panel = () => {
   };
 
   return (
-    <PageContainer>
-      <section className="panel-section">
-        <div className="panel-container">
-          <h1>Panel de Administración</h1>
-          <div className="panel-tabs">
-            <button 
-              onClick={() => setActiveTab('customers')}
-              className={activeTab === 'customers' ? 'tab-active' : 'tab-inactive'}
-            >
-              Clientes
-            </button>
-            <button 
-              onClick={() => setActiveTab('products')}
-              className={activeTab === 'products' ? 'tab-active' : 'tab-inactive'}
-            >
-              Productos
-            </button>
-            <button 
-              onClick={() => setActiveTab('suppliers')}
-              className={activeTab === 'suppliers' ? 'tab-active' : 'tab-inactive'}
-            >
-              Proveedores
-            </button>
-            <button 
-              onClick={() => setActiveTab('warehouses')}
-              className={activeTab === 'warehouses' ? 'tab-active' : 'tab-inactive'}
-            >
-              Almacenes
-            </button>
-            <button 
-              onClick={() => setActiveTab('orders')}
-              className={activeTab === 'orders' ? 'tab-active' : 'tab-inactive'}
-            >
-              Pedidos
-            </button>
-          </div>
-          <div className="panel-content">
-            {renderForm()}
-          </div>
+
+    <section className="panel-section">
+      <div className="panel-container">
+        <h1>Panel de Administración</h1>
+        <div className="panel-tabs">
+          <button
+            onClick={() => setActiveTab('customers')}
+            className={activeTab === 'customers' ? 'tab-active' : 'tab-inactive'}
+          >
+            Clientes
+          </button>
+          <button
+            onClick={() => setActiveTab('products')}
+            className={activeTab === 'products' ? 'tab-active' : 'tab-inactive'}
+          >
+            Productos
+          </button>
+          <button
+            onClick={() => setActiveTab('suppliers')}
+            className={activeTab === 'suppliers' ? 'tab-active' : 'tab-inactive'}
+          >
+            Proveedores
+          </button>
+          <button
+            onClick={() => setActiveTab('warehouses')}
+            className={activeTab === 'warehouses' ? 'tab-active' : 'tab-inactive'}
+          >
+            Almacenes
+          </button>
+          <button
+            onClick={() => setActiveTab('orders')}
+            className={activeTab === 'orders' ? 'tab-active' : 'tab-inactive'}
+          >
+            Pedidos
+          </button>
         </div>
-      </section>
-    </PageContainer>
+        <div className="panel-content">
+          {renderForm()}
+        </div>
+      </div>
+    </section>
+
   );
 };
 

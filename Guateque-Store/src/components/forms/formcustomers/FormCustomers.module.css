@@ -1,75 +1,92 @@
-/* Estilos para formularios con paleta blanca y grises - Versión responsive mejorada */
-
+/* FormCustomers.module.css - Versión optimizada */
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
-  min-height: 100vh;
+  max-height: 60%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.container h3 {
+  text-align: center;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: #333;
+  margin-bottom: 1.5rem;
+  display: none;
 }
 
 .error {
   color: #8b0000;
-  background-color: #fafafa;
-  padding: 1rem;
+  background: #fafafa;
+  padding: clamp(0.75rem, 2vw, 1rem);
   border-radius: 8px;
   margin-bottom: 1rem;
   border: 1px solid #e0e0e0;
   text-align: center;
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
 }
 
 .form {
-  margin-bottom: 2rem;
-  padding: 2rem;
-  border: 1px solid #f0f0f0;
-  border-radius: 12px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
 }
 
 .formGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  gap: clamp(0.7rem, 1.5vw, 1rem);
+  margin-bottom: clamp(0.8rem, 1.5vw, 1rem);
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+  color: #404040;
+  font-size: clamp(0.75rem, 1.3vw, 0.85rem);
 }
 
 .input {
   width: 100%;
-  padding: 12px;
+  padding: clamp(8px, 1.5vw, 10px) clamp(10px, 2vw, 12px);
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: #fafafa;
+  border-radius: 6px;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  background: #fafafa;
   transition: all 0.3s ease;
-  color: #333333;
+  color: #333;
   box-sizing: border-box;
 }
 
 .input:focus {
   outline: none;
   border-color: #a0a0a0;
-  background-color: #ffffff;
+  background: #fff;
   box-shadow: 0 0 0 3px rgba(160, 160, 160, 0.1);
 }
 
 .input::placeholder {
-  color: #999999;
+  color: #999;
+}
+
+.submitButton,
+.submitButtonDisabled {
+  margin-top: clamp(0.5rem, 1vw, 0.75rem);
+  padding: clamp(9px, 1.5vw, 11px) clamp(14px, 2.5vw, 18px);
+  border: none;
+  border-radius: 6px;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  font-weight: 500;
+  width: 100%;
 }
 
 .submitButton {
-  margin-top: 1rem;
-  padding: 12px 24px;
   background: #404040;
   color: white;
-  border: none;
-  border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
   transition: all 0.3s ease;
-  width: 100%;
 }
 
 .submitButton:hover {
@@ -79,22 +96,9 @@
 }
 
 .submitButtonDisabled {
-  margin-top: 1rem;
-  padding: 12px 24px;
   background: #8c8c8c;
   color: white;
-  border: none;
-  border-radius: 8px;
   cursor: not-allowed;
-  font-size: 1rem;
-  font-weight: 500;
-  width: 100%;
-}
-
-.submitButtonDisabled:hover {
-  background: #8c8c8c;
-  transform: none;
-  box-shadow: none;
 }
 
 .listContainer {
@@ -102,9 +106,10 @@
   overflow-y: auto;
   border: 1px solid #f0f0f0;
   border-radius: 12px;
-  background-color: #ffffff;
+  background: #fff;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
   padding: 0.5rem;
+  display: none;
 }
 
 .listItem {
@@ -115,13 +120,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fafafa;
+  background: #fafafa;
   transition: all 0.3s ease;
   gap: 1rem;
 }
 
 .listItem:hover {
-  background-color: #f0f0f0;
+  background: #f0f0f0;
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -133,7 +138,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
   font-weight: 500;
   transition: all 0.3s ease;
   white-space: nowrap;
@@ -145,139 +150,61 @@
   transform: translateY(-1px);
 }
 
-.label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #404040;
-  font-size: 0.9rem;
-}
-
-/* Mejoras de accesibilidad */
-.input:required {
-  border-left: 3px solid #a0a0a0;
-}
-
-.input:invalid:not(:focus):not(:placeholder-shown) {
-  border-color: #c0c0c0;
-  background-color: #f9f9f9;
-}
-
-/* Estados de carga */
-.loading {
-  padding: 4rem;
-  text-align: center;
-  color: #666666;
-  font-size: 1.1rem;
-  background-color: #fafafa;
-  border-radius: 8px;
-  margin: 2rem;
-}
-
-/* ============================================ */
-/* RESPONSIVE - Media Queries Mejorados */
-/* ============================================ */
-
-/* Tablets en horizontal y pantallas medianas */
-@media (max-width: 992px) {
-  .container {
-    padding: 1.5rem;
-  }
-  
-  .formGrid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-  }
-}
-
-/* Tablets en vertical */
+/* Responsive */
 @media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-  
-  .form {
-    padding: 1.5rem;
-  }
-  
   .formGrid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.9rem;
   }
-  
+
   .listContainer {
     max-height: 500px;
   }
-  
+
   .listItem {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .deleteButton {
     width: 100%;
     align-self: stretch;
   }
 }
 
-/* Móviles */
 @media (max-width: 480px) {
-  .container {
-    padding: 0.75rem;
-  }
-  
-  .form {
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  
   .formGrid {
     gap: 0.75rem;
   }
-  
+
   .input {
-    padding: 10px;
-    font-size: 0.95rem;
+    padding: 9px 12px;
   }
-  
+
   .submitButton,
   .submitButtonDisabled {
-    padding: 10px 20px;
-    font-size: 0.95rem;
+    padding: 10px 16px;
   }
-  
+
   .listItem {
     padding: 0.75rem;
     font-size: 0.9rem;
   }
-  
+
   .deleteButton {
     padding: 8px 12px;
-    font-size: 0.85rem;
   }
-  
-  .label {
-    font-size: 0.85rem;
-  }
-  
+
   .error {
     padding: 0.75rem;
-    font-size: 0.9rem;
   }
 }
 
-/* Móviles muy pequeños */
 @media (max-width: 360px) {
-  .container {
-    padding: 0.5rem;
-  }
-  
-  .form {
-    padding: 0.75rem;
-  }
-  
   .input {
-    padding: 8px;
-    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .formGrid {
+    gap: 0.65rem;
   }
 }
