@@ -9,7 +9,7 @@
 .register-content {
   width: 90%;
   min-width: 400px;
-  background: rgba(54, 44, 44, 0.333);
+  background: rgba(217, 214, 214, 0.333);
   padding: 1.5rem;
   border-radius: var(--radius);
 }
