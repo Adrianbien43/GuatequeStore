@@ -1,9 +1,8 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;  /* bloquea scroll vertical */
+  height: 88.1vh;
+  overflow: hidden;
   min-height: 0;
   position: relative;
 }
@@ -15,7 +14,6 @@
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  min-height: 0;
   overscroll-behavior-x: contain;
 }
 
@@ -25,19 +23,11 @@
 
 .section {
   min-width: 100vw;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
   color: #000;
-  font-family: sans-serif;
-}
-
-.spacer {
-  position: relative;
-  height: 85.1vh;
-  min-width: 1px;
 }
 
 .overlay-dark {

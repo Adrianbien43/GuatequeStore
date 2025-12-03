@@ -1,15 +1,12 @@
 /*Esta es la estructura de la app*/
 .App {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 /*Esto es para que el contenido principal cresca horizontal*/
 main {
-  flex: 1;
-  position: relative;
-  overflow: visible;
-  min-height: 0;     
+  overflow-x: auto; /* habilita scroll horizontal */
+  overflow-y: auto;
 }
-

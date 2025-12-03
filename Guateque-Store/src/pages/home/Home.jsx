@@ -12,7 +12,6 @@ export default function Home() {
       <SplineScene />
       <div ref={scrollRef} className="horizontal-scroll">
         <section className="section section1"><Homeletter /></section>
-        <div className="spacer" aria-hidden="true"></div>
         <section className="section section2">Pantalla 2</section>
         <section className="section section3">Pantalla 3</section>
       </div>
