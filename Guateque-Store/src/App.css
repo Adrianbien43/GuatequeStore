@@ -1,14 +1,13 @@
-/*Esta es la estructura de la app*/
+/* Estructura base de la app */
 .App {
-  min-height: 100vh;
+  height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  background-color: var(--bg-transparent);
 }
 
-/*Esto es para que el contenido principal cresca horizontal*/
 main {
-  overflow-x: auto; /* habilita scroll horizontal */
+  overflow-x: auto;
   overflow-y: auto;
+  background-color: var(--bg-transparent);
 }
-
-/*Est*/

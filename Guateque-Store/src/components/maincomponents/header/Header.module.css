@@ -1,4 +1,4 @@
-header {
+.headerContainer {
   position: fixed;
   top: 0;
   width: 100%;
@@ -12,7 +12,7 @@ header {
   padding: 0 1rem;
 }
 
-.header-nav {
+.headerNav {
   width: 100%;
   max-width: 1200px;
   display: flex;
@@ -20,25 +20,30 @@ header {
   align-items: center;
 }
 
-.nav-links a,
-.auth-section .auth-link {
+.navLinks a,
+.authSection .authLink {
   margin-right: 1rem;
   text-decoration: none;
   color: #333;
 }
 
-.nav-links a:hover,
-.auth-section .auth-link:hover {
+.registerLogin {
+  display: flex;
+  gap: 30px;
+}
+
+.navLinks a:hover,
+.authSection .authLink:hover {
   text-decoration: underline;
 }
 
-.user-info {
+.userInfo {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.logout-btn {
+.logoutBtn {
   padding: 0.5rem 1rem;
   background: #dc3545;
   color: white;
@@ -47,47 +52,54 @@ header {
   cursor: pointer;
 }
 
-.logout-btn:hover {
+.logoutBtn:hover {
   background: #b02a37;
 }
 
+/* Responsive abajo de 768px */
 
 @media (max-width: 768px) {
-  header {
-    height: auto; 
-    padding: 0.5rem 1rem;
+  .headerNav {
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
-  .header-nav {
-    flex-direction: column;
-    text-align: center;
+  .navLinks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .navLinks a,
+  .authSection .authLink {
+    display: inline-flex;
+    margin: 0;
+    padding: 4px 0;
+    white-space: nowrap;
+  }
+
+  .userInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 0.5rem;
   }
 
-  .nav-links a,
-  .auth-section .auth-link {
-    margin-right: 0;  
-    display: block; 
-    padding: 4px 0;
-  }
-
-  .user-info {
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-
-  .logout-btn {
-    width: 100%;
-    padding: 0.6rem;
+  .logoutBtn {
+    padding: 0.5rem 1rem;
   }
 }
 
 @media (max-width: 450px) {
-  .nav-links a,
-  .auth-section .auth-link {
+  .navLinks a,
+  .authSection .authLink {
     font-size: 0.9rem;
   }
-  .logout-btn {
+  .logoutBtn {
     font-size: 0.9rem;
   }
 }

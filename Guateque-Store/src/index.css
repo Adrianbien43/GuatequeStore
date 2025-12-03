@@ -1,24 +1,29 @@
-* {
-  margin: 0;
-  padding: 0;
+/* Reset básico */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-}
-
-html, body, #root {
-  height: 100%;
-  width: 100%;
   margin: 0;
   padding: 0;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Variables CSS Globales */
+:root {
 
-  /* Permitir scrolling nativo del body si hace falta */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+
+
+  /*Estos son los estilos de Registro*/
+  --primary: #2c3e50;
+  --accent: hsl(204, 70%, 53%);
+  --muted: #7f8c8d;
+  --card-bg: transparent;
+  --radius: 12px;
+}
+
+/* Tipografía base */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-transparent);
 }
