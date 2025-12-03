@@ -1,13 +1,12 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: grid;
   place-items: center;
   padding: 1rem;
 }
 
 .card {
-  background: white;
+  background: rgba(57, 54, 54, 0.434);
   padding: 2.5rem;
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
