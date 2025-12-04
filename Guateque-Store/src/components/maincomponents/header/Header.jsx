@@ -18,7 +18,7 @@ const Header = () => {
 
   const handleLogout = () => {
     authService.logout();
-    navigate('/');
+    window.location.href = '/';
   };
 
   return (

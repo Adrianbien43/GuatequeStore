@@ -1,4 +1,4 @@
-// App.jsx
+// App.jsx CORREGIDO
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/maincomponents/header/Header';
@@ -9,24 +9,16 @@ import Login from './pages/login/Login';
 import Men from './pages/men/Men';
 import Women from './pages/women/Women';
 import Panel from './pages/panel/Panel';
-
-//Componente donde veremos los detalles de cada producto
-import ProductDetail from './components/clotheitem/ProductDetail'; // Crea este archivo (te lo doy abajo)
-
-//Funciones 
+import ProductDetail from './components/clotheitem/ProductDetail';
 import { authService } from './services/authService';
 import './App.css';
 
-//Rutas protegidas
-const ProtectedRoute = ({ children }) =>
-  authService.isAuthenticated() ? children : <Navigate to="/login" />;
-
-//Solo para administradores
+// Solo para administradores
 const AdminRoute = ({ children }) =>
-  authService.isAuthenticated() && authService.isAdmin() ? children : <Navigate to="/" />;
+  authService.isAuthenticated() && authService.isAdmin() ? children : <Navigate to="/login" />;
 
-// Solo para usuarios no logueados
-const PublicRoute = ({ children }) =>
+// Solo para usuarios NO autenticados (login y register)
+const GuestRoute = ({ children }) =>
   !authService.isAuthenticated() ? children : <Navigate to="/" />;
 
 function App() {
@@ -36,24 +28,23 @@ function App() {
         <Header />
         <main>
           <Routes>
+            {/* Rutas públicas (accesibles siempre) */}
             <Route path="/" element={<Home />} />
-            <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/panel" element={<AdminRoute><Panel /></AdminRoute>} />
-
-            {/* Rutas para la seccion de hombres */}
             <Route path="/men">
-              {/* Esta muestra un producto */}
-              <Route path=":id" element={<PublicRoute><ProductDetail /></PublicRoute>} />
-              {/* Muestra todos los productos de hombres */}
-              <Route index element={<PublicRoute><Men /></PublicRoute>} />
+              <Route path=":id" element={<ProductDetail />} />
+              <Route index element={<Men />} />
+            </Route>
+            <Route path="/women">
+              <Route path=":id" element={<ProductDetail />} />
+              <Route index element={<Women />} />
             </Route>
 
-            {/* Lo mismo pero la seccion de mujeres */}
-            <Route path="/women">
-              <Route path=":id" element={<PublicRoute><ProductDetail /></PublicRoute>} />
-              <Route index element={<PublicRoute><Women /></PublicRoute>} />
-            </Route>
+            {/* Rutas solo para invitados (NO autenticados) */}
+            <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+            <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
+
+            {/* Rutas protegidas */}
+            <Route path="/panel" element={<AdminRoute><Panel /></AdminRoute>} />
           </Routes>
         </main>
         <Footer />
