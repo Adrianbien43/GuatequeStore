@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Informacion de la app -->
+    <string name="app_name">Guateque-Store</string>
+    <string name="author_nombre">Adri-Gorka-Manu</string>
+    <string name="version_app">1.0.0</string>
+
+    <!-- Texto para botones -->
+    <string name="btn_eventos">Novedades</string>
+    <string name="btn_Hombre">Ropa Hombre</string>
+    <string name="btn_Mujeres">Ropa Mujeres</string>
+    <string name="btn_Registrate">Registrate</string>
+
+    <!-- Mensajes de la app -->
+    <string name="mensaje_bienvenida">Bienvenida a mi aplicación</string>
+    <string name="mensaje_error">Ha ocurrido un error</string>
+
+    <!-- Texto para la Ropa Hombre -->
+    <string name="nombre_ejemplo">Camisa Azul Moderna</string>
+    <string name="precio_ejemplo">19,99 €</string>
+    <string name="descripcion_ejemplo">Camisa de algodón, ajuste regular, lavable a máquina. Disponible en tallas S–XXL.</string>
+    <string name="btn_agregar">Añadir</string>
+    <string name="btn_comprar">Comprar</string>
+
+</resources>
