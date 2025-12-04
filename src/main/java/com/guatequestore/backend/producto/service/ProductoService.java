@@ -27,10 +27,17 @@ public class ProductoService {
     }
 
     public Producto createProducto(Producto producto) {
-        if (producto.getProveedor() != null && producto.getProveedor().getId() != null) {
-            Proveedor proveedor = proveedorRepository.findById(producto.getProveedor().getId()).orElse(null);
-            producto.setProveedor(proveedor);
+        // Validar que haya proveedor
+        if (producto.getProveedor() == null || producto.getProveedor().getId() == null) {
+            throw new IllegalArgumentException("El producto debe tener un proveedor válido");
         }
+
+        // Verificar que el proveedor exista
+        Proveedor proveedor = proveedorRepository.findById(producto.getProveedor().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Proveedor no encontrado"));
+
+        producto.setProveedor(proveedor);
+
         return repository.save(producto);
     }
 
@@ -43,19 +50,21 @@ public class ProductoService {
             p.setMarca(producto.getMarca());
             p.setFechaFabricacion(producto.getFechaFabricacion());
 
-            if (producto.getProveedor() != null && producto.getProveedor().getId() != null) {
-                Proveedor proveedor = proveedorRepository.findById(producto.getProveedor().getId()).orElse(null);
-                p.setProveedor(proveedor);
-            } else {
-                p.setProveedor(null);
+            // Validar proveedor
+            if (producto.getProveedor() == null || producto.getProveedor().getId() == null) {
+                throw new IllegalArgumentException("El producto debe tener un proveedor válido");
             }
 
+            // Verificar que el proveedor exista
+            Proveedor proveedor = proveedorRepository.findById(producto.getProveedor().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Proveedor no encontrado"));
+            p.setProveedor(proveedor);
+
             return repository.save(p);
-        }).orElse(null);
+        }).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
     }
 
     public void deleteProducto(Long id) {
         repository.findById(id).ifPresent(repository::delete);
     }
-
 }

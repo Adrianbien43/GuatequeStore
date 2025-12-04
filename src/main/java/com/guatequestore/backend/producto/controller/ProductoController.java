@@ -2,6 +2,8 @@ package com.guatequestore.backend.producto.controller;
 
 import com.guatequestore.backend.producto.model.Producto;
 import com.guatequestore.backend.producto.service.ProductoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,22 +24,38 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    public Producto getById(@PathVariable Long id) {
-        return service.getProductoById(id);
+    public ResponseEntity<Producto> getById(@PathVariable Long id) {
+        Producto producto = service.getProductoById(id);
+        if (producto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(producto);
     }
 
     @PostMapping
-    public Producto create(@RequestBody Producto producto) {
-        return service.createProducto(producto);
+    public ResponseEntity<?> create(@RequestBody Producto producto) {
+        try {
+            Producto nuevoProducto = service.createProducto(producto);
+            return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            // Devuelve un mensaje amigable al frontend
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
-    public Producto update(@PathVariable Long id, @RequestBody Producto producto) {
-        return service.updateProducto(id, producto);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Producto producto) {
+        try {
+            Producto actualizado = service.updateProducto(id, producto);
+            return ResponseEntity.ok(actualizado);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteProducto(id);
+        return ResponseEntity.noContent().build();
     }
 }
