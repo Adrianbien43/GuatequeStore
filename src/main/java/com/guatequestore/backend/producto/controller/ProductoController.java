@@ -7,6 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+/**
+ * @author Gorka Jesús
+ * @version 1.0.5
+ */
+
 @RestController
 @RequestMapping("/api/productos")
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200", "http://localhost:5173"})
@@ -17,12 +22,12 @@ public class ProductoController {
     public ProductoController(ProductoService service) {
         this.service = service;
     }
-
+    // Aqui obtengo todos los pedidos
     @GetMapping
     public List<Producto> getAll() {
         return service.getAllProductos();
     }
-
+    //Aqui obtengo el pedido por el id
     @GetMapping("/{id}")
     public ResponseEntity<Producto> getById(@PathVariable Long id) {
         Producto producto = service.getProductoById(id);
@@ -31,7 +36,7 @@ public class ProductoController {
         }
         return ResponseEntity.ok(producto);
     }
-
+    //Aqui es para generar un nuevo producto
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Producto producto) {
         try {
@@ -42,7 +47,7 @@ public class ProductoController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
+    //Aqui actualizo por el id
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Producto producto) {
         try {
@@ -52,7 +57,7 @@ public class ProductoController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
+    //Este es para eliminarlo
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteProducto(id);

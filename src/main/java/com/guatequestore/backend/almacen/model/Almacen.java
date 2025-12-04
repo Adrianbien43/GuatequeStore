@@ -1,4 +1,4 @@
-package com.guatequestore.backend.almacen.model;
+package com.guatequestore.backend.almacen.model; // Paquete para modelos de almacén
 
 import com.guatequestore.backend.pedido.model.Pedido;
 import com.guatequestore.backend.inventario.model.Inventario;
@@ -9,83 +9,93 @@ import jakarta.validation.constraints.Positive;
 import java.util.Set;
 import java.util.HashSet;
 
-@Entity
-@Table(name = "almacen")
-public class Almacen {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_almacen")
-    private Long id;
+/**
+ * @author Manuel Cruz
+ * @version 1.0.2
+ */
 
-    @NotBlank
-    @Column(nullable = false)
-    private String nombre;
+@Entity // Esta clase es una entidad JPA
+@Table(name = "almacen") // Se mapea a la tabla 'almacen' en la base de datos
+public class Almacen { // Clase que representa un almacén físico
 
-    @Positive
-    private Integer capacidad;
+    @Id // Marca este campo como clave primaria
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Valor auto-generado por la BD
+    @Column(name = "id_almacen") // Nombre de columna en la tabla
+    private Long id; // Identificador único del almacén
 
-    private String direccion;
+    @NotBlank // Validación: no puede estar vacío o solo espacios
+    @Column(nullable = false) // Restricción en BD: campo obligatorio
+    private String nombre; // Nombre descriptivo del almacén
 
-    // RELACIÓN BIDIRECCIONAL CON PEDIDO
+    @Positive // Validación: solo valores positivos
+    private Integer capacidad; // Capacidad máxima del almacén (en unidades, metros, etc.)
+
+    private String direccion; // Ubicación física del almacén
+
+    // RELACIÓN: Un almacén puede tener muchos pedidos
     @OneToMany(mappedBy = "almacen", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // ← EVITA RECURSIVIDAD EN JSON
-    private Set<Pedido> pedidos = new HashSet<>();
+    @JsonIgnore // Evita que Jackson serialice esta relación (previene ciclos infinitos en JSON)
+    private Set<Pedido> pedidos = new HashSet<>(); // Conjunto de pedidos asociados a este almacén
 
-    // NUEVA RELACIÓN BIDIRECCIONAL CON INVENTARIO
+    // RELACIÓN: Un almacén puede tener muchos items en inventario
     @OneToMany(mappedBy = "almacen", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // ← EVITA RECURSIVIDAD EN JSON
-    private Set<Inventario> inventarios = new HashSet<>();
+    @JsonIgnore // Evita que Jackson serialice esta relación
+    private Set<Inventario> inventarios = new HashSet<>(); // Conjunto de items en inventario
 
-    public Almacen() {}
+    public Almacen() {} // Constructor vacío requerido por JPA
 
+    // Constructor para crear nuevos almacenes fácilmente
     public Almacen(String nombre, Integer capacidad, String direccion) {
-        this.nombre = nombre;
-        this.capacidad = capacidad;
-        this.direccion = direccion;
+        this.nombre = nombre; // asigna el nombre
+        this.capacidad = capacidad; // asigna la capacidad
+        this.direccion = direccion; // asigna la dirección
     }
 
-    // Getters y Setters
-    public Long getId() { return id; }
+    // GETTERS Y SETTERS - Métodos para acceder y modificar los atributos
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Long getId() { return id; } // obtiene el id
 
-    public Integer getCapacidad() { return capacidad; }
-    public void setCapacidad(Integer capacidad) { this.capacidad = capacidad; }
+    public String getNombre() { return nombre; } // obtiene el nombre
+    public void setNombre(String nombre) { this.nombre = nombre; } // cambia el nombre
 
-    public String getDireccion() { return direccion; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public Integer getCapacidad() { return capacidad; } // obtiene la capacidad
+    public void setCapacidad(Integer capacidad) { this.capacidad = capacidad; } // cambia la capacidad
 
-    public Set<Pedido> getPedidos() { return pedidos; }
-    public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; }
+    public String getDireccion() { return direccion; } // obtiene la dirección
+    public void setDireccion(String direccion) { this.direccion = direccion; } // cambia la dirección
 
-    public Set<Inventario> getInventarios() { return inventarios; }
-    public void setInventarios(Set<Inventario> inventarios) { this.inventarios = inventarios; }
+    public Set<Pedido> getPedidos() { return pedidos; } // obtiene los pedidos
+    public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; } // cambia los pedidos
 
-    // MÉTODOS UTILITARIOS PARA PEDIDOS
+    public Set<Inventario> getInventarios() { return inventarios; } // obtiene el inventario
+    public void setInventarios(Set<Inventario> inventarios) { this.inventarios = inventarios; } // cambia el inventario
+
+    // MÉTODO PARA AÑADIR UN PEDIDO AL ALMACÉN
     public void addPedido(Pedido pedido) {
-        pedidos.add(pedido);
-        pedido.setAlmacen(this);
+        pedidos.add(pedido); // añade el pedido a la colección
+        pedido.setAlmacen(this); // establece este almacén como dueño del pedido
     }
 
+    // MÉTODO PARA ELIMINAR UN PEDIDO DEL ALMACÉN
     public void removePedido(Pedido pedido) {
-        pedidos.remove(pedido);
-        pedido.setAlmacen(null);
+        pedidos.remove(pedido); // remueve el pedido de la colección
+        pedido.setAlmacen(null); // desvincula el pedido de este almacén
     }
 
-    // MÉTODOS UTILITARIOS PARA INVENTARIO
+    // MÉTODO PARA AÑADIR UN ITEM AL INVENTARIO DEL ALMACÉN
     public void addInventario(Inventario inventario) {
-        inventarios.add(inventario);
-        inventario.setAlmacen(this);
+        inventarios.add(inventario); // añade el item al inventario
+        inventario.setAlmacen(this); // establece este almacén como ubicación del item
     }
 
+    // MÉTODO PARA ELIMINAR UN ITEM DEL INVENTARIO DEL ALMACÉN
     public void removeInventario(Inventario inventario) {
-        inventarios.remove(inventario);
-        inventario.setAlmacen(null);
+        inventarios.remove(inventario); // remueve el item del inventario
+        inventario.setAlmacen(null); // desvincula el item de este almacén
     }
 
-    // Método toString() seguro
+    // Representación en texto del objeto (excluye relaciones para evitar recursividad)
     @Override
     public String toString() {
         return "Almacen{" +
