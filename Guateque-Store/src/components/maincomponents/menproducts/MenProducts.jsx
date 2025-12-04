@@ -1,9 +1,8 @@
-// src/components/maincomponents/menproducts/MenProducts.jsx
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getProductos } from '../../../services/productService';
 import { manImageService } from '../../../services/manImageService';
-import './MenProducts.css';
+import styles from './MenProducts.module.css';
 
 const MenProducts = () => {
   const [products, setProducts] = useState([]);
@@ -13,17 +12,13 @@ const MenProducts = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        setLoading(true);
         const response = await getProductos();
-        const allProducts = response.data || [];
-
-        const menProducts = allProducts.filter(p =>
+        const menProducts = (response.data || []).filter(p =>
           p.categoria && /hombre|men|masculino|masc|male/i.test(p.categoria)
         );
-
         setProducts(menProducts);
       } catch (err) {
-        setError('No se pudieron cargar los productos');
+        setError('Error cargando productos');
       } finally {
         setLoading(false);
       }
@@ -31,54 +26,37 @@ const MenProducts = () => {
     loadProducts();
   }, []);
 
-  if (loading) return <div className="loading">Cargando productos...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (loading) return <div className={styles.loading}>Cargando...</div>;
+  if (error) return <div className={styles.error}>{error}</div>;
 
   return (
-    <div className="men-products-container">
-      <h1 className="title">Moda Masculina</h1>
-      <p className="subtitle">{products.length} productos disponibles</p>
+    <div className={styles.grid}>
+      {products.map(product => (
+        <NavLink key={product.id} to={`/men/${product.id}`} className={styles.cardLink}>
+          <article className={styles.card}>
+            <img
+              src={manImageService.getOptimizedImage(product)}
+              alt={product.nombre}
+              className={styles.image}
+              onError={(e) => e.target.src = manImageService.getDefaultImage()}
+            />
 
-      <div className="products-grid">
-        {products.map(product => (
-          <NavLink
-            key={product.id}
-            to={`/men/${product.id}`}
-            style={{ textDecoration: 'none', color: 'inherit' }}
-          >
-            <article className="product-card">
-              <div className="image-wrapper">
-                <img
-                  src={manImageService.getOptimizedImage(product)}
-                  alt={product.nombre || 'Producto'}
-                  className="product-image"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.src = manImageService.getDefaultImage();
-                  }}
-                />
+            <div className={styles.content}>
+              <h3>{product.nombre || 'Sin nombre'}</h3>
+              <p className={styles.brand}>{product.marca}</p>
+              <p className={styles.category}>{product.categoria}</p>
+              {product.talla && <p>Talla: {product.talla}</p>}
+
+              <div className={styles.footer}>
+                <span className={styles.price}>
+                  ${product.precioUnitario?.toLocaleString('es-AR') || '0'}
+                </span>
+                <button className={styles.button}>Ver detalle</button>
               </div>
-
-              <div className="product-info">
-                <h3 className="product-name">{product.nombre || 'Sin nombre'}</h3>
-                <p className="product-brand">{product.marca || 'Marca premium'}</p>
-                <p className="product-category">{product.categoria || 'Categoría'}</p>
-                {product.talla && <p className="product-size">Talla: {product.talla}</p>}
-
-                <div className="price-section">
-                  <span className="price">
-                    ${product.precioUnitario?.toLocaleString('es-AR') || '0'}
-                  </span>
-                </div>
-
-                <button className="add-to-cart-btn">
-                  Ver detalle
-                </button>
-              </div>
-            </article>
-          </NavLink>
-        ))}
-      </div>
+            </div>
+          </article>
+        </NavLink>
+      ))}
     </div>
   );
 };
