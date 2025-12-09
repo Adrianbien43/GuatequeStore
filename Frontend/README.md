@@ -15,9 +15,12 @@ Hemos creado una interfaz limpia, moderna y totalmente responsiva que refleja lo
 Reconocemos que el **scroll horizontal** implementado para la navegación de productos no ofrece la mejor experiencia de usuario que imaginamos. El equipo está considerando reconstruir esta funcionalidad completamente para implementar una solución más robusta y amigable.
 
 ## 🖼️ Vista Previa
-
 ![Captura de pantalla del Frontend](public/screenshot.png)
-*Interfaz actual del catálogo de productos*
+
+## Figma
+Este es el enlace del figma.
+
+https://www.figma.com/design/vbEG6WmzHaxsk2JROq9KnC/KORA-DESIGN?node-id=1-2381&t=c40bGH3AkG5NkY87-1
 
 ## 📁 Estructura del Proyecto
 
