@@ -1,0 +1,210 @@
+/* FormCustomers.module.css - Versión sin fondos */
+.container {
+  height: 60%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.container h3 {
+  text-align: center;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: #333;
+  margin-bottom: 1.5rem;
+  display: none;
+}
+
+.error {
+  color: #8b0000;
+  background: transparent; /* Cambiado */
+  padding: clamp(0.75rem, 2vw, 1rem);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+}
+
+.form {
+  margin-bottom: 0;
+  padding: 0;
+  border: none;
+  background: transparent; /* Asegurar transparente */
+  box-shadow: none;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(0.7rem, 1.5vw, 1rem);
+  margin-bottom: clamp(0.8rem, 1.5vw, 1rem);
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+  color: #404040;
+  font-size: clamp(0.75rem, 1.3vw, 0.85rem);
+}
+
+.input {
+  width: 100%;
+  padding: clamp(8px, 1.5vw, 10px) clamp(10px, 2vw, 12px);
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  background: transparent; /* Cambiado de #fafafa a transparent */
+  transition: all 0.3s ease;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #a0a0a0;
+  background: transparent; /* Cambiado de #fff a transparent */
+  box-shadow: 0 0 0 3px rgba(160, 160, 160, 0.1);
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.submitButton,
+.submitButtonDisabled {
+  margin-top: clamp(0.5rem, 1vw, 0.75rem);
+  padding: clamp(9px, 1.5vw, 11px) clamp(14px, 2.5vw, 18px);
+  border: none;
+  border-radius: 6px;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  font-weight: 500;
+  width: 100%;
+}
+
+.submitButton {
+  background: #404040;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(64, 64, 64, 0.2);
+}
+
+.submitButtonDisabled {
+  background: #8c8c8c;
+  color: white;
+  cursor: not-allowed;
+}
+
+.listContainer {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  background: transparent; /* Cambiado de #fff a transparent */
+  box-shadow: none; /* Removido sombra */
+  padding: 0.5rem;
+  display: none;
+}
+
+.listItem {
+  border: 1px solid #f0f0f0;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent; /* Cambiado de #fafafa a transparent */
+  transition: all 0.3s ease;
+  gap: 1rem;
+}
+
+.listItem:hover {
+  background: rgba(240, 240, 240, 0.3); /* Con transparencia */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.deleteButton {
+  padding: 8px 16px;
+  background: #8c8c8c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.deleteButton:hover {
+  background: #737373;
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formGrid {
+    gap: 0.9rem;
+  }
+
+  .listContainer {
+    max-height: 500px;
+  }
+
+  .listItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .deleteButton {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .formGrid {
+    gap: 0.75rem;
+  }
+
+  .input {
+    padding: 9px 12px;
+  }
+
+  .submitButton,
+  .submitButtonDisabled {
+    padding: 10px 16px;
+  }
+
+  .listItem {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .deleteButton {
+    padding: 8px 12px;
+  }
+
+  .error {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .input {
+    padding: 8px 10px;
+  }
+
+  .formGrid {
+    gap: 0.65rem;
+  }
+}
