@@ -56,11 +56,6 @@ const ProductDetail = () => {
           marginTop: '40px',
           alignItems: 'start'
         }}>
-          <img 
-            src={product.imagen || 'https://via.placeholder.com/600'} 
-            alt={product.nombre}
-            style={{ width: '100%', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}
-          />
 
           <div>
             <h1 style={{ fontSize: '3em', margin: '0 0 20px 0' }}>{product.nombre}</h1>
@@ -79,18 +74,6 @@ const ProductDetail = () => {
               ${product.precioUnitario?.toLocaleString('es-AR')}
             </p>
 
-            <button style={{
-              padding: '18px 50px',
-              background: isMenPage ? '#00ff9d' : '#e91e63',
-              color: isMenPage ? 'black' : 'white',
-              border: 'none',
-              borderRadius: '50px',
-              fontSize: '1.4em',
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}>
-              Añadir al carrito
-            </button>
           </div>
         </div>
       </div>
