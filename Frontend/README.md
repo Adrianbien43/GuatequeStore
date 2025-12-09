@@ -20,19 +20,31 @@ Reconocemos que el **scroll horizontal** implementado para la navegación de pro
 *Interfaz actual del catálogo de productos*
 
 ## 📁 Estructura del Proyecto
-GuatequeStore-Frontend/
-├── public/ # Archivos estáticos
-├── src/ # Código fuente principal
-│ ├── assets/ # Imágenes, fuentes, etc.
-│ ├── components/ # Componentes reutilizables
-│ ├── pages/ # Páginas principales
-│ ├── styles/ # Archivos CSS/SCSS
-│ ├── App.jsx # Componente raíz
-│ └── main.jsx # Punto de entrada
-├── index.html # Template HTML
-├── package.json # Dependencias
-├── vite.config.js # Configuración de Vite
-└── eslint.config.js # Reglas de linting
+
+```text
+GuatequeStore/
+├── Android/                 # Aplicación móvil en Java
+│   ├── app/                 # Código fuente de Android
+│   └── build/               # Archivos de compilación
+├── Frontend/                # Aplicación web en React
+│   ├── public/              # Archivos estáticos (imágenes, favicon, etc.)
+│   ├── src/                 # Código fuente principal
+│   │   ├── assets/          # Imágenes, fuentes, etc.
+│   │   ├── components/      # Componentes reutilizables
+│   │   ├── pages/           # Páginas principales
+│   │   ├── styles/          # Archivos CSS/SCSS
+│   │   ├── App.jsx          # Componente raíz
+│   │   └── main.jsx         # Punto de entrada
+│   ├── index.html           # Template HTML
+│   ├── package.json         # Dependencias y scripts
+│   ├── vite.config.js       # Configuración de Vite
+│   └── eslint.config.js     # Reglas de linting
+├── Backend/                 # API y lógica del servidor en Java + Spring Boot
+│   ├── src/                 # Código fuente
+│   ├── pom.xml              # Dependencias y configuración Maven/Gradle
+│   └── application.properties # Configuración del servidor
+└── README.md                # Documentación general del proyecto
+
 
 ## 🚀 Instalación y Ejecución
 
