@@ -1,0 +1,13 @@
+/* Estructura base de la app */
+.App {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background-color: var(--bg-transparent);
+}
+
+main {
+  overflow-x: auto;
+  overflow-y: auto;
+  background-color: var(--bg-transparent);
+}
