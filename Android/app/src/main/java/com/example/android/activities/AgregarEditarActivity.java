@@ -1,82 +1,54 @@
 package com.example.android.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import com.example.android.R;
 import com.example.android.api.ApiClient;
 import com.example.android.model.Proveedor;
-import com.example.android.model.TelefonoProveedor;
-
+import java.util.Collections;  // ← ESTE IMPORT ARREGLA EL ERROR
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import java.util.ArrayList;
 
 public class AgregarEditarActivity extends AppCompatActivity {
 
     private EditText etNombre, etDireccion;
-    private LinearLayout layoutTelefonos;
-    private Button btnAgregarTelefono, btnGuardar;
+    private Button btnGuardar, btnVolverMenu;
     private Proveedor proveedorEditar = null;
-    private ArrayList<TelefonoProveedor> listaTelefonos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_editar);
 
+        // Vistas
         etNombre = findViewById(R.id.etNombre);
         etDireccion = findViewById(R.id.etDireccion);
-        layoutTelefonos = findViewById(R.id.layoutTelefonos);
-        btnAgregarTelefono = findViewById(R.id.btnAgregarTelefono);
         btnGuardar = findViewById(R.id.btnGuardar);
+        btnVolverMenu = findViewById(R.id.btnVolverMenu);
 
-        // Si viene un proveedor para editar
+        // Si estamos editando
         if (getIntent().hasExtra("proveedor")) {
             proveedorEditar = (Proveedor) getIntent().getSerializableExtra("proveedor");
             etNombre.setText(proveedorEditar.getNombre());
             etDireccion.setText(proveedorEditar.getDireccion() != null ? proveedorEditar.getDireccion() : "");
-            listaTelefonos.addAll(proveedorEditar.getTelefonos());
-            actualizarListaTelefonos();
             setTitle("Editar Proveedor");
         } else {
             setTitle("Nuevo Proveedor");
         }
 
-        btnAgregarTelefono.setOnClickListener(v -> agregarCampoTelefono(null, null));
-
+        // Botón Guardar
         btnGuardar.setOnClickListener(v -> guardarProveedor());
-    }
 
-    private void agregarCampoTelefono(String numero, String tipo) {
-        TextView fila = (TextView) getLayoutInflater().inflate(R.layout.item_telefono_input, layoutTelefonos, false);
-
-        EditText etTel = fila.findViewById(R.id.etTelefono);
-        Spinner spTipo = fila.findViewById(R.id.spTipo);
-        ImageButton btnQuitar = fila.findViewById(R.id.btnQuitar);
-
-        // Spinner con MOVIL y FIJO
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, new String[]{"MOVIL", "FIJO"});
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spTipo.setAdapter(adapter);
-
-        if (numero != null) etTel.setText(numero);
-        if (tipo != null) spTipo.setSelection(tipo.equals("MOVIL") ? 0 : 1);
-
-        btnQuitar.setOnClickListener(v -> layoutTelefonos.removeView(fila));
-
-        layoutTelefonos.addView(fila);
-    }
-
-    private void actualizarListaTelefonos() {
-        layoutTelefonos.removeAllViews();
-        for (TelefonoProveedor tel : listaTelefonos) {
-            agregarCampoTelefono(tel.getTelefono(), tel.getTipo());
-        }
+        // Botón Volver al Menú
+        btnVolverMenu.setOnClickListener(v -> {
+            startActivity(new Intent(this, MenuActivity.class));
+            finish();
+        });
     }
 
     private void guardarProveedor() {
@@ -88,45 +60,32 @@ public class AgregarEditarActivity extends AppCompatActivity {
             return;
         }
 
-        // Recoger teléfonos
-        listaTelefonos.clear();
-        for (int i = 0; i < layoutTelefonos.getChildCount(); i++) {
-            TextView fila = (TextView) layoutTelefonos.getChildAt(i);
-            String tel = ((EditText) fila.findViewById(R.id.etTelefono)).getText().toString().trim();
-            String tipo = (String) ((Spinner) fila.findViewById(R.id.spTipo)).getSelectedItem();
-
-            if (!tel.isEmpty()) {
-                listaTelefonos.add(new TelefonoProveedor(tel, tipo));
-            }
-        }
-
         Proveedor p = new Proveedor(nombre, direccion);
-        p.setTelefonos(listaTelefonos);
+        p.setTelefonos(Collections.emptyList());
 
+        Call<Proveedor> call;
         if (proveedorEditar == null) {
-            // CREAR
-            ApiClient.getApi().crearProveedor(p).enqueue(callback);
+            call = ApiClient.getApi().crearProveedor(p);
         } else {
-            // EDITAR
             p.setId(proveedorEditar.getId());
-            ApiClient.getApi().actualizarProveedor(p.getId(), p).enqueue(callback);
+            call = ApiClient.getApi().actualizarProveedor(p.getId(), p);
         }
-    }
 
-    private final Callback<Proveedor> callback = new Callback<Proveedor>() {
-        @Override
-        public void onResponse(Call<Proveedor> call, Response<Proveedor> response) {
-            if (response.isSuccessful()) {
-                Toast.makeText(AgregarEditarActivity.this, "¡Guardado correctamente!", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(AgregarEditarActivity.this, "Error del servidor", Toast.LENGTH_LONG).show();
+        call.enqueue(new Callback<Proveedor>() {
+            @Override
+            public void onResponse(Call<Proveedor> call, Response<Proveedor> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(AgregarEditarActivity.this, "¡Guardado correctamente!", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(AgregarEditarActivity.this, "Error al guardar en el servidor", Toast.LENGTH_LONG).show();
+                }
             }
-        }
 
-        @Override
-        public void onFailure(Call<Proveedor> call, Throwable t) {
-            Toast.makeText(AgregarEditarActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    };
+            @Override
+            public void onFailure(Call<Proveedor> call, Throwable t) {
+                Toast.makeText(AgregarEditarActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

@@ -11,8 +11,6 @@
     <!-- Esto son los margenes -->
     <include layout="@layout/margenes" />
 
-    <!-- Esto es para nuestro fondo -->
-
 
     <!-- El resto de elemnetos -->
     <ImageView

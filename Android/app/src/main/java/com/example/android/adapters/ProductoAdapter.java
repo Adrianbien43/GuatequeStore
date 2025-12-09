@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHolder> {
 
-    //Esta parte es detectar los clics y enviar en viar un objeto producto.
+    //Esta parte es detectar los clics y enviar enviar un objeto producto.
     public interface OnItemClickListener {
         void onItemClick(Producto producto);
     }

@@ -1,57 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:background="#FAF7FF"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="28dp">
 
-        <EditText
-            android:id="@+id/etNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nombre del proveedor"
-            android:inputType="textCapWords" />
-
-        <EditText
-            android:id="@+id/etDireccion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Dirección (opcional)"
-            android:inputType="textCapSentences" />
-
+        <!-- Título grande -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Teléfonos"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/layoutTelefonos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:text="Proveedor"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="#6D28D9"
+            android:gravity="center"
+            android:layout_marginBottom="48dp"
+            android:fontFamily="sans-serif-medium" />
 
-        <Button
-            android:id="@+id/btnAgregarTelefono"
+        <!-- Nombre -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="+ Agregar teléfono" />
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FFFFFF">
 
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:hint="Nombre del proveedor"
+                android:textSize="18sp"
+                android:padding="20dp"
+                android:background="@null"
+                android:inputType="textCapWords"
+                android:textColor="#000000"
+                android:textColorHint="#999999" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Dirección (opcional) -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <EditText
+                android:id="@+id/etDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:hint="Dirección (opcional)"
+                android:textSize="18sp"
+                android:padding="20dp"
+                android:background="@null"
+                android:inputType="textCapSentences"
+                android:textColor="#000000"
+                android:textColorHint="#999999" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Botón GUARDAR -->
         <Button
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_height="72dp"
             android:text="GUARDAR PROVEEDOR"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#7C3AED"
+            android:elevation="12dp"
+            app:cornerRadius="36dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Botón para el menu -->
+        <Button
+            android:id="@+id/btnVolverMenu"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="Volver al Menú"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#7C3AED"
+            android:backgroundTint="#EDE9FE"
+            app:cornerRadius="32dp"
+            android:elevation="6dp"
+            android:fontFamily="sans-serif-medium" />
 
     </LinearLayout>
 </ScrollView>
