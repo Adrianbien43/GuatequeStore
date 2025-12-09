@@ -2,7 +2,17 @@
     <!-- Informacion de la app -->
     <string name="app_name">Guateque-Store</string>
     <string name="author_nombre">Adri-Gorka-Manu</string>
+    <string name="desarrollo">Los Guateques-Store</string>
     <string name="version_app">1.0.0</string>
+
+    <!-- LOGIN -->
+    <string name="titulo_login">Ingrese Sesion</string>
+    <string name="lbl_usuario">Usuario</string>
+    <string name="txt_usuario">Ingrese Usuario</string>
+    <string name="lbl_password">Contraseña</string>
+    <string name="txt_password">Ingrese Contraseña</string>
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="lbl_crear_cuenta">¿Tienes cuenta?, Registrate</string>
 
     <!-- Texto para botones -->
     <string name="btn_eventos">Novedades</string>
@@ -20,4 +30,5 @@
     <string name="descripcion_ejemplo">Camisa de algodón, ajuste regular, lavable a máquina. Disponible en tallas S–XXL.</string>
     <string name="btn_agregar">Añadir</string>
     <string name="btn_comprar">Comprar</string>
+
 </resources>
