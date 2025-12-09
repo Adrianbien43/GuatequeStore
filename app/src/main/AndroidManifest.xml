@@ -13,7 +13,25 @@
         android:theme="@style/Theme.ANDROID"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ProveedorActivity"
+            android:name=".activities.ProductoDetalleActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".ropamujer.RopaMujerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ropahombre.RopaHombreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".registrate.RegistrateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".novedades.EventoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProveedorActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AgregarEditarActivity"

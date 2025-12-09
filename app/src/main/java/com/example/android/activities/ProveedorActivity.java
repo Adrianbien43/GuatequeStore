@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.activities.AgregarEditarActivity;
+import com.example.android.R;
 import com.example.android.adapters.ProveedorAdapter;
 import com.example.android.api.ApiClient;
 import com.example.android.model.Proveedor;
