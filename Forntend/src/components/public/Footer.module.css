@@ -1,0 +1,76 @@
+.footer {
+  width: 100%;
+  max-height: 200px;
+  background: #111;
+  color: white;
+  padding: 2rem 0;
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(auto, 1fr)); 
+}
+
+.contenedor3 {
+  position: relative;
+  width: 19vw;      
+  max-width: 220px;
+  min-width: 120px;
+  height: 120px;    
+  overflow: hidden; 
+  border-radius: 12px;
+}
+
+.extra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 19vw;      
+  max-width: 220px;
+  min-width: 120px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.096);
+  border-radius: 12px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.icono {
+  width: 80px;
+  height: 80px;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+
+.extra:hover {
+  box-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff, 0 0 15px #00f0ff;
+  transform: scale(0.99);
+}
+
+.extra:hover .icono {
+  filter: drop-shadow(0 0 2px #00f0ff)
+          drop-shadow(0 0 5px #00f0ff)
+          drop-shadow(0 0 10px #00f0ff);
+  transform: scale(1);
+}
+
+
+
+
+@media (max-width: 700px) {
+  .contenedor {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .contenedor {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,195 @@
+/* ==============================================
+   FONTS.MODEL.CSS OPTIMIZADO - TIENDA DE ROPA
+   ============================================== */
+
+/* ==============================================
+   FUENTES LOCALES
+   ============================================== */
+
+/* --------------------
+   Bodoni Moda SC - Títulos y subtítulos
+   -------------------- */
+@font-face {
+  font-family: 'BodoniModaSC';
+  src: url('../assets/fonts/BodoniModaSC_28pt-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BodoniModaSC';
+  src: url('../assets/fonts/BodoniModaSC_28pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BodoniModaSC';
+  src: url('../assets/fonts/BodoniModaSC_18pt-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* --------------------
+   Montserrat - Cuerpo / párrafos
+   -------------------- */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* --------------------
+   Roboto - Notas / botones pequeños
+   -------------------- */
+@font-face {
+  font-family: 'Roboto';
+  src: url('../assets/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ==============================================
+   VARIABLES CSS
+   ============================================== */
+:root {
+  /* Fuentes por tipo de texto */
+  --font-heading: 'BodoniModaSC', serif;
+  /* Títulos principales y nombres de productos */
+  --font-subtitle: 'BodoniModaSC', serif;
+  /* Subtítulos y secciones */
+  --font-body: 'Montserrat', sans-serif;
+  /* Párrafos y texto normal */
+  --font-small: 'Roboto', sans-serif;
+  /* Notas, botones secundarios */
+
+  /* Tamaños sugeridos */
+  --font-size-small: 0.875rem;
+  /* 14px */
+  --font-size-base: 1rem;
+  /* 16px */
+  --font-size-medium: 1.125rem;
+  /* 18px */
+  --font-size-large: 1.5rem;
+  /* 24px */
+  --font-size-xlarge: 2rem;
+  /* 32px */
+
+  /* Pesos genéricos asignados automáticamente */
+  --font-weight-heading: 900;
+  /* Títulos grandes */
+  --font-weight-subtitle: 600;
+  /* Subtítulos */
+  --font-weight-body: 400;
+  /* Párrafos normales */
+  --font-weight-small: 400;
+  /* Notas y botones pequeños */
+
+  /* Line-height */
+  --line-height-base: 1.5;
+  --line-height-heading: 1.2;
+}
+
+/* ==============================================
+   CLASES PREDEFINIDAS PARA EL EQUIPO
+   ============================================== */
+
+/* Body y texto normal */
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+/* Títulos grandes */
+.h1,
+h1 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: var(--font-size-xlarge);
+  line-height: var(--line-height-heading);
+  margin: 0 0 1rem;
+  color: #111;
+}
+
+/* Subtítulos */
+.subtitle,
+h2,
+h3 {
+  font-family: var(--font-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  font-size: var(--font-size-medium);
+  line-height: var(--line-height-heading);
+  color: #555;
+}
+
+/* Párrafos normales */
+p {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-body);
+  font-size: var(--font-size-base);
+  margin: 0 0 1rem;
+}
+
+/* Botones principales */
+.button-primary {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-body);
+  font-size: var(--font-size-base);
+  padding: 0.75rem 1.5rem;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-primary:hover {
+  background-color: #333;
+}
+
+/* Botones secundarios */
+.button-secondary {
+  font-family: var(--font-small);
+  font-weight: var(--font-weight-small);
+  font-size: var(--font-size-small);
+  padding: 0.5rem 1rem;
+  background-color: #eee;
+  color: #111;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-secondary:hover {
+  background-color: #ddd;
+}
+
+/* Nombres de productos */
+.product-title {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-heading);
+  font-size: var(--font-size-large);
+  margin: 0 0 0.5rem;
+  color: #111;
+}
+
+/* Texto pequeño / notas */
+.small-text {
+  font-family: var(--font-small);
+  font-weight: var(--font-weight-small);
+  font-size: var(--font-size-small);
+  color: #777;
+}
