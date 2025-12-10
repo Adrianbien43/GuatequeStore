@@ -1,10 +1,9 @@
 # 🖥️ Frontend - GuatequeStore
 
-## 📋 Descripción del Proyecto
+**Tienda online de moda sostenible desarrollada con React + Vite**  
+Este frontend permite a usuarios explorar productos, gestionar carrito de compras y realizar pedidos. Administradores pueden gestionar productos, proveedores, almacenes y pedidos desde un panel de control completo. Desarrollado como parte de un ecosistema que incluye backend Spring Boot y app móvil Android.
 
-Este módulo contiene el frontend de **GuatequeStore**, desarrollado con **React** y **Vite**. La aplicación web permite a los usuarios explorar productos de moda, gestionar carritos de compra y completar pedidos en una interfaz moderna y responsiva.
-
-**Estado actual:** Estamos implementando mejoras continuas. Actualmente tenemos un sistema de scroll horizontal para navegar productos, pero estamos evaluando reconstruir esta funcionalidad para mejorar la experiencia de usuario.
+📋 **Estado actual:** Estamos implementando mejoras continuas. Actualmente tenemos un sistema de scroll horizontal para navegar productos, pero estamos evaluando reconstruir esta funcionalidad para mejorar la experiencia de usuario.
 
 ## 🎨 Diseño y Experiencia
 
@@ -12,19 +11,22 @@ Este módulo contiene el frontend de **GuatequeStore**, desarrollado con **React
 Hemos creado una interfaz limpia, moderna y totalmente responsiva que refleja los valores de sostenibilidad de GuatequeStore. El diseño sigue fielmente nuestro sistema de diseño en Figma y ofrece una navegación intuitiva.
 
 ### 🔄 Áreas de Mejora
-Reconocemos que el **scroll horizontal** implementado para la navegación de productos no ofrece la mejor experiencia de usuario que imaginamos. El equipo está considerando reconstruir esta funcionalidad completamente para implementar una solución más robusta y amigable.
+Reconocemos que el scroll horizontal implementado para la navegación de productos no ofrece la mejor experiencia de usuario que imaginamos. El equipo está considerando reconstruir esta funcionalidad completamente para implementar una solución más robusta y amigable.
 
-## 🖼️ Vista Previa
-![Captura de pantalla del Frontend](public/screenshot.png)
+## 🖼️ Demo / Capturas
 
-## Figma
-Este es el enlace del figma.
-
+**Enlace al diseño en Figma:**  
 https://www.figma.com/design/vbEG6WmzHaxsk2JROq9KnC/KORA-DESIGN?node-id=1-2381&t=c40bGH3AkG5NkY87-1
+
+![Pantalla de Inicio](src/assets/screenshots/home.png)  
+*Pantalla principal de Guateque Store*
+
+![Panel de Administración](src/assets/screenshots/admin-dashboard.png)  
+*Dashboard administrativo con gestión de productos*
 
 ## 📁 Estructura del Proyecto
 
-```text
+```
 GuatequeStore/
 ├── Android/                 # Aplicación móvil en Java
 │   ├── app/                 # Código fuente de Android
@@ -47,22 +49,84 @@ GuatequeStore/
 │   ├── pom.xml              # Dependencias y configuración Maven/Gradle
 │   └── application.properties # Configuración del servidor
 └── README.md                # Documentación general del proyecto
+```
 
+## 🛠️ Tecnologías Usadas
 
-## 🚀 Instalación y Ejecución
+- **React 18** – Biblioteca principal para interfaces de usuario
+- **Vite 5** – Herramienta de build y desarrollo de alta velocidad
+- **React Router DOM 6** – Enrutamiento y navegación
+- **Axios 1.6** – Cliente HTTP para comunicación con APIs
+- **npm 9+** – Gestor de paquetes
+- **ESLint 8** – Análisis estático de código
+- **CSS Modules** – Estilos con alcance local por componente
 
-### Prerrequisitos
-- Node.js 18 o superior
-- npm o yarn
+## 📋 Requisitos Previos
 
-### Pasos para ejecutar
+- **Node.js 18** o superior
+- **npm 9** o superior
+- **Backend de Guateque Store** ejecutándose localmente en puerto 8080
+- **MySQL** para la base de datos (gestión mediante backend)
+- **Git** para clonar el repositorio
 
-1. **Clonar el repositorio:**
+## 🚀 Instalación
+
+### 1. Clonar el Repositorio
+
 ```bash
+git clone https://github.com/Adrianbien43/GuatequeStore.git
+cd GuatequeStore/Frontend
+```
 
+### 2. Instalar Dependencias
 
-##Instalar dependencias:
+```bash
 npm install
+```
 
-##Ejecutar en desarrollo
+### 3. Configurar Variables de Entorno
+
+Crear archivo `.env` en la raíz del proyecto con las variables necesarias (ver sección siguiente).
+
+### 4. Ejecutar la Aplicación
+
+**Modo desarrollo:**
+```bash
 npm run dev
+```
+La aplicación estará disponible en `http://localhost:5173`
+
+**Build de producción:**
+```bash
+npm run build
+```
+
+**Previsualizar build de producción:**
+```bash
+npm run preview
+```
+
+## 🔧 Variables de Entorno
+
+Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```env
+VITE_API_URL=http://localhost:8080/api
+```
+
+**Descripción:**
+- `VITE_API_URL`: URL base del backend de Guateque Store. Debe apuntar a la API REST que proporciona los endpoints para productos, clientes, proveedores, etc.
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia **MIT**. Consulta el archivo LICENSE para más detalles.
+
+## 👥 Autor / Contacto
+
+**Proyecto desarrollado por:**
+- Gorka Jesús Quesada Vega – Desarrollo Frontend/Backend
+- Adrián Bienvenido Morales – Desarrollo Backend/Base de Datos  
+- Manuel Cruz Sánchez – Desarrollo Frontend/Diseño
+
+**Repositorio:** https://github.com/Adrianbien43/GuatequeStore.git  
+**Rama principal del backend:** `backend-Adrian`
