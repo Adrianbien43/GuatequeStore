@@ -119,7 +119,7 @@ VITE_API_URL=http://localhost:8080/api
 
 ## 📄 Licencia
 
-Este proyecto está bajo la licencia **MIT**. Consulta el archivo LICENSE para más detalles.
+Este proyecto está no esta bajo licencia.
 
 ## 👥 Autor / Contacto
 
