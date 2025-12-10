@@ -129,4 +129,3 @@ Este proyecto está bajo la licencia **MIT**. Consulta el archivo LICENSE para m
 - Manuel Cruz Sánchez – Desarrollo Frontend/Diseño
 
 **Repositorio:** https://github.com/Adrianbien43/GuatequeStore.git  
-**Rama principal del backend:** `backend-Adrian`
