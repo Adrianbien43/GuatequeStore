@@ -22,7 +22,7 @@ const FormCustomers = () => {
       const data = await customerService.getAll();
       setCustomers(data);
     } catch (e) {
-      setError("Error cargando clientes: " + e.message);
+      setError("Error cargando clientes " );
     } finally {
       setLoading(false);
     }
@@ -34,7 +34,7 @@ const FormCustomers = () => {
       await customerService.create(customer);
       await loadCustomers();
     } catch (e) {
-      setError("Error creando cliente: " + e.message);
+      setError("Error creando cliente " );
     } finally {
       setLoading(false);
     }
@@ -46,7 +46,7 @@ const FormCustomers = () => {
       await customerService.delete(id);
       await loadCustomers();
     } catch (e) {
-      setError("Error eliminando cliente: " + e.message);
+      setError("Error eliminando cliente " );
     } finally {
       setLoading(false);
     }
