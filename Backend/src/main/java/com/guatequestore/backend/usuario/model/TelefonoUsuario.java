@@ -1,4 +1,4 @@
-package com.guatequestore.backend.cliente.model;
+package com.guatequestore.backend.usuario.model;
 
 import jakarta.persistence.*;
 
@@ -16,7 +16,7 @@ public class TelefonoCliente {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    private Usuario cliente;
 
     public TelefonoCliente() {}
 
@@ -30,6 +30,6 @@ public class TelefonoCliente {
     public void setNumero(String numero) { this.numero = numero; }
     public TipoTelefono getTipo() { return tipo; }
     public void setTipo(TipoTelefono tipo) { this.tipo = tipo; }
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+    public Usuario getCliente() { return cliente; }
+    public void setCliente(Usuario cliente) { this.cliente = cliente; }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FormCustomers from '../../components/forms/formcustomers/FormCustomers';
+import FormUsuarios from '../../components/forms/formcustomers/FormUsuarios';
 import FormProducts from '../../components/forms/formproducts/FormProducts';
 import FormSuppliers from '../../components/forms/formsuppliers/FormSuppliers';
 import FormWarehouses from '../../components/forms/formwarehouses/FormWarehouses';
@@ -7,12 +7,12 @@ import FormOrders from '../../components/forms/formorders/FormOrders';
 import './Panel.css';
 
 const Panel = () => {
-  const [activeTab, setActiveTab] = useState('customers');
+  const [activeTab, setActiveTab] = useState('usuarios');
 
   const renderForm = () => {
     switch (activeTab) {
-      case 'customers':
-        return <FormCustomers />;
+      case 'usuarios':
+        return <FormUsuarios />;
       case 'products':
         return <FormProducts />;
       case 'suppliers':
@@ -22,7 +22,7 @@ const Panel = () => {
       case 'orders':
         return <FormOrders />;
       default:
-        return <FormCustomers />;
+        return <FormUsuarios />;
     }
   };
 
@@ -33,10 +33,10 @@ const Panel = () => {
         <h1>Panel de Administración</h1>
         <div className="panel-tabs">
           <button
-            onClick={() => setActiveTab('customers')}
-            className={activeTab === 'customers' ? 'tab-active' : 'tab-inactive'}
+            onClick={() => setActiveTab('usuarios')}
+            className={activeTab === 'usuarios' ? 'tab-active' : 'tab-inactive'}
           >
-            Clientes
+            Usuarios
           </button>
           <button
             onClick={() => setActiveTab('products')}

@@ -6,14 +6,14 @@ import {
   updatePedido, 
   deletePedido 
 } from '../services/orderService';
-import { customerService } from '../services/customerService';
+import { usuarioService } from '../services/customerService'; // Cambiado: customerService → usuarioService
 import { getAlmacenes } from '../services/warehouseService';
 
 export const useOrdersManagement = () => {
   // Estado para almacenar la lista de todos los pedidos
   const [orders, setOrders] = useState([]);
-  // Estado para almacenar la lista de todos los clientes disponibles
-  const [customers, setCustomers] = useState([]);
+  // Estado para almacenar la lista de todos los usuarios disponibles
+  const [usuarios, setUsuarios] = useState([]); // Cambiado: customers → usuarios
   // Estado para almacenar la lista de todos los almacenes
   const [warehouses, setWarehouses] = useState([]);
   // Estado para controlar si los datos están cargando
@@ -24,10 +24,10 @@ export const useOrdersManagement = () => {
   // Estados para el formulario de creación/edición de pedidos
   const [orderDate, setOrderDate] = useState(''); // Fecha del pedido
   const [orderStatus, setOrderStatus] = useState('PENDIENTE'); // Estado del pedido
-  const [customerId, setCustomerId] = useState(''); // ID del cliente seleccionado
+  const [usuarioId, setUsuarioId] = useState(''); // Cambiado: customerId → usuarioId
   const [warehouseId, setWarehouseId] = useState(''); // ID del almacén seleccionado
   const [editingId, setEditingId] = useState(null); // ID del pedido que se está editando
-  const [customerSearch, setCustomerSearch] = useState(''); // Texto para buscar clientes
+  const [usuarioSearch, setUsuarioSearch] = useState(''); // Cambiado: customerSearch → usuarioSearch
 
   // Función principal para cargar todos los datos necesarios
   const loadData = async () => {
@@ -37,15 +37,15 @@ export const useOrdersManagement = () => {
       setError('');
 
       // Realizamos todas las peticiones a la vez para mayor eficiencia
-      const [ordersResponse, customersResponse, warehousesResponse] = await Promise.all([
+      const [ordersResponse, usuariosResponse, warehousesResponse] = await Promise.all([
         getPedidos(), // Obtiene todos los pedidos
-        customerService.getAll(), // Obtiene todos los clientes
+        usuarioService.getAll(), // Cambiado: customerService.getAll() → usuarioService.getAll()
         getAlmacenes() // Obtiene todos los almacenes
       ]);
 
       // Guardamos los datos en el estado, manejando diferentes formatos de respuesta
       setOrders(ordersResponse.data || ordersResponse);
-      setCustomers(customersResponse || []);
+      setUsuarios(usuariosResponse || []); // Cambiado: setCustomers → setUsuarios
       setWarehouses(warehousesResponse.data || warehousesResponse);
     } catch (err) {
       // Si hay un error, lo mostramos en consola y al usuario
@@ -61,10 +61,10 @@ export const useOrdersManagement = () => {
   const resetForm = () => {
     setOrderDate('');
     setOrderStatus('PENDIENTE');
-    setCustomerId('');
+    setUsuarioId(''); // Cambiado: setCustomerId → setUsuarioId
     setWarehouseId('');
     setEditingId(null);
-    setCustomerSearch('');
+    setUsuarioSearch(''); // Cambiado: setCustomerSearch → setUsuarioSearch
   };
 
   // Función para preparar el formulario cuando se va a editar un pedido existente
@@ -74,8 +74,9 @@ export const useOrdersManagement = () => {
     // Establecemos el estado del pedido o uno por defecto
     setOrderStatus(order.estadoPedido || 'PENDIENTE');
     // Convertimos los IDs a string para que funcionen con los inputs
-    setCustomerId(order.cliente?.id?.toString() || '');
-    setWarehouseId(order.almacen?.id?.toString() || '');
+    // IMPORTANTE: usar idUsuario si existe, si no usar id
+    setUsuarioId(order.usuario?.idUsuario?.toString() || order.usuario?.id?.toString() || ''); // Cambiado
+    setWarehouseId(order.almacen?.idAlmacen?.toString() || order.almacen?.id?.toString() || '');
     // Guardamos el ID del pedido que estamos editando
     setEditingId(order.id);
     // Desplazamos la vista al formulario para mayor comodidad
@@ -84,10 +85,10 @@ export const useOrdersManagement = () => {
 
   // Función para guardar un pedido (tanto crear nuevo como actualizar existente)
   const saveOrder = async (orderData) => {
-    const { orderDate, orderStatus, customerId, warehouseId, editingId } = orderData;
+    const { orderDate, orderStatus, usuarioId, warehouseId, editingId } = orderData; // Cambiado: customerId → usuarioId
 
     // Verificamos que todos los campos obligatorios estén completos
-    if (!customerId || !warehouseId || !orderDate) {
+    if (!usuarioId || !warehouseId || !orderDate) { // Cambiado: customerId → usuarioId
       alert('Por favor, complete todos los campos obligatorios');
       return;
     }
@@ -96,7 +97,7 @@ export const useOrdersManagement = () => {
     const dataToSend = {
       fechaPedido: orderDate,
       estadoPedido: orderStatus,
-      cliente: { id: Number(customerId) },
+      usuario: { id: Number(usuarioId) }, // Cambiado: cliente → usuario
       almacen: { id: Number(warehouseId) }
     };
 
@@ -143,7 +144,7 @@ export const useOrdersManagement = () => {
   return {
     // Estados de datos
     orders,
-    customers,
+    usuarios, // Cambiado: customers → usuarios
     warehouses,
     loading,
     error,
@@ -151,18 +152,18 @@ export const useOrdersManagement = () => {
     // Estados del formulario
     orderDate,
     orderStatus,
-    customerId,
+    usuarioId, // Cambiado: customerId → usuarioId
     warehouseId,
     editingId,
-    customerSearch,
+    usuarioSearch, // Cambiado: customerSearch → usuarioSearch
     
     // Funciones para cambiar estados
     setOrderDate,
     setOrderStatus,
-    setCustomerId,
+    setUsuarioId, // Cambiado: setCustomerId → setUsuarioId
     setWarehouseId,
     setEditingId,
-    setCustomerSearch,
+    setUsuarioSearch, // Cambiado: setCustomerSearch → setUsuarioSearch
     
     // Funciones de acciones
     loadData,

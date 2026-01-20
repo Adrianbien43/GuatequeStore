@@ -13,7 +13,7 @@ import './FormOrders.css';
 // Componente para mostrar cuando los datos están cargando
 const LoadingState = () => (
   <div className="loading-state">
-    Cargando pedidos y clientes...
+    Cargando pedidos y usuarios...
   </div>
 );
 
@@ -29,21 +29,21 @@ const FormOrders = () => {
   // Usamos nuestro hook personalizado que contiene toda la lógica
   const {
     orders,
-    customers,
+    usuarios,           // Cambiado: customers → usuarios
     warehouses,
     loading,
     error,
     orderDate,
     orderStatus,
-    customerId,
+    usuarioId,          // Cambiado: customerId → usuarioId
     warehouseId,
     editingId,
-    customerSearch,
+    usuarioSearch,      // Cambiado: customerSearch → usuarioSearch
     setOrderDate,
     setOrderStatus,
-    setCustomerId,
+    setUsuarioId,       // Cambiado: setCustomerId → setUsuarioId
     setWarehouseId,
-    setCustomerSearch,
+    setUsuarioSearch,   // Cambiado: setCustomerSearch → setUsuarioSearch
     resetForm,
     prepareEdit,
     saveOrder,
@@ -58,16 +58,16 @@ const FormOrders = () => {
     saveOrder({
       orderDate,
       orderStatus,
-      customerId,
+      usuarioId,         // Cambiado: customerId → usuarioId
       warehouseId,
       editingId
     });
   };
 
-  // Filtramos los clientes según el texto de búsqueda
-  const filteredCustomers = customers.filter(customer =>
-    customer.nombre?.toLowerCase().includes(customerSearch.toLowerCase()) ||
-    customer.email?.toLowerCase().includes(customerSearch.toLowerCase())
+  // Filtramos los usuarios según el texto de búsqueda
+  const filteredUsuarios = usuarios.filter(usuario =>
+    usuario.nombre?.toLowerCase().includes(usuarioSearch.toLowerCase()) ||
+    usuario.email?.toLowerCase().includes(usuarioSearch.toLowerCase())
   );
 
   // Si está cargando, mostramos el componente de carga
@@ -125,28 +125,29 @@ const FormOrders = () => {
             </select>
           </div>
 
-          {/* Campo para buscar y seleccionar cliente */}
+          {/* Campo para buscar y seleccionar usuario */}
           <div className="form-field">
             <label className="form-label">
-              <strong>Cliente *</strong>
+              <strong>Usuario *</strong>  {/* Cambiado: Cliente → Usuario */}
             </label>
             <input
               type="text"
-              placeholder="Buscar cliente por nombre o email..."
-              value={customerSearch}
-              onChange={(e) => setCustomerSearch(e.target.value)}
+              placeholder="Buscar usuario por nombre o email..."
+              value={usuarioSearch}
+              onChange={(e) => setUsuarioSearch(e.target.value)}
               className="form-input"
             />
+            {/* Cambiado */}
             <select
-              value={customerId}
-              onChange={(e) => setCustomerId(e.target.value)}
+              value={usuarioId}
+              onChange={(e) => setUsuarioId(e.target.value)}
               required
               className="form-select"
             >
-              <option value="">Selecciona un cliente</option>
-              {filteredCustomers.map(customer => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.nombre} {customer.apellido && `- ${customer.apellido}`} ({customer.email})
+              <option value="">Selecciona un usuario</option>  {/* Cambiado */}
+              {filteredUsuarios.map(usuario => (
+                <option key={usuario.idUsuario || usuario.id} value={usuario.idUsuario || usuario.id}>
+                  {usuario.nombre} {usuario.rol ? `(${usuario.rol})` : ''} {/* Añadido rol */}
                 </option>
               ))}
             </select>
@@ -165,8 +166,8 @@ const FormOrders = () => {
             >
               <option value="">Selecciona almacén</option>
               {warehouses.map(warehouse => (
-                <option key={warehouse.id} value={warehouse.id}>
-                  {warehouse.nombre} - {warehouse.direccion || warehouse.ciudad}
+                <option key={warehouse.idAlmacen || warehouse.id} value={warehouse.idAlmacen || warehouse.id}>
+                  {warehouse.nombre} - {warehouse.direccion || ''}
                 </option>
               ))}
             </select>

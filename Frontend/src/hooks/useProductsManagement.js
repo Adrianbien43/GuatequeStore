@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import { getProductos, createProducto, updateProducto, deleteProducto } from '../services/productService';
 import { getProveedores } from '../services/supplierService';
 
-// Lista de categorías disponibles para los productos
-const CATEGORIAS = ['HOMBRE', 'MUJER'];
+// Lista de categorías disponibles para los productos (según el nuevo enum)
+const CATEGORIAS = ['PANTALON', 'CAMISETA', 'GORRA', 'SUDADERA'];
+
+// Lista de géneros disponibles para los productos
+const GENEROS = ['HOMBRE', 'MUJER'];
 
 export const useProductsManagement = () => {
   // Estado para almacenar la lista de todos los productos
@@ -18,13 +21,14 @@ export const useProductsManagement = () => {
 
   // Estado para el formulario de creación/edición de productos
   const [formData, setFormData] = useState({
-    nombre: '',           // Nombre del producto
-    categoria: 'HOMBRE',  // Categoría por defecto
-    talla: '',            // Talla del producto
-    precioUnitario: '',   // Precio unitario
-    marca: '',            // Marca del producto
-    fechaFabricacion: '', // Fecha de fabricación
-    proveedor: ''         // ID del proveedor seleccionado
+    nombre: '',               // Nombre del producto
+    categoria: 'CAMISETA',    // Categoría por defecto (ahora tipo de prenda)
+    genero: 'HOMBRE',         // Género por defecto (nuevo campo)
+    talla: '',                // Talla del producto
+    precioUnitario: '',       // Precio unitario
+    marca: '',                // Marca del producto
+    fechaFabricacion: '',     // Fecha de fabricación
+    proveedor: ''             // ID del proveedor seleccionado
   });
 
   // Estado para controlar si estamos editando un producto existente
@@ -68,7 +72,8 @@ export const useProductsManagement = () => {
   const resetForm = () => {
     setFormData({
       nombre: '',
-      categoria: 'HOMBRE',
+      categoria: 'CAMISETA',
+      genero: 'HOMBRE',
       talla: '',
       precioUnitario: '',
       marca: '',
@@ -82,7 +87,8 @@ export const useProductsManagement = () => {
   const prepareEdit = (product) => {
     setFormData({
       nombre: product.nombre || '',
-      categoria: product.categoria || 'HOMBRE',
+      categoria: product.categoria || 'CAMISETA', // Ahora es tipo de prenda
+      genero: product.genero || 'HOMBRE',         // Nuevo campo género
       talla: product.talla || '',
       precioUnitario: product.precioUnitario?.toString() || '',
       marca: product.marca || '',
@@ -96,15 +102,16 @@ export const useProductsManagement = () => {
   // Función para guardar un producto (tanto crear nuevo como actualizar existente)
   const saveProduct = async () => {
     // Verificamos que los campos obligatorios estén completos
-    if (!formData.nombre || !formData.precioUnitario) {
-      alert('Por favor, complete los campos obligatorios (Nombre y Precio)');
+    if (!formData.nombre || !formData.precioUnitario || !formData.categoria || !formData.genero) {
+      alert('Por favor, complete los campos obligatorios (Nombre, Categoría, Género y Precio)');
       return;
     }
 
     // Preparamos los datos en el formato que espera el servidor
     const payload = {
       nombre: formData.nombre,
-      categoria: formData.categoria,
+      categoria: formData.categoria,    // Ahora es tipo de prenda (PANTALON, CAMISETA, etc.)
+      genero: formData.genero,          // Nuevo campo: HOMBRE o MUJER
       talla: formData.talla || null,
       precioUnitario: parseFloat(formData.precioUnitario),
       marca: formData.marca || null,
@@ -146,6 +153,16 @@ export const useProductsManagement = () => {
     }
   };
 
+  // Función para filtrar productos por categoría
+  const filterByCategoria = (categoria) => {
+    return products.filter(product => product.categoria === categoria);
+  };
+
+  // Función para filtrar productos por género
+  const filterByGenero = (genero) => {
+    return products.filter(product => product.genero === genero);
+  };
+
   // Efecto que se ejecuta al montar el componente para cargar los datos iniciales
   useEffect(() => {
     loadData();
@@ -165,6 +182,7 @@ export const useProductsManagement = () => {
     
     // Constantes
     CATEGORIAS,
+    GENEROS,
     
     // Funciones
     updateFormField,
@@ -172,6 +190,8 @@ export const useProductsManagement = () => {
     prepareEdit,
     saveProduct,
     deleteProduct,
-    loadData
+    loadData,
+    filterByCategoria,
+    filterByGenero
   };
 };

@@ -1,4 +1,4 @@
-package com.guatequestore.backend.cliente.model; // Paquete cliente
+package com.guatequestore.backend.usuario.model; // Paquete cliente
 
 import com.guatequestore.backend.pedido.model.Pedido;
 import com.fasterxml.jackson.annotation.JsonIgnore;

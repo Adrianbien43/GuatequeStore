@@ -1,4 +1,4 @@
-/* FormCustomers.module.css - Versión sin fondos */
+/* FormUsuarios.module.css - Versión sin fondos */
 .container {
   height: 60%;
   margin: 0;
@@ -16,7 +16,7 @@
 
 .error {
   color: #8b0000;
-  background: transparent; /* Cambiado */
+  background: transparent;
   padding: clamp(0.75rem, 2vw, 1rem);
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -29,7 +29,7 @@
   margin-bottom: 0;
   padding: 0;
   border: none;
-  background: transparent; /* Asegurar transparente */
+  background: transparent;
   box-shadow: none;
 }
 
@@ -54,7 +54,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-  background: transparent; /* Cambiado de #fafafa a transparent */
+  background: transparent;
   transition: all 0.3s ease;
   color: #333;
   box-sizing: border-box;
@@ -63,7 +63,7 @@
 .input:focus {
   outline: none;
   border-color: #a0a0a0;
-  background: transparent; /* Cambiado de #fff a transparent */
+  background: transparent;
   box-shadow: 0 0 0 3px rgba(160, 160, 160, 0.1);
 }
 
@@ -106,8 +106,8 @@
   overflow-y: auto;
   border: 1px solid #f0f0f0;
   border-radius: 12px;
-  background: transparent; /* Cambiado de #fff a transparent */
-  box-shadow: none; /* Removido sombra */
+  background: transparent;
+  box-shadow: none;
   padding: 0.5rem;
   display: none;
 }
@@ -120,13 +120,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent; /* Cambiado de #fafafa a transparent */
+  background: transparent;
   transition: all 0.3s ease;
   gap: 1rem;
 }
 
 .listItem:hover {
-  background: rgba(240, 240, 240, 0.3); /* Con transparencia */
+  background: rgba(240, 240, 240, 0.3);
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

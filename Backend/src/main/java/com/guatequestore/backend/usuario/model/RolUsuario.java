@@ -1,4 +1,4 @@
-package com.guatequestore.backend.cliente.model;
+package com.guatequestore.backend.usuario.model;
 
 public enum Rol {
     USER("usuario"),

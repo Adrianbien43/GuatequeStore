@@ -1,7 +1,7 @@
-package com.guatequestore.backend.cliente.service;
+package com.guatequestore.backend.usuario.service;
 
-import com.guatequestore.backend.cliente.model.Cliente;
-import com.guatequestore.backend.cliente.repository.ClienteRepository;
+import com.guatequestore.backend.usuario.model.Usuario;
+import com.guatequestore.backend.usuario.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -14,19 +14,19 @@ public class ClienteService {
         this.repository = repository;
     }
 
-    public List<Cliente> getAllClientes() {
+    public List<Usuario> getAllClientes() {
         return repository.findAll();
     }
 
-    public Cliente getClienteById(Long id) {
+    public Usuario getClienteById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public Cliente createCliente(Cliente cliente) {
+    public Usuario createCliente(Usuario cliente) {
         return repository.save(cliente);
     }
 
-    public Cliente updateCliente(Long id, Cliente cliente) {
+    public Usuario updateCliente(Long id, Usuario cliente) {
         return repository.findById(id).map(c -> {
             c.setNombre(cliente.getNombre());
             c.setEmail(cliente.getEmail());

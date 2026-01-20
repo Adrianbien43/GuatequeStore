@@ -1,6 +1,6 @@
-package com.guatequestore.backend.cliente.repository;
+package com.guatequestore.backend.usuario.repository;
 
-import com.guatequestore.backend.cliente.model.Cliente;
+import com.guatequestore.backend.usuario.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,10 +18,10 @@ import java.util.Optional;
  *
  * @author Guateque Store
  * @since 1.0
- * @see Cliente
+ * @see Usuario
  */
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+public interface ClienteRepository extends JpaRepository<Usuario, Long> {
 
     /**
      * Busca un cliente por su email.
@@ -42,5 +42,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
      *     System.out.println("Cliente encontrado: " + cliente.get().getNombre());
      * }
      */
-    Optional<Cliente> findByEmail(String email);
+    Optional<Usuario> findByEmail(String email);
 }
