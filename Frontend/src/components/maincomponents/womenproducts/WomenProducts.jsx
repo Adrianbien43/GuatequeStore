@@ -1,4 +1,3 @@
-// src/components/maincomponents/womenproducts/WomenProducts.jsx
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getProductos } from '../../../services/productService';
@@ -17,8 +16,9 @@ const WomenProducts = () => {
         const response = await getProductos();
         const allProducts = response.data || [];
 
+        // Cambiado: Ahora filtramos por el campo 'genero'
         const womenProducts = allProducts.filter(p =>
-          p.categoria && /mujer|women|woman|femenino|femme/i.test(p.categoria)
+          p.genero === 'MUJER' || p.genero === 'mujer'
         );
 
         setProducts(womenProducts);

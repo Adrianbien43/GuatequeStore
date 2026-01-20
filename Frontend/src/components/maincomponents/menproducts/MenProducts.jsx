@@ -13,8 +13,9 @@ const MenProducts = () => {
     const loadProducts = async () => {
       try {
         const response = await getProductos();
+        // Cambiado: Ahora filtramos por el campo 'genero'
         const menProducts = (response.data || []).filter(p =>
-          p.categoria && /hombre|men|masculino|masc|male/i.test(p.categoria)
+          p.genero === 'HOMBRE' || p.genero === 'hombre'
         );
         setProducts(menProducts);
       } catch (err) {
