@@ -1,4 +1,4 @@
-package com.guatequestore.backend.producto.model; // Paquete producto
+package com.guatequestore.backend.producto.model;
 
 import com.guatequestore.backend.proveedor.model.Proveedor;
 import com.guatequestore.backend.inventario.model.Inventario;
@@ -13,129 +13,209 @@ import java.util.HashSet;
  * Modelo para los productos en la tienda
  * Representa la entidad Producto.
  * @author Gorka Jesus
- * @version 1.0.1
+ * @version 1.0.2
  */
 
+@Entity
+@Table(name = "producto")
+public class Producto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_Producto")
+    private Long id;
 
-@Entity // Entidad JPA
-@Table(name = "producto") // Tabla 'producto'
-public class Producto { // Clase Producto
+    @Column(name = "Fecha_Fabricacion")
+    private LocalDate fechaFabricacion;
 
-    @Id // clave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment
-    @Column(name = "ID_Producto") // columna ID_Producto
-    private Long id; // id producto
+    @Column(name = "Nombre", nullable = false, length = 255)
+    private String nombre;
 
-    @Column(name = "Fecha_Fabricacion") // columna fecha de fabricación
-    private LocalDate fechaFabricacion; // fecha fabricación
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Categoria", nullable = false, length = 50)
+    private Categoria categoria;
 
-    @Column(name = "Nombre", nullable = false) // nombre obligatorio
-    private String nombre; // nombre producto
+    @Column(name = "Talla", length = 10)
+    private String talla;
 
-    @Enumerated(EnumType.STRING) // guarda enum como texto
-    @Column(name = "Categoria", nullable = false) // categoria obligatoria
-    private Categoria categoria; // categoría del producto
+    @Column(name = "Precio_Unitario", precision = 19, scale = 2, nullable = false)
+    private BigDecimal precioUnitario;
 
-    @Column(name = "Talla") // columna talla
-    private String talla; // talla
+    @Column(name = "Marca", length = 100)
+    private String marca;
 
-    @Column(name = "Precio_Unitario", precision = 19, scale = 2, nullable = false) // precio con precisión
-    private BigDecimal precioUnitario; // precio unitario
+    @Lob
+    @Column(name = "Imagen")
+    @JsonIgnore
+    private byte[] imagen;
 
-    @Column(name = "Marca") // columna marca
-    private String marca; // marca
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Genero", length = 10)
+    private Genero genero;
 
-    //Relacion con Proveedor
-    @ManyToOne // Many producto -> One proveedor
-    @JoinColumn(name = "ID_Proveedor") // FK ID_Proveedor
-    private Proveedor proveedor; // proveedor
+    @ManyToOne
+    @JoinColumn(name = "ID_Proveedor")
+    private Proveedor proveedor;
 
-    //Relacion con Inventario
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true) // 1 producto - N inventarios
-    @JsonIgnore // evita serializar inventarios en JSON
-    private Set<Inventario> inventarios = new HashSet<>(); // conjunto inventarios
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Inventario> inventarios = new HashSet<>();
 
-    // Enums
-    public enum Categoria { // categorías disponibles
-        HOMBRE, MUJER
-    }
-
-    // Constructores
-    public Producto() {} // constructor vacío
+    // Constructores - Actualizados para incluir Genero
+    public Producto() {}
 
     public Producto(String nombre, Categoria categoria, BigDecimal precioUnitario) {
-        this.nombre = nombre; // asigna nombre
-        this.categoria = categoria; // asigna categoria
-        this.precioUnitario = precioUnitario; // asigna precio
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.precioUnitario = precioUnitario;
     }
 
     public Producto(String nombre, Categoria categoria, BigDecimal precioUnitario, String marca) {
-        this.nombre = nombre; // asigna nombre
-        this.categoria = categoria; // asigna categoria
-        this.precioUnitario = precioUnitario; // asigna precio
-        this.marca = marca; // asigna marca
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.precioUnitario = precioUnitario;
+        this.marca = marca;
     }
 
-    // Getters y Setters
-    public Long getId() { return id; } // get id
-    public void setId(Long id) { this.id = id; } // set id
+    // Nuevos constructores con Genero
+    public Producto(String nombre, Categoria categoria, BigDecimal precioUnitario, Genero genero) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.precioUnitario = precioUnitario;
+        this.genero = genero;
+    }
 
-    public LocalDate getFechaFabricacion() { return fechaFabricacion; } // get fechaFabricacion
-    public void setFechaFabricacion(LocalDate fechaFabricacion) { this.fechaFabricacion = fechaFabricacion; } // set fechaFabricacion
+    public Producto(String nombre, Categoria categoria, BigDecimal precioUnitario,
+                    String marca, Genero genero) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.precioUnitario = precioUnitario;
+        this.marca = marca;
+        this.genero = genero;
+    }
 
-    public String getNombre() { return nombre; } // get nombre
-    public void setNombre(String nombre) { this.nombre = nombre; } // set nombre
+    // Getters y Setters - Agregados para imagen y genero
+    public Long getId() {
+        return id;
+    }
 
-    public Categoria getCategoria() { return categoria; } // get categoria
-    public void setCategoria(Categoria categoria) { this.categoria = categoria; } // set categoria
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getTalla() { return talla; } // get talla
-    public void setTalla(String talla) { this.talla = talla; } // set talla
+    public LocalDate getFechaFabricacion() {
+        return fechaFabricacion;
+    }
 
-    public BigDecimal getPrecioUnitario() { return precioUnitario; } // get precioUnitario
-    public void setPrecioUnitario(BigDecimal precioUnitario) { this.precioUnitario = precioUnitario; } // set precioUnitario
+    public void setFechaFabricacion(LocalDate fechaFabricacion) {
+        this.fechaFabricacion = fechaFabricacion;
+    }
 
-    public String getMarca() { return marca; } // get marca
-    public void setMarca(String marca) { this.marca = marca; } // set marca
+    public String getNombre() {
+        return nombre;
+    }
 
-    public Proveedor getProveedor() { return proveedor; } // get proveedor
-    public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; } // set proveedor
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public Set<Inventario> getInventarios() { return inventarios; } // get inventarios
-    public void setInventarios(Set<Inventario> inventarios) { this.inventarios = inventarios; } // set inventarios
+    public Categoria getCategoria() {
+        return categoria;
+    }
 
-    // Métodos utilitarios para Inventario
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getTalla() {
+        return talla;
+    }
+
+    public void setTalla(String talla) {
+        this.talla = talla;
+    }
+
+    public BigDecimal getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(BigDecimal precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public Set<Inventario> getInventarios() {
+        return inventarios;
+    }
+
+    public void setInventarios(Set<Inventario> inventarios) {
+        this.inventarios = inventarios;
+    }
+
+    // Métodos utilitarios para Inventario (sin cambios)
     public void addInventario(Inventario inventario) {
-        inventarios.add(inventario); // añade inventario
-        inventario.setProducto(this); // setea relación inversa
+        inventarios.add(inventario);
+        inventario.setProducto(this);
     }
 
     public void removeInventario(Inventario inventario) {
-        inventarios.remove(inventario); // elimina inventario
-        inventario.setProducto(null); // limpia relación inversa
+        inventarios.remove(inventario);
+        inventario.setProducto(null);
     }
 
-    // Metodo de calculo
-    @Transient // no persistente
+    // Método de cálculo (sin cambios)
+    @Transient
     public Integer getStockTotal() {
         if (inventarios == null || inventarios.isEmpty()) {
-            return 0; // sin inventarios
+            return 0;
         }
         return inventarios.stream()
-                .mapToInt(Inventario::getCantidad) // suma cantidades
+                .mapToInt(Inventario::getCantidad)
                 .sum();
     }
 
-    // Método toString() seguro
+    // Método toString() actualizado con genero
     @Override
     public String toString() {
         return "Producto{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", categoria=" + categoria +
+                ", genero=" + genero +
                 ", precioUnitario=" + precioUnitario +
                 ", marca='" + marca + '\'' +
+                ", talla='" + talla + '\'' +
                 ", cantidadInventarios=" + (inventarios != null ? inventarios.size() : 0) +
                 '}';
     }

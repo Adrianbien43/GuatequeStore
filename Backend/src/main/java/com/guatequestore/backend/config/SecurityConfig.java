@@ -39,7 +39,7 @@ public class SecurityConfig {
                 // Configurar autorización
                 .authorizeHttpRequests(authz -> authz
                         // Rutas públicas
-                        .requestMatchers("/api/clientes", "/api/auth/login", "/api/auth/validate",                         "/api/almacenes",
+                        .requestMatchers("/api/usuarios", "/api/usuarios/**", "/api/auth/login", "/api/auth/validate",                         "/api/almacenes",
                                 "/api/almacenes/**",
                                 "/api/productos",
                                 "/api/productos/**",

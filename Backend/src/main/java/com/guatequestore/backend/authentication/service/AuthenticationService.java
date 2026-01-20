@@ -1,7 +1,7 @@
 package com.guatequestore.backend.authentication.service;
 
-import com.guatequestore.backend.cliente.model.Cliente;
-import com.guatequestore.backend.cliente.repository.ClienteRepository;
+import com.guatequestore.backend.usuario.model.Usuario;
+import com.guatequestore.backend.usuario.repository.UsuarioRepository;
 import com.guatequestore.backend.exception.BusinessException;
 import com.guatequestore.backend.security.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio de autenticación para login de clientes.
+ * Servicio de autenticación para login de usuarios.
  *
  * Responsabilidades:
  * - Validar credenciales (email y contraseña)
@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
  * - Extraer información de tokens
  *
  * Flujo de autenticación:
- * 1. Cliente envía email y contraseña
+ * 1. Usuario envía email y contraseña
  * 2. Se validan credenciales
  * 3. Si son válidas, se genera JWT
- * 4. Cliente recibe token
+ * 4. Usuario recibe token
  * 5. En futuras requests, envía token en header Authorization
  * 6. Se valida token antes de procesar request
  *
@@ -33,34 +33,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AuthenticationService {
 
-    private final ClienteRepository clienteRepository;
+    private final UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     public AuthenticationService(
-            ClienteRepository clienteRepository,
+            UsuarioRepository usuarioRepository,
             BCryptPasswordEncoder passwordEncoder,
             JwtUtil jwtUtil) {
-        this.clienteRepository = clienteRepository;
+        this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
     }
 
     /**
-     * Autentica un cliente y retorna un token JWT.
+     * Autentica un usuario y retorna un token JWT.
      *
      * Proceso:
      * 1. Valida que email y contraseña no sean vacíos
-     * 2. Busca cliente por email
+     * 2. Busca usuario por email
      * 3. Verifica contraseña
      * 4. Si es válida, genera JWT
      * 5. Retorna token
      *
-     * @param email email del cliente
+     * @param email email del usuario
      * @param password contraseña en texto plano
      * @return token JWT generado
      * @throws BusinessException si email o password son inválidos
-     * @throws BusinessException si el cliente no existe
+     * @throws BusinessException si el usuario no existe
      * @throws BusinessException si la contraseña es incorrecta
      *
      * @see #validarCredenciales(String, String)
@@ -68,16 +68,16 @@ public class AuthenticationService {
     public String authenticate(String email, String password) {
         validarCredenciales(email, password);
 
-        Cliente cliente = clienteRepository.findByEmail(email)
+        Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException("Email o contraseña incorrectos"));
 
-        // Verificar contraseña
-        if (!passwordEncoder.matches(password, cliente.getPassword())) {
+        // Verificar contraseña - CAMBIADO AQUÍ
+        if (!passwordEncoder.matches(password, usuario.getContraseña())) {
             throw new BusinessException("Email o contraseña incorrectos");
         }
 
-        // Verificar que cliente esté activo
-        if (!cliente.estaActivo()) {
+        // Verificar que usuario esté activo
+        if (!usuario.estaActivo()) {
             throw new BusinessException("La cuenta está desactivada");
         }
 
@@ -124,17 +124,17 @@ public class AuthenticationService {
     }
 
     /**
-     * Obtiene el cliente autenticado desde el token.
+     * Obtiene el usuario autenticado desde el token.
      *
      * @param token token JWT
-     * @return Cliente encontrado
-     * @throws BusinessException si el token es inválido o cliente no existe
+     * @return Usuario encontrado
+     * @throws BusinessException si el token es inválido o usuario no existe
      */
     @Transactional(readOnly = true)
-    public Cliente getClienteFromToken(String token) {
+    public Usuario getUsuarioFromToken(String token) {
         String email = getEmailFromToken(token);
-        return clienteRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException("Cliente no encontrado"));
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException("Usuario no encontrado"));
     }
 
     /**
@@ -152,5 +152,29 @@ public class AuthenticationService {
         if (password == null || password.isBlank()) {
             throw new BusinessException("La contraseña es requerida");
         }
+    }
+
+    /**
+     * Registra un nuevo usuario.
+     *
+     * @param usuario usuario a registrar
+     * @return usuario registrado
+     * @throws BusinessException si el email ya está registrado
+     */
+    public Usuario register(Usuario usuario) {
+        // Verificar si el email ya existe
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new BusinessException("El email ya está registrado");
+        }
+
+        // Encriptar contraseña - CAMBIADO AQUÍ
+        usuario.setContraseña(passwordEncoder.encode(usuario.getContraseña()));
+
+        // Asignar rol por defecto si no tiene
+        if (usuario.getRol() == null) {
+            usuario.setRol(com.guatequestore.backend.usuario.model.RolUsuario.CLIENTE);
+        }
+
+        return usuarioRepository.save(usuario);
     }
 }

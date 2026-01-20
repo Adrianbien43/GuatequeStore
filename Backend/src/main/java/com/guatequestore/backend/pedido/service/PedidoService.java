@@ -39,7 +39,7 @@ public class PedidoService {
             // Actualiza solo los campos permitidos
             pedidoExistente.setFechaPedido(pedidoActualizado.getFechaPedido());
             pedidoExistente.setEstadoPedido(pedidoActualizado.getEstadoPedido());
-            pedidoExistente.setCliente(pedidoActualizado.getCliente());
+            pedidoExistente.setUsuario(pedidoActualizado.getUsuario());
             pedidoExistente.setAlmacen(pedidoActualizado.getAlmacen());
 
             // Guarda los cambios

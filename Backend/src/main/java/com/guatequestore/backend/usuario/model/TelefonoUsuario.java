@@ -3,33 +3,62 @@ package com.guatequestore.backend.usuario.model;
 import jakarta.persistence.*;
 
 @Entity
-public class TelefonoCliente {
+@Table(name = "telefono_usuario") // Alineado con CREATE TABLE
+public class TelefonoUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "ID_TelefonoUsuario") // Alineado con CREATE TABLE
+    private Long idTelefonoUsuario;
 
+    @Column(name = "telefono", nullable = false) // Alineado con CREATE TABLE
     private String numero;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo", nullable = false) // Alineado con CREATE TABLE
     private TipoTelefono tipo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    private Usuario cliente;
+    @JoinColumn(name = "ID_Usuario") // Alineado con CREATE TABLE
+    private Usuario usuario;
 
-    public TelefonoCliente() {}
+    public TelefonoUsuario() {}
 
-    public TelefonoCliente(String numero, TipoTelefono tipo) {
+    public TelefonoUsuario(String numero, TipoTelefono tipo) {
         this.numero = numero;
         this.tipo = tipo;
     }
 
-    public Long getId() { return id; }
-    public String getNumero() { return numero; }
-    public void setNumero(String numero) { this.numero = numero; }
-    public TipoTelefono getTipo() { return tipo; }
-    public void setTipo(TipoTelefono tipo) { this.tipo = tipo; }
-    public Usuario getCliente() { return cliente; }
-    public void setCliente(Usuario cliente) { this.cliente = cliente; }
+    // Getters y Setters
+    public Long getIdTelefonoUsuario() {
+        return idTelefonoUsuario;
+    }
+
+    public void setIdTelefonoUsuario(Long idTelefonoUsuario) {
+        this.idTelefonoUsuario = idTelefonoUsuario;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public TipoTelefono getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoTelefono tipo) {
+        this.tipo = tipo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

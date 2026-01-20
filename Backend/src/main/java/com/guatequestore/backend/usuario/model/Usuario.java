@@ -1,4 +1,4 @@
-package com.guatequestore.backend.usuario.model; // Paquete cliente
+package com.guatequestore.backend.usuario.model;
 
 import com.guatequestore.backend.pedido.model.Pedido;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,184 +11,238 @@ import java.util.HashSet;
 import java.time.LocalDateTime;
 
 /**
- * Entidad Cliente que representa un usuario del sistema.
+ * Entidad Usuario que representa un usuario del sistema.
  *
  * @author Adrian Bienvenido
  * @version 1.0.5
  */
 
+@Entity
+@Table(name = "usuario") // Cambiado de "clientes" a "usuario"
+public class Usuario {
 
-@Entity // Entidad JPA
-@Table(name = "clientes") // Tabla 'clientes'
-public class Cliente { // Clase Cliente
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_Usuario") // Alineado con tu CREATE TABLE
+    private Long idUsuario;
 
-    /**
-     * Identificador del cliente.
-     * Se generará automáticamente mediante IDENTITY.
-     */
-    @Id // clave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment
-    private Long id; // id cliente
+    @NotBlank(message = "Tienes que colocar el nombre")
+    @Size(min = 2, max = 100, message = "Tu nombre puede tener entre 2 y 100 caracteres")
+    @Column(nullable = false, name = "nombre")
+    private String nombre;
 
-    @NotBlank(message = "Tienes que colocar el nombre") // no vacío
-    @Size(min = 2, max = 100, message = "Tu nombre puede tener entre 2 y 100 caracteres") // longitud
-    @Column(nullable = false) // columna no nula
-    private String nombre; // nombre cliente
+    @NotBlank(message = "Necesitas una contraseña")
+    @Size(min = 8, message = "Requiere 8 caracteres mínimos para tu contraseña")
+    @Column(nullable = false, name = "contraseña") // Nombre exacto del CREATE TABLE
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String contraseña; // Cambiado de "password" a "contraseña"
 
-    @NotBlank(message = "Necesitas una contraseña") // no vacío
-    @Size(min = 8, message = "Requiere 8 caracteres mínimos para tu contraseña") // mínimo 8
-    @Column(nullable = false) // columna no nula
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // solo escritura en JSON
-    private String password; // contraseña (protegida en JSON)
+    @Size(max = 255, message = "La dirección puede tener hasta 255 caracteres")
+    @Column(name = "direccion")
+    private String direccion;
 
-    @Size(max = 255, message = "La dirección puede tener hasta 255 caracteres") // longitud
-    private String direccion; // dirección del cliente
+    @NotBlank(message = "No puedes dejar vacío el email")
+    @Email(message = "El email debe ser válido")
+    @Column(nullable = false, unique = true, name = "email")
+    private String email;
 
-    @NotBlank(message = "No puedes dejar vacío el email") // no vacío
-    @Email(message = "El email debe ser válido") // formato email
-    @Column(nullable = false, unique = true) // no nulo y único
-    private String email; // correo electrónico
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "rol")
+    private RolUsuario rol = RolUsuario.CLIENTE; // Cambiado a RolUsuario y valor por defecto CLIENTE
 
-    @Enumerated(EnumType.STRING) // guarda enum como String
-    @Column(nullable = false) // no nulo
-    private Rol rol = Rol.USER; // rol por defecto USER
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    private LocalDateTime fechaCreacion;
 
-    @Column(name = "fecha_creacion", nullable = false, updatable = false) // fecha creación inmutable
-    private LocalDateTime fechaCreacion; // fecha de creación
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion;
 
-    @Column(name = "fecha_actualizacion") // fecha última actualización
-    private LocalDateTime fechaActualizacion; // fecha actualización
+    @Column(name = "activo", nullable = false)
+    private Boolean activo = true;
 
-    @Column(name = "activo", nullable = false) // indicador activo
-    private Boolean activo = true; // true si activo
-
-    // Relación con teléfonos
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true) // 1 cliente - N teléfonos
-    @JsonIgnore // ignorar en JSON para evitar recursión
-    private Set<TelefonoCliente> telefonos = new HashSet<>(); // conjunto de teléfonos
+    // Relación con teléfonos (actualizada)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<TelefonoUsuario> telefonos = new HashSet<>();
 
     // Relación con pedidos
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true) // 1 cliente - N pedidos
-    @JsonIgnore // ignorar en JSON
-    private Set<Pedido> pedidos = new HashSet<>(); // conjunto de pedidos
+    @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Pedido> pedidos = new HashSet<>();
 
     // Constructores
-    public Cliente() {
-        this.rol = Rol.obtenerRolPorDefecto(); // rol por defecto
-        this.fechaCreacion = LocalDateTime.now(); // marca creación ahora
-        this.activo = true; // activo por defecto
+    public Usuario() {
+        this.rol = RolUsuario.CLIENTE; // Valor por defecto según CREATE TABLE
+        this.fechaCreacion = LocalDateTime.now();
+        this.activo = true;
     }
 
-    public Cliente(String nombre, String password, String direccion, String email) {
-        this(); // llama ctor por defecto
-        this.nombre = nombre; // set nombre
-        this.password = password; // set password
-        this.direccion = direccion; // set direccion
-        this.email = email; // set email
+    public Usuario(String nombre, String contraseña, String direccion, String email) {
+        this();
+        this.nombre = nombre;
+        this.contraseña = contraseña;
+        this.direccion = direccion;
+        this.email = email;
     }
 
-    public Cliente(Long id, String nombre, String password, String direccion, String email, Rol rol) {
-        this(nombre, password, direccion, email); // delega al otro ctor
-        this.rol = rol != null ? rol : Rol.obtenerRolPorDefecto(); // asigna rol o por defecto
+    public Usuario(Long idUsuario, String nombre, String contraseña, String direccion, String email, RolUsuario rol) {
+        this(nombre, contraseña, direccion, email);
+        this.idUsuario = idUsuario;
+        this.rol = rol != null ? rol : RolUsuario.CLIENTE;
     }
 
-    @PreUpdate // hook JPA antes de actualizar
+    @PreUpdate
     protected void preUpdate() {
-        this.fechaActualizacion = LocalDateTime.now(); // actualiza timestamp
+        this.fechaActualizacion = LocalDateTime.now();
     }
 
     // Getters y Setters
-    public Long getId() { return id; } // get id
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
 
-    public String getNombre() { return nombre; } // get nombre
-    public void setNombre(String nombre) { this.nombre = nombre; } // set nombre
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-    public String getPassword() { return password; } // get password
-    public void setPassword(String password) { this.password = password; } // set password
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getDireccion() { return direccion; } // get direccion
-    public void setDireccion(String direccion) { this.direccion = direccion; } // set direccion
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public String getEmail() { return email; } // get email
-    public void setEmail(String email) { this.email = email; } // set email
+    public String getContraseña() {
+        return contraseña;
+    }
 
-    public Rol getRol() { return rol; } // get rol
-    public void setRol(Rol rol) { this.rol = rol != null ? rol : Rol.obtenerRolPorDefecto(); } // set rol segura
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
 
-    public LocalDateTime getFechaCreacion() { return fechaCreacion; } // get fechaCreacion
-    public LocalDateTime getFechaActualizacion() { return fechaActualizacion; } // get fechaActualizacion
+    public String getDireccion() {
+        return direccion;
+    }
 
-    public Boolean getActivo() { return activo; } // get activo
-    public void setActivo(Boolean activo) { this.activo = activo; } // set activo
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-    public Set<TelefonoCliente> getTelefonos() { return telefonos; } // get telefonos
-    public void setTelefonos(Set<TelefonoCliente> telefonos) { this.telefonos = telefonos; } // set telefonos
+    public String getEmail() {
+        return email;
+    }
 
-    public Set<Pedido> getPedidos() { return pedidos; } // get pedidos
-    public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; } // set pedidos
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public RolUsuario getRol() {
+        return rol;
+    }
+
+    public void setRol(RolUsuario rol) {
+        this.rol = rol != null ? rol : RolUsuario.CLIENTE;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public LocalDateTime getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public Set<TelefonoUsuario> getTelefonos() {
+        return telefonos;
+    }
+
+    public void setTelefonos(Set<TelefonoUsuario> telefonos) {
+        this.telefonos = telefonos;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 
     // Métodos de relación con teléfonos
-    public void addTelefono(TelefonoCliente telefono) {
+    public void addTelefono(TelefonoUsuario telefono) {
         if (telefono != null) {
-            telefonos.add(telefono); // añade al set
-            telefono.setCliente(this); // setea relación inversa
+            telefonos.add(telefono);
+            telefono.setUsuario(this);
         }
     }
 
-    public void removeTelefono(TelefonoCliente telefono) {
+    public void removeTelefono(TelefonoUsuario telefono) {
         if (telefono != null) {
-            telefonos.remove(telefono); // elimina del set
-            telefono.setCliente(null); // limpia relación inversa
+            telefonos.remove(telefono);
+            telefono.setUsuario(null);
         }
     }
 
     // Métodos de relación con pedidos
     public void addPedido(Pedido pedido) {
         if (pedido != null) {
-            pedidos.add(pedido); // añade pedido
-            pedido.setCliente(this); // setea relación inversa
+            pedidos.add(pedido);
+            pedido.setUsuario(this);
         }
     }
 
-    /**
-     * Elimina un pedido asociado al cliente.
-     */
     public void removePedido(Pedido pedido) {
         if (pedido != null) {
-            pedidos.remove(pedido); // elimina pedido
-            pedido.setCliente(null); // limpia relación inversa
+            pedidos.remove(pedido);
+            pedido.setUsuario(null);
         }
     }
 
     /**
-     * Verifica si el cliente tiene permisos de administrador
-     * @return true si el rol es ADMIN
+     * Verifica si el usuario tiene permisos de administrador
+     * @return true si el rol es ADMINISTRADOR
      */
     public boolean esAdmin() {
-        return this.rol == Rol.ADMIN; // true si rol ADMIN
+        return this.rol == RolUsuario.ADMINISTRADOR;
     }
 
     /**
-     * Verifica si el cliente está activo
+     * Verifica si el usuario está activo
      * @return true si está activo
      */
     public boolean estaActivo() {
-        return Boolean.TRUE.equals(this.activo); // true si activo es TRUE
+        return Boolean.TRUE.equals(this.activo);
     }
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "id=" + id + // id
-                ", nombre='" + nombre + '\'' + // nombre
-                ", direccion='" + direccion + '\'' + // direccion
-                ", email='" + email + '\'' + // email
-                ", rol=" + rol + // rol
-                ", activo=" + activo + // activo
-                ", fechaCreacion=" + fechaCreacion + // fechaCreacion
-                ", cantidadTelefonos=" + (telefonos != null ? telefonos.size() : 0) + // cuenta teléfonos
-                ", cantidadPedidos=" + (pedidos != null ? pedidos.size() : 0) + // cuenta pedidos
-                ", password='[PROTEGIDO]'" + // password oculto
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nombre='" + nombre + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", email='" + email + '\'' +
+                ", rol=" + rol +
+                ", activo=" + activo +
+                ", fechaCreacion=" + fechaCreacion +
+                ", cantidadTelefonos=" + (telefonos != null ? telefonos.size() : 0) +
+                ", cantidadPedidos=" + (pedidos != null ? pedidos.size() : 0) +
+                ", contraseña='[PROTEGIDO]'" +
                 '}';
     }
 }
