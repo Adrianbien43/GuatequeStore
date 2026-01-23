@@ -222,6 +222,15 @@ public class Usuario {
         return this.rol == RolUsuario.ADMINISTRADOR;
     }
 
+    // En tu Usuario.java, agrega estos métodos DESPUÉS de getIdUsuario():
+
+    public Long getId() {
+        return this.idUsuario;  // Devuelve el mismo que getIdUsuario()
+    }
+
+    public void setId(Long id) {
+        this.idUsuario = id;    // Asigna al mismo campo
+    }
     /**
      * Verifica si el usuario está activo
      * @return true si está activo
