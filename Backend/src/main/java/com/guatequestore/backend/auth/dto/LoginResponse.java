@@ -1,33 +1,39 @@
-package com.guatequestore.backend.authentication.dto;
+package com.guatequestore.backend.auth.dto;
 
 /**
  * DTO para respuesta de login exitoso.
  *
- * Respuesta:
- * 200 OK
+ * Contiene el token JWT y información básica del usuario.
+ *
+ * Ejemplo JSON:
  * {
- *   "token": "eyJhbGciOiJIUzUxMiJ9...",
+ *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
  *   "tipo": "Bearer",
- *   "email": "usuario@example.com",
+ *   "email": "usuario@ejemplo.com",
+ *   "nombre": "Juan Pérez",
+ *   "rol": "CLIENTE",
  *   "mensaje": "Autenticación exitosa"
  * }
- *
- * @author Guateque Store
- * @since 1.0
  */
 public class LoginResponse {
     private String token;
     private String tipo;
     private String email;
+    private String nombre;
+    private String rol;
     private String mensaje;
 
-    public LoginResponse(String token, String email) {
+    // Constructor
+    public LoginResponse(String token, String email, String nombre, String rol) {
         this.token = token;
         this.tipo = "Bearer";
         this.email = email;
+        this.nombre = nombre;
+        this.rol = rol;
         this.mensaje = "Autenticación exitosa";
     }
 
+    // Getters y Setters
     public String getToken() {
         return token;
     }
@@ -50,6 +56,22 @@ public class LoginResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public String getMensaje() {

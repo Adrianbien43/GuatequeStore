@@ -1,29 +1,38 @@
-package com.guatequestore.backend.authentication.dto;
+package com.guatequestore.backend.auth.dto;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * DTO para solicitud de login.
  *
- * Uso:
- * POST /api/auth/login
- * {
- *   "email": "usuario@example.com",
- *   "password": "miContraseña123"
- * }
+ * Contiene las credenciales del usuario.
  *
- * @author Guateque Store
- * @since 1.0
+ * Ejemplo JSON:
+ * {
+ *   "email": "usuario@ejemplo.com",
+ *   "password": "micontraseña123"
+ * }
  */
 public class LoginRequest {
+
+    @NotBlank(message = "El email es requerido")
+    @Email(message = "El email debe ser válido")
     private String email;
+
+    @NotBlank(message = "La contraseña es requerida")
     private String password;
 
+    // Constructor vacío (necesario para Jackson)
     public LoginRequest() {}
 
+    // Constructor con parámetros
     public LoginRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    // Getters y Setters
     public String getEmail() {
         return email;
     }

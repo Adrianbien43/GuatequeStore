@@ -11,42 +11,19 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 /**
- * Utilidad para manejar JSON Web Tokens (JWT).
- *
- * Responsabilidades:
- * - Generar tokens JWT firmados
- * - Validar y extraer información de tokens
- * - Manejo de expiración de tokens
- *
- * Configuración desde application.properties:
- * - app.jwt.secret: Clave secreta para firmar tokens
- * - app.jwt.expiration: Tiempo en milisegundos (defecto: 24 horas)
- *
- * Versión compatible con JJWT 0.12.3
- *
- * @author Guateque Store
- * @since 1.0
+ * Utilidad para manejar tokens JWT (JSON Web Tokens).
  */
 @Component
 public class JwtUtil {
 
-    @Value("${app.jwt.secret:tu-clave-secreta-muy-larga-aqui-debe-ser-minimo-32-caracteres}")
+    @Value("${app.jwt.secret:defaultSecretKeyForDevelopmentOnlyChangeInProduction}")
     private String jwtSecret;
 
     @Value("${app.jwt.expiration:86400000}") // 24 horas por defecto
     private long jwtExpiration;
 
     /**
-     * Genera un token JWT para un usuario.
-     *
-     * Contenido del token:
-     * - Subject (sub): Email del usuario
-     * - Issued At (iat): Fecha de emisión
-     * - Expiration (exp): Fecha de vencimiento
-     * - Signature: Firmado con clave secreta
-     *
-     * @param email email del cliente autenticado
-     * @return token JWT firmado
+     * Generar token JWT para un email.
      */
     public String generateToken(String email) {
         Date now = new Date();
@@ -61,26 +38,14 @@ public class JwtUtil {
     }
 
     /**
-     * Extrae el email del token JWT.
-     *
-     * @param token token JWT a analizar
-     * @return email del usuario
-     * @throws io.jsonwebtoken.JwtException si el token es inválido
+     * Extraer email del token.
      */
     public String getEmailFromToken(String token) {
         return getClaims(token).getSubject();
     }
 
     /**
-     * Valida si el token JWT es válido.
-     *
-     * Validaciones:
-     * - Firma es correcta
-     * - No ha expirado
-     * - Formato es correcto
-     *
-     * @param token token JWT a validar
-     * @return true si es válido, false si no
+     * Validar token.
      */
     public boolean validateToken(String token) {
         try {
@@ -94,10 +59,7 @@ public class JwtUtil {
     }
 
     /**
-     * Verifica si el token ha expirado.
-     *
-     * @param token token JWT a verificar
-     * @return true si ha expirado
+     * Verificar si token ha expirado.
      */
     public boolean isTokenExpired(String token) {
         try {
@@ -108,10 +70,7 @@ public class JwtUtil {
     }
 
     /**
-     * Extrae todos los claims (información) del token.
-     *
-     * @param token token JWT
-     * @return Claims con la información decodificada
+     * Extraer claims del token.
      */
     private Claims getClaims(String token) {
         return Jwts.parser()
@@ -121,9 +80,7 @@ public class JwtUtil {
     }
 
     /**
-     * Genera la clave de firma a partir del secreto.
-     *
-     * @return SecretKey para firmar tokens
+     * Obtener clave de firma.
      */
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());

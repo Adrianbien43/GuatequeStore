@@ -1,13 +1,10 @@
 -- ==================================================
--- data.sql - DATOS DE PRUEBA REALISTAS Y SEGUROS
--- 1 proveedor con productos + otros sin productos
--- Actualizado para usar 'usuario' en lugar de 'clientes'
+-- data.sql CORREGIDO - USA 1/0 EN LUGAR DE TRUE/FALSE
 -- ==================================================
 
--- Desactivar verificaciones de claves foráneas temporalmente
 SET FOREIGN_KEY_CHECKS = 0;
 
--- 1. PROVEEDORES (5 proveedores, solo el primero tiene productos)
+-- 1. PROVEEDORES
 INSERT INTO proveedor (nombre, direccion) VALUES
 ('RockWear Supplies S.L.', 'Polígono Industrial La Garena, Av. del Sol 45, 28806 Alcalá de Henares, Madrid'),
 ('Urban Trend Fashion', 'Calle de la Moda 12, 41003 Sevilla'),
@@ -15,15 +12,15 @@ INSERT INTO proveedor (nombre, direccion) VALUES
 ('Street Kings Co.', 'Avenida de América 89, 48005 Bilbao'),
 ('EcoThreads Atelier', 'Rúa do Franco 15, 15702 Santiago de Compostela');
 
--- 2. USUARIOS REALISTAS (TABLA: usuario, ROL: CLIENTE o ADMINISTRADOR)
+-- 2. USUARIOS - CORREGIDO: 1=activo, 0=inactivo
 INSERT INTO usuario (nombre, email, contraseña, direccion, activo, rol, fecha_creacion, fecha_actualizacion) VALUES
-('Ana Martínez López', 'ana.martinez@email.com', '$2a$10$6VvP3fV8z1Z9k9L9m9N9O.9O9P9Q9R9S9T9U9V9W9X9Y9Z9A9B9C', 'Calle Mayor 23, 28013 Madrid', 1, 'CLIENTE', NOW(), NOW()),
-('Carlos Ruiz Gómez', 'carlos.ruiz@email.com', '$2a$10$6VvP3fV8z1Z9k9L9m9N9O.9O9P9Q9R9S9T9U9V9W9X9Y9Z9A9B9C', 'Av. Libertad 56, 41002 Sevilla', 1, 'CLIENTE', NOW(), NOW()),
-('Laura Fernández Díaz', 'laura.fd@email.com', '$2a$10$6VvP3fV8z1Z9k9L9m9N9O.9O9P9Q9R9S9T9U9V9W9X9Y9Z9A9B9C', 'Ronda de Sant Pere 45, 08010 Barcelona', 1, 'ADMINISTRADOR', NOW(), NOW()),
-('Pablo Sánchez Torres', 'pablo.st@email.com', '$2a$10$6VvP3fV8z1Z9k9L9m9N9O.9O9P9Q9R9S9T9U9V9W9X9Y9Z9A9B9C', 'Calle Urzaiz 78, 36201 Vigo', 1, 'CLIENTE', NOW(), NOW()),
-('Sofía Herrera Vega', 'sofia.hv@email.com', '$2a$10$6VvP3fV8z1Z9k9L9m9N9O.9O9P9Q9R9S9T9U9V9W9X9Y9Z9A9B9C', NULL, 1, 'CLIENTE', NOW(), NOW());
+('Ana Martínez López', 'ana.martinez@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye7a8ZJ5BvjZHr.M8XKJY3p1CJYw7Fk8q', 'Calle Mayor 23, 28013 Madrid', 1, 'CLIENTE', NOW(), NOW()),
+('Carlos Ruiz Gómez', 'carlos.ruiz@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye7a8ZJ5BvjZHr.M8XKJY3p1CJYw7Fk8q', 'Av. Libertad 56, 41002 Sevilla', 1, 'CLIENTE', NOW(), NOW()),
+('Laura Fernández Díaz', 'laura.fd@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye7a8ZJ5BvjZHr.M8XKJY3p1CJYw7Fk8q', 'Ronda de Sant Pere 45, 08010 Barcelona', 1, 'ADMINISTRADOR', NOW(), NOW()),
+('Pablo Sánchez Torres', 'pablo.st@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye7a8ZJ5BvjZHr.M8XKJY3p1CJYw7Fk8q', 'Calle Urzaiz 78, 36201 Vigo', 1, 'CLIENTE', NOW(), NOW()),
+('Sofía Herrera Vega', 'sofia.hv@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMye7a8ZJ5BvjZHr.M8XKJY3p1CJYw7Fk8q', NULL, 1, 'CLIENTE', NOW(), NOW());
 
--- 3. TELÉFONOS DE USUARIOS (TABLA: telefono_usuario)
+-- 3. TELÉFONOS USUARIOS
 INSERT INTO telefono_usuario (ID_Usuario, telefono, tipo) VALUES
 (1, '612345678', 'MOVIL'),
 (1, '914567890', 'FIJO'),
@@ -32,7 +29,7 @@ INSERT INTO telefono_usuario (ID_Usuario, telefono, tipo) VALUES
 (4, '986112233', 'FIJO'),
 (5, '622334455', 'MOVIL');
 
--- 4. TELÉFONOS DE PROVEEDORES
+-- 4. TELÉFONOS PROVEEDORES
 INSERT INTO telefono_proveedor (ID_Proveedor, telefono, tipo) VALUES
 (1, '911234567', 'FIJO'),
 (1, '601234567', 'MOVIL'),
@@ -46,10 +43,7 @@ INSERT INTO almacen (nombre, direccion, capacidad) VALUES
 ('Almacén Sur Sevilla', 'Polígono Store, 41006 Sevilla', 3000),
 ('Almacén Norte Bilbao', 'Polígono Zorrozaurre, 48013 Bilbao', 2500);
 
--- 6. PRODUCTOS - SOLO DEL PROVEEDOR 1 (RockWear Supplies)
--- IMPORTANTE: Ahora Categoria es PANTALON/CAMISETA/GORRA/SUDADERA
--- y Genero es HOMBRE/MUJER como campos separados
-
+-- 6. PRODUCTOS
 INSERT INTO producto (Nombre, Categoria, Genero, Precio_Unitario, Talla, Marca, Fecha_Fabricacion, ID_Proveedor) VALUES
 ('Camiseta Nirvana Smile', 'CAMISETA', 'HOMBRE', 24.99, 'M', 'RockWear', '2024-03-15', 1),
 ('Hoodie Metallica Skull', 'SUDADERA', 'HOMBRE', 54.99, 'L', 'RockWear', '2024-04-20', 1),
@@ -60,7 +54,7 @@ INSERT INTO producto (Nombre, Categoria, Genero, Precio_Unitario, Talla, Marca, 
 ('Camiseta Guns N Roses Bullet', 'CAMISETA', 'HOMBRE', 27.99, 'L', 'RockWear', '2024-09-18', 1),
 ('Top Led Zeppelin Icarus', 'CAMISETA', 'MUJER', 21.99, 'XS', 'RockWear', '2024-10-22', 1);
 
--- 7. INVENTARIO (stock de los productos del proveedor 1)
+-- 7. INVENTARIO
 INSERT INTO inventario (ID_Almacen, ID_Producto, Cantidad) VALUES
 (1, 1, 120),
 (1, 2, 80),
@@ -71,14 +65,14 @@ INSERT INTO inventario (ID_Almacen, ID_Producto, Cantidad) VALUES
 (1, 7, 70),
 (2, 8, 110);
 
--- 8. PEDIDOS DE PRUEBA
--- CORREGIDO: Cambiado los nombres de columna según tu entidad Pedido
-INSERT INTO pedidos (fecha_pedido, estado_pedido, usuario_id, almacen_id) VALUES
+-- 8. PEDIDOS - fechaPedido y estadoPedido (camelCase)
+INSERT INTO pedidos (fechaPedido, estadoPedido, usuario_id, almacen_id) VALUES
 ('2024-11-15', 'ENTREGADO', 1, 1),
 ('2024-12-01', 'ENVIADO', 2, 1),
 ('2024-12-05', 'EN_PREPARACION', 3, 2),
 ('2024-12-08', 'PENDIENTE', 4, 1),
 ('2024-12-09', 'CONFIRMADO', 1, 3);
 
--- Reactivar verificaciones de claves foráneas
 SET FOREIGN_KEY_CHECKS = 1;
+
+SELECT '✅ Datos insertados correctamente' AS Mensaje;

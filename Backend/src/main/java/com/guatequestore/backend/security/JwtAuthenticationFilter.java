@@ -15,29 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Filtro JWT que se ejecuta en cada request HTTP.
- *
- * Responsabilidades:
- * - Extraer token del header Authorization
- * - Validar el token
- * - Extraer email del token
- * - Establecer autenticación en SecurityContext
- *
- * Flujo:
- * 1. Request llega al servidor
- * 2. JwtAuthenticationFilter intercepta
- * 3. Extrae token del header "Authorization: Bearer <token>"
- * 4. Valida token con JwtUtil
- * 5. Si es válido, establece autenticación
- * 6. Request continúa con usuario autenticado
- *
- * Header esperado:
- * Authorization: Bearer eyJhbGciOiJIUzUxMiJ9...
- *
- * @author Guateque Store
- * @since 1.0
- * @see JwtUtil
- * @see OncePerRequestFilter
+ * Filtro JWT que se ejecuta en cada request.
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -51,13 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
-    /**
-     * Filtra cada request HTTP.
-     *
-     * @param request solicitud HTTP
-     * @param response respuesta HTTP
-     * @param filterChain cadena de filtros
-     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -65,43 +36,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            // Extraer token del header Authorization
             String token = extractTokenFromRequest(request);
 
-            // Si hay token y es válido
             if (token != null && jwtUtil.validateToken(token)) {
-                // Extraer email del token
                 String email = jwtUtil.getEmailFromToken(token);
 
-                // Crear autenticación
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 email,
                                 null,
-                                new ArrayList<>()); // Sin roles por ahora
+                                new ArrayList<>());
 
                 authentication.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // Establecer en SecurityContext
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
             logger.error("Error al procesar token JWT: " + e.getMessage());
         }
 
-        // Continuar con el siguiente filtro
         filterChain.doFilter(request, response);
     }
 
-    /**
-     * Extrae el token JWT del header Authorization.
-     *
-     * Formato esperado: "Authorization: Bearer <token>"
-     *
-     * @param request solicitud HTTP
-     * @return token JWT o null si no existe
-     */
     private String extractTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
 
