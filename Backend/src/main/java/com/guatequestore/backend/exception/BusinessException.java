@@ -1,22 +1,16 @@
-// ====== Archivo 1: BusinessException.java ======
 package com.guatequestore.backend.exception;
 
-/**
- * Excepción base para errores de negocio.
- *
- * Se lanza cuando ocurre un error relacionado con reglas de negocio,
- * validaciones o procesos específicos de la aplicación.
- *
- * @author Guateque Store
- * @since 1.0
- */
+// Excepción para errores de negocio
 public class BusinessException extends RuntimeException {
 
+    // Constructor con mensaje
     public BusinessException(String mensaje) {
         super(mensaje);
     }
 
+    // Constructor con mensaje y causa
     public BusinessException(String mensaje, Throwable causa) {
         super(mensaje, causa);
     }
 }
+

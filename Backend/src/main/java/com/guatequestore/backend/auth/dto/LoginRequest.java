@@ -3,27 +3,19 @@ package com.guatequestore.backend.auth.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-/**
- * DTO para solicitud de login.
- *
- * Contiene las credenciales del usuario.
- *
- * Ejemplo JSON:
- * {
- *   "email": "usuario@ejemplo.com",
- *   "password": "micontraseña123"
- * }
- */
+// DTO para el login de usuarios
 public class LoginRequest {
 
+    // Email del usuario
     @NotBlank(message = "El email es requerido")
     @Email(message = "El email debe ser válido")
     private String email;
 
+    // Contraseña del usuario
     @NotBlank(message = "La contraseña es requerida")
     private String password;
 
-    // Constructor vacío (necesario para Jackson)
+    // Constructor vacío
     public LoginRequest() {}
 
     // Constructor con parámetros
@@ -32,7 +24,7 @@ public class LoginRequest {
         this.password = password;
     }
 
-    // Getters y Setters
+    // Getters y setters
     public String getEmail() {
         return email;
     }

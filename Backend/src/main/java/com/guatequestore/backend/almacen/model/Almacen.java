@@ -11,88 +11,94 @@ import java.util.HashSet;
 
 
 /**
- * @author Manuel Cruz
- * @version 1.0.2
+ * @author Adrián Bienvenido Morales Perdomo
+ * @version 1.1.5
+ *
+ * Esta clase es una entidad: almacenes de la base de datos.
  */
 
-@Entity // Esta clase es una entidad JPA
-@Table(name = "almacenes") // Se mapea a la tabla 'almacen' en la base de datos
-public class Almacen { // Clase que representa un almacén físico
+@Entity
+@Table(name = "almacenes")
+public class Almacen {
 
-    @Id // Marca este campo como clave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Valor auto-generado por la BD
-    @Column(name = "id_almacen") // Nombre de columna en la tabla
-    private Long id; // Identificador único del almacén
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_almacen")
+    private Long id;
 
-    @NotBlank // Validación: no puede estar vacío o solo espacios
-    @Column(nullable = false) // Restricción en BD: campo obligatorio
-    private String nombre; // Nombre descriptivo del almacén
+    @NotBlank
+    @Column(nullable = false)
+    private String nombre;
 
-    @Positive // Validación: solo valores positivos
-    private Integer capacidad; // Capacidad máxima del almacén (en unidades, metros, etc.)
+    @Positive
+    private Integer capacidad;
 
-    private String direccion; // Ubicación física del almacén
+    private String direccion;
 
     // RELACIÓN: Un almacén puede tener muchos pedidos
     @OneToMany(mappedBy = "almacen", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // Evita que Jackson serialice esta relación (previene ciclos infinitos en JSON)
-    private Set<Pedido> pedidos = new HashSet<>(); // Conjunto de pedidos asociados a este almacén
+    @JsonIgnore
+    private Set<Pedido> pedidos = new HashSet<>();
 
     // RELACIÓN: Un almacén puede tener muchos items en inventario
     @OneToMany(mappedBy = "almacen", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // Evita que Jackson serialice esta relación
-    private Set<Inventario> inventarios = new HashSet<>(); // Conjunto de items en inventario
+    @JsonIgnore
+    private Set<Inventario> inventarios = new HashSet<>();
 
-    public Almacen() {} // Constructor vacío requerido por JPA
+    //Constructores
 
-    // Constructor para crear nuevos almacenes fácilmente
+    public Almacen() {}
+
     public Almacen(String nombre, Integer capacidad, String direccion) {
-        this.nombre = nombre; // asigna el nombre
-        this.capacidad = capacidad; // asigna la capacidad
-        this.direccion = direccion; // asigna la dirección
+        this.nombre = nombre;
+        this.capacidad = capacidad;
+        this.direccion = direccion;
     }
 
-    // GETTERS Y SETTERS - Métodos para acceder y modificar los atributos
+    // GETTERS AND SETTERS
 
-    public Long getId() { return id; } // obtiene el id
+    public Long getId() { return id; }
 
-    public String getNombre() { return nombre; } // obtiene el nombre
-    public void setNombre(String nombre) { this.nombre = nombre; } // cambia el nombre
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public Integer getCapacidad() { return capacidad; } // obtiene la capacidad
-    public void setCapacidad(Integer capacidad) { this.capacidad = capacidad; } // cambia la capacidad
+    public Integer getCapacidad() { return capacidad; }
+    public void setCapacidad(Integer capacidad) { this.capacidad = capacidad; }
 
-    public String getDireccion() { return direccion; } // obtiene la dirección
-    public void setDireccion(String direccion) { this.direccion = direccion; } // cambia la dirección
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 
-    public Set<Pedido> getPedidos() { return pedidos; } // obtiene los pedidos
-    public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; } // cambia los pedidos
+    public Set<Pedido> getPedidos() { return pedidos; }
+    public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; }
 
-    public Set<Inventario> getInventarios() { return inventarios; } // obtiene el inventario
-    public void setInventarios(Set<Inventario> inventarios) { this.inventarios = inventarios; } // cambia el inventario
+    public Set<Inventario> getInventarios() { return inventarios; }
+    public void setInventarios(Set<Inventario> inventarios) { this.inventarios = inventarios; }
 
-    // MÉTODO PARA AÑADIR UN PEDIDO AL ALMACÉN
+
+    // Métodos auxiliares
+
+    // Añade un pedido al almacén
     public void addPedido(Pedido pedido) {
-        pedidos.add(pedido); // añade el pedido a la colección
-        pedido.setAlmacen(this); // establece este almacén como dueño del pedido
+        pedidos.add(pedido);
+        pedido.setAlmacen(this);
     }
 
-    // MÉTODO PARA ELIMINAR UN PEDIDO DEL ALMACÉN
+    // Elimina un pedido del almacén
     public void removePedido(Pedido pedido) {
-        pedidos.remove(pedido); // remueve el pedido de la colección
-        pedido.setAlmacen(null); // desvincula el pedido de este almacén
+        pedidos.remove(pedido);
+        pedido.setAlmacen(null);
     }
 
-    // MÉTODO PARA AÑADIR UN ITEM AL INVENTARIO DEL ALMACÉN
+    // Añade un inventario al almacén
     public void addInventario(Inventario inventario) {
-        inventarios.add(inventario); // añade el item al inventario
-        inventario.setAlmacen(this); // establece este almacén como ubicación del item
+        inventarios.add(inventario);
+        inventario.setAlmacen(this);
     }
 
-    // MÉTODO PARA ELIMINAR UN ITEM DEL INVENTARIO DEL ALMACÉN
+    // Elimina un inventario del almacén
     public void removeInventario(Inventario inventario) {
-        inventarios.remove(inventario); // remueve el item del inventario
-        inventario.setAlmacen(null); // desvincula el item de este almacén
+        inventarios.remove(inventario);
+        inventario.setAlmacen(null);
     }
 
     // Representación en texto del objeto (excluye relaciones para evitar recursividad)

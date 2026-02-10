@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-// Controlador REST para operaciones de inventario
+// Controlador para manejar inventario
 @RestController
 @RequestMapping("/api/inventario")
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200", "http://localhost:5173"})
 public class InventarioController {
 
-    // Inyección del servicio de inventario
+    // Servicio de inventario
     private final InventarioService service;
 
+    // Constructor
     public InventarioController(InventarioService service) {
         this.service = service;
     }
@@ -27,13 +28,13 @@ public class InventarioController {
         return service.getAll();
     }
 
-    // Obtener inventario filtrado por almacén
+    // Obtener inventario por almacén
     @GetMapping("/almacen/{almacenId}")
     public List<Inventario> getByAlmacen(@PathVariable Long almacenId) {
         return service.getByAlmacen(almacenId);
     }
 
-    // Obtener inventario filtrado por producto
+    // Obtener inventario por producto
     @GetMapping("/producto/{productoId}")
     public List<Inventario> getByProducto(@PathVariable Long productoId) {
         return service.getByProducto(productoId);
@@ -54,7 +55,7 @@ public class InventarioController {
         return service.create(inventario);
     }
 
-    // Actualizar un registro de inventario existente
+    // Actualizar un registro de inventario
     @PutMapping("/almacen/{almacenId}/producto/{productoId}")
     public ResponseEntity<Inventario> update(
             @PathVariable Long almacenId,
@@ -65,7 +66,7 @@ public class InventarioController {
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
-    // Incrementar cantidades en inventario
+    // Incrementar cantidad de un producto en inventario
     @PostMapping("/almacen/{almacenId}/producto/{productoId}/incrementar")
     public ResponseEntity<Void> incrementar(
             @PathVariable Long almacenId,
@@ -77,7 +78,7 @@ public class InventarioController {
                 : ResponseEntity.notFound().build();
     }
 
-    // Decrementar cantidades en inventario
+    // Decrementar cantidad de un producto en inventario
     @PostMapping("/almacen/{almacenId}/producto/{productoId}/decrementar")
     public ResponseEntity<Void> decrementar(
             @PathVariable Long almacenId,
@@ -89,13 +90,13 @@ public class InventarioController {
                 : ResponseEntity.notFound().build();
     }
 
-    // Obtener productos que están por debajo de cierto límite de stock
+    // Obtener productos con stock bajo
     @GetMapping("/bajo-stock/{limite}")
     public List<Inventario> getBajoStock(@PathVariable Integer limite) {
         return service.getBajoStock(limite);
     }
 
-    // Eliminar un registro de inventario por almacén y producto
+    // Eliminar un registro de inventario
     @DeleteMapping("/almacen/{almacenId}/producto/{productoId}")
     public ResponseEntity<Void> delete(
             @PathVariable Long almacenId,

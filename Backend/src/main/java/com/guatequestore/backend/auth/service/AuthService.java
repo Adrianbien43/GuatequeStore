@@ -12,23 +12,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Servicio para manejar autenticación y registro de usuarios.
- *
- * Responsabilidades:
- * - Validar credenciales de login
- * - Registrar nuevos usuarios
- * - Generar y validar tokens JWT
- * - Hashear contraseñas
- */
+// Servicio para la autenticación y registro
 @Service
 @Transactional
 public class AuthService {
 
+    // Repositorio de usuarios
     private final UsuarioRepository usuarioRepository;
+
+    // Codificador de contraseñas
     private final PasswordEncoder passwordEncoder;
+
+    // Utilidad para JWT
     private final JwtUtil jwtUtil;
 
+    // Constructor del servicio
     public AuthService(
             UsuarioRepository usuarioRepository,
             PasswordEncoder passwordEncoder,
@@ -38,19 +36,15 @@ public class AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    /**
-     * Autenticar usuario y generar token JWT.
-     *
-     * @param loginRequest Credenciales del usuario
-     * @return LoginResponse con token y datos del usuario
-     * @throws BusinessException Si las credenciales son inválidas
-     */
+    // Inicia sesión y genera el token
     public LoginResponse login(LoginRequest loginRequest) {
-        // Validar que no estén vacíos
+
+        // Validar email
         if (loginRequest.getEmail() == null || loginRequest.getEmail().isBlank()) {
             throw new BusinessException("El email es requerido");
         }
 
+        // Validar contraseña
         if (loginRequest.getPassword() == null || loginRequest.getPassword().isBlank()) {
             throw new BusinessException("La contraseña es requerida");
         }
@@ -59,20 +53,20 @@ public class AuthService {
         Usuario usuario = usuarioRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new BusinessException("Credenciales inválidas"));
 
-        // Verificar contraseña (comparando hash)
+        // Verificar contraseña
         if (!passwordEncoder.matches(loginRequest.getPassword(), usuario.getContraseña())) {
             throw new BusinessException("Credenciales inválidas");
         }
 
         // Verificar si el usuario está activo
         if (!usuario.getActivo()) {
-            throw new BusinessException("La cuenta está desactivada. Contacta al administrador.");
+            throw new BusinessException("La cuenta está desactivada");
         }
 
-        // Generar token JWT
+        // Generar token
         String token = jwtUtil.generateToken(usuario.getEmail());
 
-        // Crear y retornar respuesta
+        // Retornar respuesta
         return new LoginResponse(
                 token,
                 usuario.getEmail(),
@@ -81,58 +75,46 @@ public class AuthService {
         );
     }
 
-    /**
-     * Registrar nuevo usuario.
-     *
-     * @param registerRequest Datos del nuevo usuario
-     * @return Usuario creado
-     * @throws BusinessException Si el email ya existe
-     */
+    // Registra un nuevo usuario
     public Usuario register(RegisterRequest registerRequest) {
-        // Validar que el email no esté registrado
+
+        // Verificar si el email ya existe
         if (usuarioRepository.existsByEmail(registerRequest.getEmail())) {
-            throw new BusinessException("El email '" + registerRequest.getEmail() + "' ya está registrado");
+            throw new BusinessException("El email ya está registrado");
         }
 
-        // Crear nuevo usuario
+        // Crear usuario
         Usuario usuario = new Usuario();
         usuario.setNombre(registerRequest.getNombre());
         usuario.setEmail(registerRequest.getEmail());
-        usuario.setContraseña(passwordEncoder.encode(registerRequest.getPassword())); // Hashear contraseña
+        usuario.setContraseña(passwordEncoder.encode(registerRequest.getPassword()));
         usuario.setDireccion(registerRequest.getDireccion());
-        usuario.setRol(RolUsuario.CLIENTE); // Rol por defecto: CLIENTE
-        usuario.setActivo(true); // Usuario activo por defecto
+        usuario.setRol(RolUsuario.CLIENTE);
+        usuario.setActivo(true);
 
         // Guardar usuario
         return usuarioRepository.save(usuario);
     }
 
-    /**
-     * Generar token JWT para un email.
-     *
-     * @param email Email del usuario
-     * @return Token JWT
-     */
+    // Genera un token a partir del email
     public String generateToken(String email) {
         return jwtUtil.generateToken(email);
     }
 
-    /**
-     * Validar token JWT.
-     *
-     * @param token Token a validar
-     * @return true si el token es válido
-     * @throws BusinessException Si el token es inválido o está expirado
-     */
+    // Valida un token JWT
     public boolean validateToken(String token) {
+
+        // Verificar token vacío
         if (token == null || token.isBlank()) {
             throw new BusinessException("Token no proporcionado");
         }
 
+        // Verificar token válido
         if (!jwtUtil.validateToken(token)) {
             throw new BusinessException("Token inválido");
         }
 
+        // Verificar expiración
         if (jwtUtil.isTokenExpired(token)) {
             throw new BusinessException("Token expirado");
         }
@@ -140,19 +122,14 @@ public class AuthService {
         return true;
     }
 
-    /**
-     * Obtener usuario desde token JWT.
-     *
-     * @param token Token JWT
-     * @return Usuario correspondiente al token
-     * @throws BusinessException Si el usuario no existe
-     */
+    // Obtiene el usuario a partir del token
     public Usuario getUsuarioFromToken(String token) {
-        // Extraer email del token
+
+        // Obtener email del token
         String email = jwtUtil.getEmailFromToken(token);
 
-        // Buscar usuario por email
+        // Buscar usuario
         return usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado para el token proporcionado"));
+                .orElseThrow(() -> new BusinessException("Usuario no encontrado"));
     }
 }

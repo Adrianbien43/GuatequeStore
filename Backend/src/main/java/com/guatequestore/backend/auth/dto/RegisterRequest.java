@@ -4,33 +4,25 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-/**
- * DTO para solicitud de registro de usuario.
- *
- * Contiene los datos necesarios para crear un nuevo usuario.
- *
- * Ejemplo JSON:
- * {
- *   "nombre": "Juan Pérez",
- *   "email": "juan@ejemplo.com",
- *   "password": "micontraseña123",
- *   "direccion": "Ciudad, País"
- * }
- */
+// DTO para el registro de usuarios
 public class RegisterRequest {
 
+    // Nombre del usuario
     @NotBlank(message = "El nombre es requerido")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
 
+    // Email del usuario
     @NotBlank(message = "El email es requerido")
     @Email(message = "El email debe ser válido")
     private String email;
 
+    // Contraseña del usuario
     @NotBlank(message = "La contraseña es requerida")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
 
+    // Dirección del usuario
     private String direccion;
 
     // Constructor vacío
@@ -44,7 +36,7 @@ public class RegisterRequest {
         this.direccion = direccion;
     }
 
-    // Getters y Setters
+    // Getters y setters
     public String getNombre() {
         return nombre;
     }

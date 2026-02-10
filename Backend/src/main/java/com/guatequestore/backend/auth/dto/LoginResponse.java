@@ -1,26 +1,24 @@
 package com.guatequestore.backend.auth.dto;
 
-/**
- * DTO para respuesta de login exitoso.
- *
- * Contiene el token JWT y información básica del usuario.
- *
- * Ejemplo JSON:
- * {
- *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
- *   "tipo": "Bearer",
- *   "email": "usuario@ejemplo.com",
- *   "nombre": "Juan Pérez",
- *   "rol": "CLIENTE",
- *   "mensaje": "Autenticación exitosa"
- * }
- */
+// DTO para la respuesta del login
 public class LoginResponse {
+
+    // Token JWT
     private String token;
+
+    // Tipo de token
     private String tipo;
+
+    // Email del usuario
     private String email;
+
+    // Nombre del usuario
     private String nombre;
+
+    // Rol del usuario
     private String rol;
+
+    // Mensaje de respuesta
     private String mensaje;
 
     // Constructor
@@ -33,7 +31,7 @@ public class LoginResponse {
         this.mensaje = "Autenticación exitosa";
     }
 
-    // Getters y Setters
+    // Getters y setters
     public String getToken() {
         return token;
     }
