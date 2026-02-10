@@ -13,7 +13,7 @@ import jakarta.persistence.*;
  */
 
 @Entity // Entidad JPA
-@Table(name = "inventario") // Tabla 'inventario'
+@Table(name = "inventarios") // Tabla 'inventario'
 @IdClass(InventarioId.class) // Clave compuesta (almacenId + productoId)
 public class Inventario { // Entidad inventario
 

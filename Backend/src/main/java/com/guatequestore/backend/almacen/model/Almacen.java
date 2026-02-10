@@ -16,7 +16,7 @@ import java.util.HashSet;
  */
 
 @Entity // Esta clase es una entidad JPA
-@Table(name = "almacen") // Se mapea a la tabla 'almacen' en la base de datos
+@Table(name = "almacenes") // Se mapea a la tabla 'almacen' en la base de datos
 public class Almacen { // Clase que representa un almacén físico
 
     @Id // Marca este campo como clave primaria

@@ -14,7 +14,7 @@ import com.guatequestore.backend.producto.model.Producto;
 
 
 @Entity // Entidad JPA
-@Table(name = "proveedor") // Tabla 'proveedor'
+@Table(name = "proveedores") // Tabla 'proveedor'
 public class Proveedor { // Clase Proveedor
 
     @Id // clave primaria

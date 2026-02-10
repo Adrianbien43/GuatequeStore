@@ -17,7 +17,7 @@ import java.util.HashSet;
  */
 
 @Entity
-@Table(name = "producto")
+@Table(name = "productos")
 public class Producto {
 
     @Id
