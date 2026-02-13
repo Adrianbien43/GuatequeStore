@@ -1,0 +1,149 @@
+@font-face {
+    font-family: 'DaintySpring';
+    src: url('../../assets/dainty-spring.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+.seccion_mujer {
+    display: flex;
+    flex-direction: column;
+    height: 81vh;
+}
+
+.seccion_header {
+    display: flex;
+    flex: 1;
+    min-height: 300px;
+}
+
+.seccion_titulo1 {
+    position: relative;
+    background-image: url('../../src/assets/co18.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+
+.seccion_titulo1::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.259);
+    pointer-events: none;
+}
+
+.seccion_card {
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo 20s infinite ease-in-out;
+}
+
+@keyframes alternarFondo {
+  0% {
+    background-image: url('../../src/assets/co17.jpg');
+  }
+  50% {
+    background-image: url('../../src/assets/co19.jpg');
+  }
+  100% {
+    background-image: url('../../src/assets/co17.jpg');
+  }
+}
+
+.titulo1 {
+    width: 120px;
+    z-index: 2;
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+}
+
+.titulo1 h2 {
+    font-size: 19px;
+    margin: 1px;
+}
+
+.titulo1 h5 {
+    font-size: 11px;
+    margin: 1px;
+}
+
+.seccion_footer {
+    background: black;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    margin-top: auto;
+}
+
+
+
+/*No tocar esta parte es cositas de diseño de botones*/
+
+.button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  --border-right: 4px;
+  --fs-size: 1em; /* tamaño más pequeño */
+  letter-spacing: 2px;
+  font-size: var(--fs-size);
+  font-family: "Arial";
+  position: absolute; /* se posiciona dentro del card */
+  bottom: 20px; /* abajo dentro del card */
+  left: 50%; /* centrado horizontal */
+  transform: translateX(-50%);
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+
+.button1 {
+  --text-stroke-color: rgba(255, 255, 255, 0.6);
+  --animation-color: #37FF8B;
+}
+
+.button2 {
+  --text-stroke-color: rgba(255, 255, 255, 0.6);
+  --animation-color: #ffff00;
+}
+
+.button3 {
+  --text-stroke-color: rgba(255, 255, 255, 0.6);
+  --animation-color: #ff9500;
+}
+
+.button4 {
+  --text-stroke-color: rgba(255, 255, 255, 0.6);
+  --animation-color: #c0f4ff;
+}
+
+.actualText {
+  position: relative;
+}
+
+.hoverText {
+  position: absolute;
+  box-sizing: border-box;
+  content: attr(data-text);
+  color: var(--animation-color);
+  width: 0%;
+  inset: 0;
+  border-right: var(--border-right) solid var(--animation-color);
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+
+.button:hover .hoverText {
+  width: 100%;
+  filter: drop-shadow(0 0 23px var(--animation-color));
+}

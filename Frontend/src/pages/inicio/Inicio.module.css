@@ -1,0 +1,281 @@
+.inicio {
+  position: relative;
+  width: 100%;
+}
+
+/*Texto presentacion de Inicio*/
+.pre1 {
+  position: absolute;
+  top: 20px;
+  left: 5px;
+  z-index: 10;
+}
+
+.pre2 {
+  position: absolute;
+  top: 50px;
+  left: 151px;
+  z-index: 10;
+}
+
+/*Primera seccion del inicio*/
+.seccion1 {
+  position: relative;
+  height: 80vh;
+  background-image: url('../../src/assets/co.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+  text-align: center;
+}
+
+.contenedor_i_1 {
+  position: absolute;
+  top: 150px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0),
+      rgb(0, 0, 0));
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.info_container_1 {
+  margin: 5px;
+  width: 264px;
+  text-align: justify;
+  z-index: 10;
+}
+
+.contenedor_i_1 h2 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.contenedor_i_1 p {
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+
+
+/*Este es el carousel*/
+.carousel {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: spin 80s infinite linear;
+  padding-right: 1em;
+  margin-top: 5px;
+}
+
+.card {
+  position: relative;
+  flex: 0 0 5em;
+  height: 2em;
+  padding: 1em;
+  font-size: 3rem;
+  text-align: center;
+  align-content: center;
+}
+
+@keyframes spin {
+  from {
+    translate: 0;
+  }
+
+  to {
+    translate: -100%;
+  }
+}
+
+/*Estilos de cartas de info*/
+.card_Info {
+  position: absolute;
+  background: linear-gradient(rgba(0, 0, 0, 0.084), black);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgb(213, 213, 213);
+  overflow: hidden;
+  text-align: center;
+}
+
+.card_Info h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card_Info p {
+  font-size: 10px;
+  padding: 15px;
+}
+
+
+.card1 {
+  background-image: url('../../src/assets/co2.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card2 {
+  background-image: url('../../src/assets/co3.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card3 {
+  background-image: url('../../src/assets/co1.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.card4 {
+  background-image: url('../../src/assets/co4.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card5 {
+  background-image: url('../../src/assets/co5.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card6 {
+  background-image: url('../../src/assets/co6.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seccion2 {
+  height: auto;
+  color: white;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.container_seccion2 {
+  height: auto;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.seccion2_info {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  margin: 5px;
+  text-align: justify;
+  
+}
+
+.seccion2_info h2{
+  top: 10px;
+  left: 25px;
+  position: absolute;
+  font-size: 25px;
+}
+
+.seccion2_info h4{
+  top: 31px;
+  left: 42px;
+  position: absolute;
+  font-size: 18px;
+}
+
+.seccion2_info p{
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.card1_sec2 {
+  height: 200px;
+  width: 150px;
+  background-image: url('../../src/assets/co10.jpg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+
+.card2_sec2 {
+  height: 200px;
+  width: 150px;
+  background-image: url('../../src/assets/co8.jpg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+
+.card3_sec2 {
+  height: 200px;
+  width: 150px;
+  background-image: url('../../src/assets/co3.jpg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+
+.card4_sec2 {
+  height: 200px;
+  width: 150px;
+  background-image: url('../../src/assets/co12.jpg');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+
+
+
+.container1_seccion2{
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}

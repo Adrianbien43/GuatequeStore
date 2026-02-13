@@ -1,28 +1,41 @@
-/* Reset básico */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+* {
+  height: auto;
   margin: 0;
   padding: 0;
 }
 
-/* Variables CSS Globales */
 :root {
-  
 
-  /*Estos son los estilos de Registro*/
-  --primary: #2c3e50;
-  --accent: hsl(204, 70%, 53%);
-  --muted: #7f8c8d;
-  --card-bg: transparent;
-  --radius: 12px;
-}
+  --brown-dark-1: #3B2F2F;
+  /* Espresso */
+  --brown-dark-2: #4A3A34;
+  /* Cacao intenso */
+  --brown-dark-3: #5A4637;
+  /* Tabaco */
+  --brown-dark-4: #211612;
+  /* Tierra profunda */
+  --brown-dark-5: #6B5244;
+  /* Arena tostada oscura */
 
-/* Tipografía base */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  line-height: 1.5;
-  color: var(--text-primary);
-  background-color: var(--bg-transparent);
+  --brown-mid-1: #8B5E3C;
+  /* Cuero */
+  --brown-mid-2: #A47148;
+  /* Toffee */
+  --brown-mid-3: #7A5330;
+  /* Nogal */
+  --brown-mid-4: #B38A68;
+  /* Café latte */
+  --brown-mid-5: #9C6E4F;
+  /* Avellana tostada */
+
+  --brown-light-1: #D6C0A8;
+  /* Beige cacao */
+  --brown-light-2: #E7D7C5;
+  /* Crema almendra */
+  --brown-light-3: #C8AB8F;
+  /* Marrón claro arena */
+  --brown-light-4: #E4CDB8;
+  /* Arena cálida */
+  --brown-light-5: #F0E2D2;
+  /* Latte suave */
 }

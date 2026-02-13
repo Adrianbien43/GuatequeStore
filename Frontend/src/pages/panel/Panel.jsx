@@ -1,75 +1,51 @@
-import React, { useState } from 'react';
-import FormUsuarios from '../../components/forms/formcustomers/FormUsuarios';
-import FormProducts from '../../components/forms/formproducts/FormProducts';
-import FormSuppliers from '../../components/forms/formsuppliers/FormSuppliers';
-import FormWarehouses from '../../components/forms/formwarehouses/FormWarehouses';
-import FormOrders from '../../components/forms/formorders/FormOrders';
-import './Panel.css';
+import { useState } from "react";
 
-const Panel = () => {
-  const [activeTab, setActiveTab] = useState('usuarios');
+// Importa todos los CRUD
+import ProveedoresCRUD from "../../server/crud/proveedores/components/ProveedoresCRUD";
+import ProductosCRUD from "../../server/crud/productos/components/ProductosCRUD";
+import AlmacenesCRUD from "../../server/crud/almacenes/components/AlmacenesCRUD";
+import InventariosCRUD from "../../server/crud/inventarios/components/InventariosCRUD";
+import PedidosCRUD from "../../server/crud/pedidos/components/PedidosCRUD";
 
-  const renderForm = () => {
-    switch (activeTab) {
-      case 'usuarios':
-        return <FormUsuarios />;
-      case 'products':
-        return <FormProducts />;
-      case 'suppliers':
-        return <FormSuppliers />;
-      case 'warehouses':
-        return <FormWarehouses />;
-      case 'orders':
-        return <FormOrders />;
-      default:
-        return <FormUsuarios />;
-    }
-  };
+export default function Panel() {
+  const [activeCRUD, setActiveCRUD] = useState(null);
+
+  const cruds = [
+    { name: "Proveedores", component: <ProveedoresCRUD /> },
+    { name: "Productos", component: <ProductosCRUD /> },
+    { name: "Almacenes", component: <AlmacenesCRUD /> },
+    { name: "Inventarios", component: <InventariosCRUD /> },
+    { name: "Pedidos", component: <PedidosCRUD /> },
+  ];
 
   return (
+    <div style={{ padding: "40px", maxWidth: "900px", margin: "auto" }}>
+      <h1>Panel Administrativo</h1>
+      <p>Selecciona el CRUD que deseas administrar:</p>
 
-    <section className="panel-section">
-      <div className="panel-container">
-        <h1>Panel de Administración</h1>
-        <div className="panel-tabs">
+      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "30px" }}>
+        {cruds.map(c => (
           <button
-            onClick={() => setActiveTab('usuarios')}
-            className={activeTab === 'usuarios' ? 'tab-active' : 'tab-inactive'}
+            key={c.name}
+            onClick={() => setActiveCRUD(c.name)}
+            style={{
+              padding: "10px 20px",
+              fontSize: "16px",
+              cursor: "pointer",
+              backgroundColor: activeCRUD === c.name ? "#4CAF50" : "#eee",
+              color: activeCRUD === c.name ? "#fff" : "#000",
+              border: "none",
+              borderRadius: "5px"
+            }}
           >
-            Usuarios
+            {c.name}
           </button>
-          <button
-            onClick={() => setActiveTab('products')}
-            className={activeTab === 'products' ? 'tab-active' : 'tab-inactive'}
-          >
-            Productos
-          </button>
-          <button
-            onClick={() => setActiveTab('suppliers')}
-            className={activeTab === 'suppliers' ? 'tab-active' : 'tab-inactive'}
-          >
-            Proveedores
-          </button>
-          <button
-            onClick={() => setActiveTab('warehouses')}
-            className={activeTab === 'warehouses' ? 'tab-active' : 'tab-inactive'}
-          >
-            Almacenes
-          </button>
-          <button
-            onClick={() => setActiveTab('orders')}
-            className={activeTab === 'orders' ? 'tab-active' : 'tab-inactive'}
-          >
-            Pedidos
-          </button>
-        </div>
-        <div className="panel-content">
-          {renderForm()}
-        </div>
+        ))}
       </div>
-    </section>
 
+      <div style={{ border: "1px solid #ccc", padding: "20px", borderRadius: "8px" }}>
+        {cruds.find(c => c.name === activeCRUD)?.component || <p>Selecciona un CRUD para mostrar.</p>}
+      </div>
+    </div>
   );
-};
-
-export default Panel;
+}

@@ -1,0 +1,54 @@
+.contenedor {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+}
+
+.mensaje {
+    position: relative;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    z-index: 1;
+    text-align: center;
+}
+
+.puerta1, .puerta2 {
+    position: absolute;
+    top: 0;
+    width: 49%;
+    height: 100vh;
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
+    transition: transform 1s ease-in-out;
+    z-index: 2; 
+}
+
+.puerta1 {
+    left: 0;
+    border-right: 0.25em solid black;
+      background-image: url('../../src/assets/co15.jpg');
+        background-size: cover;
+  background-position: center;
+}
+
+.puerta2 {
+    right: 0;
+    border-left: 0.25em solid black;
+          background-image: url('../../src/assets/co16.png');
+        background-size: cover;
+  background-position: center;
+}
+
+.puerta1Abierta {
+    transform: translateX(-100%);
+}
+
+.puerta2Abierta {
+    transform: translateX(100%);
+}
