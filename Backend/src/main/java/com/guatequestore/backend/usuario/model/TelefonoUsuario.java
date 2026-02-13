@@ -3,7 +3,7 @@ package com.guatequestore.backend.usuario.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "telefono_usuario") // Alineado con CREATE TABLE
+@Table(name = "telefonos_usuarios") // Alineado con CREATE TABLE
 public class TelefonoUsuario {
 
     @Id

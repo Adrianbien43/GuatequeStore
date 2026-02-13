@@ -1,10 +1,14 @@
 package com.guatequestore.backend.usuario.service;
 
+import com.guatequestore.backend.usuario.dto.ChangePasswordRequest;
+import com.guatequestore.backend.usuario.model.Contrasena;
 import com.guatequestore.backend.usuario.model.RolUsuario;
 import com.guatequestore.backend.usuario.model.Usuario;
 import com.guatequestore.backend.usuario.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,9 +17,12 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository,
+                          PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Usuario> getAllUsuarios() {
@@ -32,6 +39,7 @@ public class UsuarioService {
     }
 
     public Usuario createUsuario(Usuario usuario) {
+
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("El email '" + usuario.getEmail() + "' ya está registrado");
         }
@@ -52,6 +60,7 @@ public class UsuarioService {
     }
 
     public Usuario updateUsuario(Long id, Usuario usuarioActualizado) {
+
         Usuario usuarioExistente = getUsuarioById(id);
 
         if (usuarioActualizado.getEmail() != null &&
@@ -80,15 +89,31 @@ public class UsuarioService {
             usuarioExistente.setActivo(usuarioActualizado.getActivo());
         }
 
-        // Actualizar contraseña solo si se proporciona una nueva
-        if (usuarioActualizado.getContraseña() != null &&
-                !usuarioActualizado.getContraseña().isEmpty() &&
-                !usuarioActualizado.getContraseña().equals(usuarioExistente.getContraseña())) {
-            usuarioExistente.setContraseña(usuarioActualizado.getContraseña());
+        usuarioExistente.setFechaActualizacion(LocalDateTime.now());
+
+        return usuarioRepository.save(usuarioExistente);
+    }
+
+    // 🔐 MÉTODO SEPARADO (CORRECTAMENTE FUERA)
+    public void cambiarPassword(Long usuarioId, ChangePasswordRequest request) {
+
+        Usuario usuario = getUsuarioById(usuarioId);
+
+        String hashActual = usuario.getHashActual();
+
+        if (hashActual == null ||
+                !passwordEncoder.matches(request.getPasswordActual(), hashActual)) {
+            throw new RuntimeException("La contraseña actual es incorrecta");
         }
 
-        usuarioExistente.setFechaActualizacion(LocalDateTime.now());
-        return usuarioRepository.save(usuarioExistente);
+        String nuevoHash = passwordEncoder.encode(request.getNuevaPassword());
+
+        Contrasena nuevaContrasena = new Contrasena();
+        nuevaContrasena.setHash(nuevoHash);
+
+        usuario.addContrasena(nuevaContrasena);
+
+        usuarioRepository.save(usuario);
     }
 
     public void deleteUsuario(Long id) {

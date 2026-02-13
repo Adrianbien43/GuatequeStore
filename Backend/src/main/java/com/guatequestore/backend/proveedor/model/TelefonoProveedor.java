@@ -3,7 +3,7 @@ package com.guatequestore.backend.proveedor.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "telefono_proveedores")
+@Table(name = "telefonos_proveedores")
 public class TelefonoProveedor {
 
     @Id

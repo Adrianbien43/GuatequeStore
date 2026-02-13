@@ -2,53 +2,46 @@ package com.guatequestore.backend.usuario.model;
 
 import com.guatequestore.backend.pedido.model.Pedido;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-
 import java.util.Set;
 import java.util.HashSet;
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.Optional;
 
 /**
  * Entidad Usuario que representa un usuario del sistema.
  *
  * @author Adrian Bienvenido
- * @version 1.0.5
+ * @version 1.0.6
  */
-
 @Entity
-@Table(name = "usuario") // Cambiado de "clientes" a "usuario"
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_Usuario") // Alineado con tu CREATE TABLE
+    @Column(name = "ID_Usuario")
     private Long idUsuario;
 
-    @NotBlank(message = "Tienes que colocar el nombre")
-    @Size(min = 2, max = 100, message = "Tu nombre puede tener entre 2 y 100 caracteres")
+    @NotBlank
+    @Size(min = 2, max = 100)
     @Column(nullable = false, name = "nombre")
     private String nombre;
 
-    @NotBlank(message = "Necesitas una contraseña")
-    @Size(min = 8, message = "Requiere 8 caracteres mínimos para tu contraseña")
-    @Column(nullable = false, name = "contraseña") // Nombre exacto del CREATE TABLE
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String contraseña; // Cambiado de "password" a "contraseña"
-
-    @Size(max = 255, message = "La dirección puede tener hasta 255 caracteres")
+    @Size(max = 255)
     @Column(name = "direccion")
     private String direccion;
 
-    @NotBlank(message = "No puedes dejar vacío el email")
-    @Email(message = "El email debe ser válido")
+    @NotBlank
+    @Email
     @Column(nullable = false, unique = true, name = "email")
     private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "rol")
-    private RolUsuario rol = RolUsuario.CLIENTE; // Cambiado a RolUsuario y valor por defecto CLIENTE
+    private RolUsuario rol = RolUsuario.CLIENTE;
 
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
@@ -59,7 +52,12 @@ public class Usuario {
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
 
-    // Relación con teléfonos (actualizada)
+    // Historial de contraseñas (lista; la más reciente es la actual)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Contrasena> contrasenas = new HashSet<>();
+
+    // Relación con teléfonos
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<TelefonoUsuario> telefonos = new HashSet<>();
@@ -71,21 +69,20 @@ public class Usuario {
 
     // Constructores
     public Usuario() {
-        this.rol = RolUsuario.CLIENTE; // Valor por defecto según CREATE TABLE
+        this.rol = RolUsuario.CLIENTE;
         this.fechaCreacion = LocalDateTime.now();
         this.activo = true;
     }
 
-    public Usuario(String nombre, String contraseña, String direccion, String email) {
+    public Usuario(String nombre, String direccion, String email) {
         this();
         this.nombre = nombre;
-        this.contraseña = contraseña;
         this.direccion = direccion;
         this.email = email;
     }
 
-    public Usuario(Long idUsuario, String nombre, String contraseña, String direccion, String email, RolUsuario rol) {
-        this(nombre, contraseña, direccion, email);
+    public Usuario(Long idUsuario, String nombre, String direccion, String email, RolUsuario rol) {
+        this(nombre, direccion, email);
         this.idUsuario = idUsuario;
         this.rol = rol != null ? rol : RolUsuario.CLIENTE;
     }
@@ -95,91 +92,57 @@ public class Usuario {
         this.fechaActualizacion = LocalDateTime.now();
     }
 
-    // Getters y Setters
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-    public String getNombre() {
-        return nombre;
+    // Getters / Setters (incluyo getId()/setId() para compatibilidad)
+    public Long getIdUsuario() { return idUsuario; }
+    public Long getId() { return idUsuario; }
+    public void setId(Long id) { this.idUsuario = id; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public RolUsuario getRol() { return rol; }
+    public void setRol(RolUsuario rol) { this.rol = rol != null ? rol : RolUsuario.CLIENTE; }
+
+    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public LocalDateTime getFechaActualizacion() { return fechaActualizacion; }
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
+
+    public Boolean getActivo() { return activo; }
+    public void setActivo(Boolean activo) { this.activo = activo; }
+
+    public Set<Contrasena> getContrasenas() { return contrasenas; }
+    public void setContrasenas(Set<Contrasena> contrasenas) { this.contrasenas = contrasenas; }
+
+    public Set<TelefonoUsuario> getTelefonos() { return telefonos; }
+    public void setTelefonos(Set<TelefonoUsuario> telefonos) { this.telefonos = telefonos; }
+
+    public Set<Pedido> getPedidos() { return pedidos; }
+    public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; }
+
+    // Métodos auxiliares para contraseñas
+    public void addContrasena(Contrasena c) {
+        if (c != null) {
+            contrasenas.add(c);
+            c.setUsuario(this);
+        }
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void removeContrasena(Contrasena c) {
+        if (c != null) {
+            contrasenas.remove(c);
+            c.setUsuario(null);
+        }
     }
 
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public RolUsuario getRol() {
-        return rol;
-    }
-
-    public void setRol(RolUsuario rol) {
-        this.rol = rol != null ? rol : RolUsuario.CLIENTE;
-    }
-
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public LocalDateTime getFechaActualizacion() {
-        return fechaActualizacion;
-    }
-
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
-        this.fechaActualizacion = fechaActualizacion;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
-
-    public Set<TelefonoUsuario> getTelefonos() {
-        return telefonos;
-    }
-
-    public void setTelefonos(Set<TelefonoUsuario> telefonos) {
-        this.telefonos = telefonos;
-    }
-
-    public Set<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(Set<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    // Métodos de relación con teléfonos
+    // Métodos auxiliares relaciones (telefonos/pedidos)
     public void addTelefono(TelefonoUsuario telefono) {
         if (telefono != null) {
             telefonos.add(telefono);
@@ -194,7 +157,6 @@ public class Usuario {
         }
     }
 
-    // Métodos de relación con pedidos
     public void addPedido(Pedido pedido) {
         if (pedido != null) {
             pedidos.add(pedido);
@@ -209,30 +171,16 @@ public class Usuario {
         }
     }
 
-    /**
-     * Verifica si el usuario tiene permisos de administrador
-     * @return true si el rol es ADMINISTRADOR
-     */
-    public boolean esAdmin() {
-        return this.rol == RolUsuario.ADMINISTRADOR;
+
+    public String getHashActual() {
+        Optional<Contrasena> ultima = this.contrasenas.stream()
+                .max(Comparator.comparing(Contrasena::getFechaCreacion));
+        return ultima.map(Contrasena::getHash).orElse(null);
     }
 
-    // En tu Usuario.java, agrega estos métodos DESPUÉS de getIdUsuario():
-
-    public Long getId() {
-        return this.idUsuario;  // Devuelve el mismo que getIdUsuario()
-    }
-
-    public void setId(Long id) {
-        this.idUsuario = id;    // Asigna al mismo campo
-    }
-    /**
-     * Verifica si el usuario está activo
-     * @return true si está activo
-     */
-    public boolean estaActivo() {
-        return Boolean.TRUE.equals(this.activo);
-    }
+    // Utilidades
+    public boolean esAdmin() { return this.rol == RolUsuario.ADMINISTRADOR; }
+    public boolean estaActivo() { return Boolean.TRUE.equals(this.activo); }
 
     @Override
     public String toString() {
@@ -246,7 +194,7 @@ public class Usuario {
                 ", fechaCreacion=" + fechaCreacion +
                 ", cantidadTelefonos=" + (telefonos != null ? telefonos.size() : 0) +
                 ", cantidadPedidos=" + (pedidos != null ? pedidos.size() : 0) +
-                ", contraseña='[PROTEGIDO]'" +
                 '}';
     }
 }
+
