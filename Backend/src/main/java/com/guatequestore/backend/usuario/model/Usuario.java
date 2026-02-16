@@ -192,8 +192,9 @@ public class Usuario {
                 ", rol=" + rol +
                 ", activo=" + activo +
                 ", fechaCreacion=" + fechaCreacion +
-                ", cantidadTelefonos=" + (telefonos != null ? telefonos.size() : 0) +
-                ", cantidadPedidos=" + (pedidos != null ? pedidos.size() : 0) +
+                // ELIMINA COMPLETAMENTE estas líneas problemáticas:
+                // ", cantidadTelefonos=" + (telefonos != null ? telefonos.size() : 0) +
+                // ", cantidadPedidos=" + (pedidos != null ? pedidos.size() : 0) +
                 '}';
     }
 }
