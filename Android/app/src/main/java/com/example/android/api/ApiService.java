@@ -29,4 +29,7 @@ public interface ApiService {
 
     @DELETE("api/proveedores/{id}")
     Call<Void> eliminarProveedor(@Path("id") Long id);
+
+    @POST("api/auth/register")  // Ajusta la ruta según tu backend
+    Call<LoginResponse> register(@Body RegisterRequest registerRequest);
 }

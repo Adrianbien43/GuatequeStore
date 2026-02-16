@@ -127,6 +127,28 @@
                 android:inputType="textPassword"
                 android:maxLines="1" />
 
+            <!-- Confirmar Contraseña (NUEVO) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmar Contraseña"
+                android:textColor="#4A148C"
+                android:textSize="14sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Repite tu contraseña"
+                android:padding="14dp"
+                android:textColor="#000000"
+                android:textColorHint="#999999"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:background="@android:drawable/edit_text" />
+
             <!-- CheckBox -->
             <CheckBox
                 android:id="@+id/checkBoxTerminos"

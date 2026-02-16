@@ -185,12 +185,13 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "Nombre: " + loginResponse.getNombre());
                         Log.d(TAG, "Rol: " + loginResponse.getRol());
 
-                        // Guardar datos de sesión
+                        // Guardar datos de sesión INCLUYENDO EL ROL
                         sessionManager.saveLoginDetails(
                                 loginResponse.getToken(),
-                                loginResponse.getEmail(), // Usamos el email como ID si no hay ID específico
+                                loginResponse.getEmail(), // Usamos el email como ID
                                 loginResponse.getNombre(),
-                                loginResponse.getEmail()
+                                loginResponse.getEmail(),
+                                loginResponse.getRol()  // <-- AÑADIDO: guardar el rol
                         );
 
                         Toast.makeText(LoginActivity.this,

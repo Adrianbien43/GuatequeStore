@@ -149,6 +149,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/boton_registrate" />
 
+    <!-- Botón Cerrar Sesión (al final de tus botones) -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/color3"
+        android:text="Cerrar Sesión"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/btnProveedores"
+        app:layout_constraintStart_toStartOf="@id/izquierda"
+        app:layout_constraintEnd_toStartOf="@id/derecha"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

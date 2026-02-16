@@ -11,6 +11,7 @@ public class SessionManager {
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_USER_NAME = "user_name";
     private static final String KEY_USER_EMAIL = "user_email";
+    private static final String KEY_USER_ROLE = "user_role";  // <-- NUEVA CONSTANTE
     private static final String KEY_IS_LOGGED_IN = "is_logged_in";
 
     private SharedPreferences pref;
@@ -25,15 +26,16 @@ public class SessionManager {
     }
 
     /**
-     * Guardar datos de inicio de sesión
+     * Guardar datos de inicio de sesión (VERSIÓN ACTUALIZADA CON ROL)
      */
-    public void saveLoginDetails(String token, String userId, String userName, String userEmail) {
+    public void saveLoginDetails(String token, String userId, String userName, String userEmail, String userRole) {
         editor.putString(KEY_TOKEN, token);
         editor.putString(KEY_USER_ID, userId);
         editor.putString(KEY_USER_NAME, userName);
         editor.putString(KEY_USER_EMAIL, userEmail);
+        editor.putString(KEY_USER_ROLE, userRole);  // <-- NUEVA LÍNEA
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
-        editor.apply(); // apply() es asíncrono y más seguro que commit()
+        editor.apply();
     }
 
     /**
@@ -73,6 +75,20 @@ public class SessionManager {
     }
 
     /**
+     * Obtener rol del usuario (NUEVO MÉTODO)
+     */
+    public String getUserRole() {
+        return pref.getString(KEY_USER_ROLE, "");
+    }
+
+    /**
+     * Verificar si el usuario es ADMINISTRADOR (NUEVO MÉTODO)
+     */
+    public boolean isAdmin() {
+        return "ADMINISTRADOR".equals(getUserRole());
+    }
+
+    /**
      * Verificar si hay sesión iniciada
      */
     public boolean isLoggedIn() {
@@ -93,8 +109,10 @@ public class SessionManager {
      */
     public String getFullToken() {
         String token = getToken();
-        if (token != null && !token.startsWith("Bearer ")) {
-            return "Bearer " + token;
+        String tipo = pref.getString("tipo", "Bearer"); // Recupera el tipo guardado
+
+        if (token != null && !token.startsWith(tipo + " ")) {
+            return tipo + " " + token;
         }
         return token;
     }
