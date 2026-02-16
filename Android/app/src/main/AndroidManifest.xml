@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ANDROID"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".iniciosesion.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ProductoDetalleActivity2"
             android:exported="false" />
         <activity

@@ -7,6 +7,17 @@ import retrofit2.http.*;
 import java.util.List;
 
 public interface ApiService {
+
+    // ============ AUTENTICACIÓN ============
+    // IMPORTANTE: La ruta es "api/auth/login" NO "/token"
+    @POST("api/auth/login")
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"  // Cambiado a JSON porque en Postman funciona así
+    })
+    Call<LoginResponse> login(@Body LoginRequest loginRequest);
+
+    // ============ PROVEEDORES (requieren token) ============
     @GET("api/proveedores")
     Call<List<Proveedor>> getProveedores();
 

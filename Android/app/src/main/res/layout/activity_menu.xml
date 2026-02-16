@@ -123,16 +123,32 @@
         app:layout_constraintStart_toStartOf="@id/izquierda"
         tools:layout_editor_absoluteX="170dp" />
 
+    <!-- Botón Login -->
+    <Button
+        android:id="@+id/boton_login"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Login"
+        android:background="@color/color3"
+        app:layout_constraintTop_toBottomOf="@+id/boton_registrate"
+        app:layout_constraintEnd_toStartOf="@id/derecha"
+        app:layout_constraintStart_toStartOf="@id/izquierda"
+        tools:layout_editor_absoluteX="170dp" />
+
+
     <Button
         android:id="@+id/btnProveedores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="32dp"
-        android:padding="16dp"
-        android:text="CRUD de Proveedores"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="96dp"
+        android:padding="17dp"
+        android:text="Proveedores"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/boton_registrate" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
