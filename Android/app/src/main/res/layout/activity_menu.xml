@@ -7,12 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".activities.MenuActivity">
 
+    <!-- Guías para crear dos zonas (50% cada una) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
-    <!-- Esto son los margenes -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <!-- Margenes (incluido) -->
     <include layout="@layout/margenes" />
 
-
-    <!-- El resto de elemnetos -->
+    <!-- Fondo -->
     <ImageView
         android:id="@+id/fondo"
         android:layout_width="0dp"
@@ -22,44 +35,46 @@
         android:src="@drawable/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Flow para las imágenes decorativas (se reorganizan automáticamente) -->
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_imagenes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        app:flow_wrapMode="chain"
+        app:flow_horizontalGap="16dp"
+        app:flow_verticalGap="16dp"
+        app:flow_maxElementsWrap="3"
+        app:constraint_referenced_ids="imageView,imageView4,imageView2"
+        app:layout_constraintStart_toStartOf="@id/izquierda"
+        app:layout_constraintEnd_toEndOf="@id/derecha"
+        app:layout_constraintTop_toTopOf="@id/arriba" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="160dp"
-        android:layout_height="103dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ropa" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="160dp"
-        android:layout_height="103dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ropa" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="160dp"
-        android:layout_height="103dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ropa" />
 
+    <!-- Título de la app -->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
@@ -72,99 +87,76 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/derecha"
         app:layout_constraintStart_toStartOf="@id/izquierda"
-        app:layout_constraintTop_toTopOf="@id/arriba" />
+        app:layout_constraintTop_toBottomOf="@id/flow_imagenes" />
 
+    <!-- Flow para los botones principales -->
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_botones"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="20dp"
+        app:flow_wrapMode="chain"
+        app:flow_horizontalGap="16dp"
+        app:flow_verticalGap="16dp"
+        app:flow_maxElementsWrap="2"
+        app:constraint_referenced_ids="boton_novedades,boton_ropahombre,boton_ropamujer,boton_registrate,boton_login,btnProveedores,btnLogout"
+        app:layout_constraintStart_toStartOf="@id/izquierda"
+        app:layout_constraintEnd_toEndOf="@id/derecha"
+        app:layout_constraintTop_toBottomOf="@id/textView3"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <!-- Esto son los botones para las actividades -->
+    <!-- Botones (todos con 0dp para que el Flow los dimensione) -->
     <Button
         android:id="@+id/boton_novedades"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
         android:background="@color/color3"
-        android:text="@string/btn_eventos"
-        app:layout_constraintEnd_toStartOf="@id/derecha"
-        app:layout_constraintStart_toStartOf="@id/izquierda"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        android:text="@string/btn_eventos" />
 
     <Button
         android:id="@+id/boton_ropahombre"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
         android:text="@string/btn_Hombre"
-        android:background="@color/color3"
-        app:layout_constraintTop_toBottomOf="@+id/boton_novedades"
-        app:layout_constraintEnd_toStartOf="@id/derecha"
-        app:layout_constraintStart_toStartOf="@id/izquierda"
-        tools:layout_editor_absoluteX="161dp" />
+        android:background="@color/color3" />
 
     <Button
         android:id="@+id/boton_ropamujer"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
         android:text="@string/btn_Mujeres"
-        android:background="@color/color3"
-        app:layout_constraintTop_toBottomOf="@+id/boton_ropahombre"
-        app:layout_constraintEnd_toStartOf="@id/derecha"
-        app:layout_constraintStart_toStartOf="@id/izquierda"
-        tools:layout_editor_absoluteX="158dp" />
+        android:background="@color/color3" />
 
     <Button
         android:id="@+id/boton_registrate"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
         android:text="@string/btn_Registrate"
-        android:background="@color/color3"
-        app:layout_constraintTop_toBottomOf="@+id/boton_ropamujer"
-        app:layout_constraintEnd_toStartOf="@id/derecha"
-        app:layout_constraintStart_toStartOf="@id/izquierda"
-        tools:layout_editor_absoluteX="170dp" />
+        android:background="@color/color3" />
 
-    <!-- Botón Login -->
     <Button
         android:id="@+id/boton_login"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
         android:text="Login"
-        android:background="@color/color3"
-        app:layout_constraintTop_toBottomOf="@+id/boton_registrate"
-        app:layout_constraintEnd_toStartOf="@id/derecha"
-        app:layout_constraintStart_toStartOf="@id/izquierda"
-        tools:layout_editor_absoluteX="170dp" />
-
+        android:background="@color/color3" />
 
     <Button
         android:id="@+id/btnProveedores"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="96dp"
         android:padding="17dp"
         android:text="Proveedores"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boton_registrate" />
+        android:textSize="18sp" />
 
-    <!-- Botón Cerrar Sesión (al final de tus botones) -->
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="20dp"
         android:background="@color/color3"
         android:text="Cerrar Sesión"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/btnProveedores"
-        app:layout_constraintStart_toStartOf="@id/izquierda"
-        app:layout_constraintEnd_toStartOf="@id/derecha"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
+        android:textSize="16sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

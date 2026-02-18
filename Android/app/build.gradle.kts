@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // ✅ AÑADIDA EXPLÍCITAMENTE
 
     // RETROFIT + GSON (FUNCIONAL)
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
@@ -44,6 +45,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     implementation(libs.cronet.embedded)
+    implementation(libs.constraintlayout.core)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

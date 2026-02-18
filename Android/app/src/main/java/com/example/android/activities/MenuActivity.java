@@ -1,6 +1,7 @@
 package com.example.android.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.android.R;
 import com.example.android.iniciosesion.LoginActivity;
@@ -30,6 +33,9 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu);
+
+        // Aplicar ConstraintSet según la orientación
+        applyConstraintSetForOrientation();
 
         // Inicializar SessionManager
         sessionManager = new SessionManager(this);
@@ -104,6 +110,33 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
+    private void applyConstraintSetForOrientation() {
+        ConstraintLayout constraintLayout = findViewById(R.id.main);
+        ConstraintSet constraintSet = new ConstraintSet();
+
+        try {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                constraintSet.load(this, R.xml.constraintset_landscape);
+            } else {
+                constraintSet.load(this, R.xml.constraintset_portrait);
+            }
+
+            constraintSet.applyTo(constraintLayout);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Si falla, el layout por defecto ya funciona
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Reaplicar ConstraintSet cuando cambia la orientación
+        applyConstraintSetForOrientation();
+        // Reconfigurar visibilidad de botones
+        configurarVisibilidadBotones();
+    }
+
     private void configurarVisibilidadBotones() {
         if (sessionManager.isLoggedIn()) {
             // Usuario logueado - ocultar login/registro, mostrar logout
@@ -143,7 +176,7 @@ public class MenuActivity extends AppCompatActivity {
         Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
 
         // Redirigir al login y limpiar el stack de actividades
-        Intent intent = new Intent(MenuActivity.this, MenuActivity.class); // CORREGIDO: iba a MenuActivity
+        Intent intent = new Intent(MenuActivity.this, MenuActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
