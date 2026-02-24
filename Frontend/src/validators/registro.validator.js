@@ -1,4 +1,4 @@
-//Valida exclusivamente el formulario de registro
+// Valida exclusivamente el formulario de registro
 export const validateRegistro = ({nombre, email, password, confirm}) => {
     const errors = {};
 
