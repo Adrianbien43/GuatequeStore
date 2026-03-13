@@ -100,7 +100,7 @@ export default function Inicio() {
         </div>
 
         {/* Segundo grupo para el loop del carrusel */}
-        <div aria-hidden className={styles.group}>
+        <div aria-hidden="true" className={styles.group}>
 
           <div className={`${styles.card} ${styles.card1}`}>
             <div className={`${styles.card_Info} ${styles.card1_Info}`}>
