@@ -32,7 +32,7 @@
 .puerta1 {
     left: 0;
     border-right: 0.25em solid black;
-      background-image: url('../../src/assets/co15.jpg');
+      background-image: url('../../src/assets/co15.webp');
         background-size: cover;
   background-position: center;
 }
@@ -40,7 +40,7 @@
 .puerta2 {
     right: 0;
     border-left: 0.25em solid black;
-          background-image: url('../../src/assets/co16.png');
+          background-image: url('../../src/assets/co16.webp');
         background-size: cover;
   background-position: center;
 }
