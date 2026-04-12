@@ -22,7 +22,7 @@
 .seccion1 {
   position: relative;
   height: 80vh;
-  background-image: url('../../src/assets/co.jpg');
+  background-image: url('../../src/assets/co.webp');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -131,7 +131,7 @@
 
 
 .card1 {
-  background-image: url('../../src/assets/co2.jpg');
+  background-image: url('../../src/assets/co2.webp');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -140,7 +140,7 @@
 }
 
 .card2 {
-  background-image: url('../../src/assets/co3.jpg');
+  background-image: url('../../src/assets/co3.webp');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -149,7 +149,7 @@
 }
 
 .card3 {
-  background-image: url('../../src/assets/co1.jpg');
+  background-image: url('../../src/assets/co1.webp');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -159,7 +159,7 @@
 }
 
 .card4 {
-  background-image: url('../../src/assets/co4.jpg');
+  background-image: url('../../src/assets/co4.webp');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -168,7 +168,7 @@
 }
 
 .card5 {
-  background-image: url('../../src/assets/co5.jpg');
+  background-image: url('../../src/assets/co5.webp');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -177,7 +177,7 @@
 }
 
 .card6 {
-  background-image: url('../../src/assets/co6.jpg');
+  background-image: url('../../src/assets/co6.webp');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -237,7 +237,7 @@
 .card1_sec2 {
   height: 200px;
   width: 150px;
-  background-image: url('../../src/assets/co10.jpg');
+  background-image: url('../../src/assets/co10.webp');
   background-size: cover;
   background-position: center;
   margin-right: 10px;
@@ -246,7 +246,7 @@
 .card2_sec2 {
   height: 200px;
   width: 150px;
-  background-image: url('../../src/assets/co8.jpg');
+  background-image: url('../../src/assets/co8.webp');
   background-size: cover;
   background-position: center;
   margin-right: 10px;
@@ -255,7 +255,7 @@
 .card3_sec2 {
   height: 200px;
   width: 150px;
-  background-image: url('../../src/assets/co3.jpg');
+  background-image: url('../../src/assets/co3.webp');
   background-size: cover;
   background-position: center;
   margin-right: 10px;
@@ -264,7 +264,7 @@
 .card4_sec2 {
   height: 200px;
   width: 150px;
-  background-image: url('../../src/assets/co12.jpg');
+  background-image: url('../../src/assets/co12.webp');
   background-size: cover;
   background-position: center;
   margin-right: 10px;
