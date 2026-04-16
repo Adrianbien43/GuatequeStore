@@ -1,6 +1,8 @@
 package com.guatequestore.backend.usuario.model;
 
+// Según CREATE TABLE ENUM('MOVIL','FIJO')
+
 public enum TipoTelefono {
-    MOVIL,  // Según CREATE TABLE ENUM('MOVIL','FIJO')
+    MOVIL,  
     FIJO
 }
