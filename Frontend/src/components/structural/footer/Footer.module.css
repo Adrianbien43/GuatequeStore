@@ -17,7 +17,7 @@
   display: flex;
   gap: 15px;
   align-items: center;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .socialIcons a {
@@ -32,7 +32,7 @@
 .quickInfo {
   max-width: 400px;
   text-align: center;
-  font-size: 10px;
+  font-size: 15px;
 }
 
 .quickInfo p{
@@ -43,7 +43,7 @@
   text-align: center;
   border-top: 1px solid white;
   padding-top: 10px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 @media (max-width: 768px) {

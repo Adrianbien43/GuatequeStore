@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
 import { PrivateRoute } from "./components/PrivateRoute";
 
 import Header from "./components/structural/header/Header";
@@ -17,10 +18,11 @@ import Panel from "./pages/panel/Panel";
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <div className="structural">
-          <Header />
-          <Main>
+      <CartProvider>
+        <BrowserRouter>
+          <div className="structural">
+            <Header />
+            <Main>
             <Routes>
               {/* Rutas públicas */}
               <Route path="/" element={<Inicio />} />
@@ -53,6 +55,7 @@ function App() {
           <Footer />
         </div>
       </BrowserRouter>
+      </CartProvider>
     </AuthProvider>
   );
 }

@@ -177,8 +177,9 @@ export default function Inicio() {
             <h2>Vestido Dama</h2>
             <h4>Ropa del momento</h4>
             <p>
-              Guateque viste tus días de encanto y elegancia,
-              con vestidos que susurran estilo y celebran tu esencia.
+              Guateque viste tus días de encanto y elegancia, con diseños 
+              que fluyen contigo y elevan tu presencia, transformando cada 
+              prenda en una expresión sutil de estilo, identidad y sofisticación.
             </p>
           </div>
           <div className={styles.card1_sec2}></div>

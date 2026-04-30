@@ -19,6 +19,7 @@
     min-height: 300px;
 }
 
+/*Primavera*/
 .seccion_titulo1 {
     position: relative;
     background-image: url('../../src/assets/co18.webp');
@@ -58,21 +59,142 @@
   }
 }
 
+/*Verano*/
+.seccion_titulo2 {
+    position: relative;
+    background-image: url('../../src/assets/verano.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+
+.seccion_titulo2::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 181, 181, 0.253);
+    pointer-events: none;
+}
+
+.seccion_card1 {
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo1 20s infinite ease-in-out;
+}
+
+@keyframes alternarFondo1 {
+  0% {
+    background-image: url('../../src/assets/co15.webp');
+  }
+  50% {
+    background-image: url('../../src/assets/mujerverano.jpg');
+  }
+  100% {
+    background-image: url('../../src/assets/co15.webp');
+  }
+}
+
+/*Otoño*/
+.seccion_titulo3 {
+    position: relative;
+    background-image: url('../../src/assets/OtoñoMujer.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+
+.seccion_titulo3::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(65, 39, 0, 0.315);
+    pointer-events: none;
+}
+
+.seccion_card2 {
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo2 20s infinite ease-in-out;
+}
+
+@keyframes alternarFondo2 {
+  0% {
+    background-image: url('../../src/assets/mujerOtoño1.jpg');
+  }
+  50% {
+    background-image: url('../../src/assets/mujerOtoño2.jpg');
+  }
+  100% {
+    background-image: url('../../src/assets/mujerOtoño1.jpg');
+  }
+}
+
+/*Invierno*/
+.seccion_titulo4 {
+    position: relative;
+    background-image: url('../../src/assets/inviernoMujer.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+
+.seccion_titulo4::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(129, 210, 241, 0.26);
+    pointer-events: none;
+}
+
+.seccion_card3 {
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo3 20s infinite ease-in-out;
+}
+
+@keyframes alternarFondo3 {
+  0% {
+    background-image: url('../../src/assets/mujerInvierno1.jpg');
+  }
+  50% {
+    background-image: url('../../src/assets/mujerInvierno.jpg');
+  }
+  100% {
+    background-image: url('../../src/assets/mujerInvierno1.jpg');
+  }
+}
+
+
 .titulo1 {
-    width: 120px;
+    width: 250px;
     z-index: 2;
     position: absolute;
-    bottom: 10px;
-    left: 5px;
+    top: 20px;
+    left: 20px;
 }
 
 .titulo1 h2 {
-    font-size: 19px;
-    margin: 1px;
+    font-size: 3.1rem;
+    margin: 2px;
 }
 
 .titulo1 h5 {
-    font-size: 11px;
+    font-size: 1.2rem;
     margin: 1px;
 }
 
@@ -93,7 +215,7 @@
   border: none;
   cursor: pointer;
   --border-right: 4px;
-  --fs-size: 1em; /* tamaño más pequeño */
+  --fs-size: 1.2em; /* tamaño más pequeño */
   letter-spacing: 2px;
   font-size: var(--fs-size);
   font-family: "Arial";

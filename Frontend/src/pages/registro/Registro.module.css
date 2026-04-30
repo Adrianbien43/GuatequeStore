@@ -1,24 +1,31 @@
 /* Contenedor principal de la página */
 .registro {
-  height: 100vh;
+  height: 450px;
+  width: 450px;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   justify-content: center;
   align-items: center;
-  background: #f5f6fa;
+  background: var(--brown-mid-2);
+  border-radius: 20px;
   font-family: Arial, sans-serif;
 }
 
 /* Título */
 .registro h2 {
   margin-bottom: 1rem;
-  color: #333;
+  color: #202020;
+  font-size: 30px;
 }
 
 /* Formulario */
 .form {
-  background: #ffffff;
-  padding: 2rem;
+  background: #ffffff00;
+  /* padding: 2rem; */
   width: 100%;
   max-width: 380px;
   border-radius: 8px;
@@ -51,7 +58,7 @@
 
 /* Botón */
 .form button {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   padding: 0.75rem;
   background: #4a90e2;
   color: #ffffff;

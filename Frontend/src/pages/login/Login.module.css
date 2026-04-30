@@ -1,17 +1,23 @@
 .login {
-  max-width: 400px;
-  margin: 50px auto;
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  background-color: var(--brown-mid-2);
   font-family: 'Arial', sans-serif;
 }
 
 .login h2 {
   text-align: center;
-  margin-bottom: 25px;
-  color: #333;
+  font-size: 30px;
+  margin-top: 15px;
+  margin-bottom: 45px;
+  color: #000000;
 }
 
 .form {
@@ -30,12 +36,13 @@
 }
 
 .form input:focus {
-  border-color: #0077ff;
+  border-color: var(--brown-dark-1);
 }
 
 .form button {
   padding: 12px;
   font-size: 16px;
+  margin-top: 30px;
   border: none;
   border-radius: 8px;
   background-color: #0077ff;
@@ -45,7 +52,7 @@
 }
 
 .form button:hover {
-  background-color: #005bb5;
+  background-color: #00305f;
 }
 
 .form button:disabled {

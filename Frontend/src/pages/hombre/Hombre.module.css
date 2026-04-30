@@ -34,64 +34,182 @@
   background-color: blue;
 }
 
-/* BLOQUE TÍTULO */
+/*Primavera*/
 .seccion_titulo1 {
-  position: relative;
-  background-image: url('../../src/assets/co18.webp');
-  background-size: cover;
-  background-position: center;
-  width: 50%;
+    position: relative;
+    background-image: url('../../src/assets/PrimaverHombres.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
 }
 
 .seccion_titulo1::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.259);
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.259);
+    pointer-events: none;
 }
 
-/* CARD DERECHA */
 .seccion_card {
-  position: relative; /* permite que el botón se posicione dentro */
-  background-size: cover;
-  background-position: center;
-  width: 50%;
-  animation: alternarFondo 20s infinite ease-in-out;
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo 20s infinite ease-in-out;
 }
 
 @keyframes alternarFondo {
   0% {
-    background-image: url('../../src/assets/co17.webp');
+    background-image: url('../../src/assets/primaveraHombre1.jpg');
   }
   50% {
-    background-image: url('../../src/assets/co19.webp');
+    background-image: url('../../src/assets/primaveraHombre2.jpg');
   }
   100% {
-    background-image: url('../../src/assets/co17.webp');
+    background-image: url('../../src/assets/primaveraHombre1.jpg');
   }
 }
 
-/* TÍTULOS */
+/*Verano*/
+.seccion_titulo2 {
+    position: relative;
+    background-image: url('../../src/assets/VeranoHombres.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+
+.seccion_titulo2::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 181, 181, 0.253);
+    pointer-events: none;
+}
+
+.seccion_card1 {
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo1 20s infinite ease-in-out;
+}
+
+@keyframes alternarFondo1 {
+  0% {
+    background-image: url('../../src/assets/veranoHombre1.jpg');
+  }
+  50% {
+    background-image: url('../../src/assets/veranoHombre2.jpg');
+  }
+  100% {
+    background-image: url('../../src/assets/veranoHombre1.jpg');
+  }
+}
+
+/*Otoño*/
+.seccion_titulo3 {
+    position: relative;
+    background-image: url('../../src/assets/OtoñoHombres.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+
+.seccion_titulo3::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(65, 39, 0, 0.315);
+    pointer-events: none;
+}
+
+.seccion_card2 {
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo2 20s infinite ease-in-out;
+}
+
+@keyframes alternarFondo2 {
+  0% {
+    background-image: url('../../src/assets/otoñoHombre1.jpg');
+  }
+  50% {
+    background-image: url('../../src/assets/otoñoHombre2.jpg');
+  }
+  100% {
+    background-image: url('../../src/assets/otoñoHombre1.jpg');
+  }
+}
+
+/*Invierno*/
+.seccion_titulo4 {
+    position: relative;
+    background-image: url('../../src/assets/InviernoHombres.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+}
+
+.seccion_titulo4::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(129, 210, 241, 0.26);
+    pointer-events: none;
+}
+
+.seccion_card3 {
+    position: relative; /* permite que el botón se posicione dentro */
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    animation: alternarFondo3 20s infinite ease-in-out;
+}
+
+@keyframes alternarFondo3 {
+  0% {
+    background-image: url('../../src/assets/inviernoHombre1.jpg');
+  }
+  50% {
+    background-image: url('../../src/assets/inviernoHombre2.jpg');
+  }
+  100% {
+    background-image: url('../../src/assets/inviernoHombre1.jpg');
+  }
+}
+
 .titulo1 {
-  width: 120px;
-  z-index: 2;
-  position: absolute;
-  bottom: 10px;
-  left: 5px;
+    width: 250px;
+    z-index: 2;
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }
 
 .titulo1 h2 {
-  font-size: 19px;
-  margin: 1px;
+    font-size: 3.1rem;
+    margin: 2px;
 }
 
 .titulo1 h5 {
-  font-size: 11px;
-  margin: 1px;
+    font-size: 1.2rem;
+    margin: 1px;
 }
 
 /* FOOTER */
@@ -112,7 +230,7 @@
   border: none;
   cursor: pointer;
   --border-right: 4px;
-  --fs-size: 1em;
+  --fs-size: 1.2em;
   letter-spacing: 2px;
   font-size: var(--fs-size);
   font-family: "Arial";
