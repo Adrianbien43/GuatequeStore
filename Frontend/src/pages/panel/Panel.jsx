@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from './Panel.module.css';
 
 // Importa todos los CRUD
 import ProveedoresCRUD from "../../server/crud/proveedores/components/ProveedoresCRUD";
@@ -19,32 +20,56 @@ export default function Panel() {
   ];
 
   return (
-    <div style={{ padding: "40px", maxWidth: "900px", margin: "auto" }}>
-      <h1>Panel Administrativo</h1>
-      <p>Selecciona el CRUD que deseas administrar:</p>
+    <div className={styles.dashboardContainer}>
+      <div className={styles.welcomeSection}>
+        <h1 className={styles.welcomeTitle}>Panel Administrativo</h1>
+        <p className={styles.welcomeSubtitle}>Selecciona el CRUD que deseas administrar</p>
+      </div>
 
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "30px" }}>
+      <div className={styles.cardsGrid}>
         {cruds.map(c => (
-          <button
+          <div
             key={c.name}
+            className={styles.card}
             onClick={() => setActiveCRUD(c.name)}
-            style={{
-              padding: "10px 20px",
-              fontSize: "16px",
-              cursor: "pointer",
-              backgroundColor: activeCRUD === c.name ? "#4CAF50" : "#eee",
-              color: activeCRUD === c.name ? "#fff" : "#000",
-              border: "none",
-              borderRadius: "5px"
-            }}
           >
-            {c.name}
-          </button>
+            <div className={styles.cardIcon}>
+              {c.name === "Proveedores" && "📦"}
+              {c.name === "Productos" && "👕"}
+              {c.name === "Almacenes" && "🏭"}
+              {c.name === "Inventarios" && "📊"}
+              {c.name === "Pedidos" && "📋"}
+            </div>
+            <h3 className={styles.cardTitle}>{c.name}</h3>
+            <p className={styles.cardDescription}>
+              Gestionar {c.name.toLowerCase()}
+            </p>
+          </div>
         ))}
       </div>
 
-      <div style={{ border: "1px solid #ccc", padding: "20px", borderRadius: "8px" }}>
-        {cruds.find(c => c.name === activeCRUD)?.component || <p>Selecciona un CRUD para mostrar.</p>}
+      <div className={styles.contentSection}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>
+            {activeCRUD ? `Gestión de ${activeCRUD}` : "Selecciona una opción"}
+          </h2>
+          {activeCRUD && (
+            <button className={styles.backBtn} onClick={() => setActiveCRUD(null)}>
+              Volver al menú
+            </button>
+          )}
+        </div>
+        <div>
+          {cruds.find(c => c.name === activeCRUD)?.component || 
+            <div className={styles.emptyState}>
+              <div className={styles.emptyStateIcon}>📋</div>
+              <h3 className={styles.emptyStateTitle}>Selecciona un CRUD</h3>
+              <p className={styles.emptyStateMessage}>
+                Elige una de las opciones del menú para comenzar a administrar
+              </p>
+            </div>
+          }
+        </div>
       </div>
     </div>
   );

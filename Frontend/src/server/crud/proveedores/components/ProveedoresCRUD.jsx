@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProveedores } from "../hooks/useProveedores";
+import styles from './ProveedoresCRUD.module.css';
 
 export default function ProveedoresCRUD() {
   const { proveedores, loading, addProveedor, editProveedor, removeProveedor } = useProveedores();
@@ -25,23 +26,36 @@ export default function ProveedoresCRUD() {
   };
 
   return (
-    <div>
-      <h2>CRUD de Proveedores</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" required />
-        <input name="direccion" value={form.direccion} onChange={handleChange} placeholder="Dirección" />
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div>
+          <h2>CRUD de Proveedores</h2>
+          <p>Gestiona los proveedores de la tienda</p>
+        </div>
+        <button className={styles.btnNew} onClick={() => setEditing({ id: null })}>
+          + Nuevo Proveedor
+        </button>
+      </div>
+
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formGrid}>
+          <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" required />
+          <input name="direccion" value={form.direccion} onChange={handleChange} placeholder="Dirección" />
+        </div>
         <button type="submit">{editing ? "Actualizar" : "Crear"}</button>
       </form>
 
       {loading ? (
-        <p>Cargando...</p>
+        <p className={styles.loading}>Cargando...</p>
       ) : (
-        <ul>
+        <ul className={styles.lista}>
           {proveedores.map((p) => (
-            <li key={p.id}>
-              {p.nombre} - {p.direccion || "Sin dirección"}
-              <button onClick={() => handleEdit(p)}>Editar</button>
-              <button onClick={() => removeProveedor(p.id)}>Eliminar</button>
+            <li key={p.id} className={styles.item}>
+              <span>{p.nombre} - {p.direccion || "Sin dirección"}</span>
+              <div>
+                <button onClick={() => handleEdit(p)}>Editar</button>
+                <button onClick={() => removeProveedor(p.id)}>Eliminar</button>
+              </div>
             </li>
           ))}
         </ul>

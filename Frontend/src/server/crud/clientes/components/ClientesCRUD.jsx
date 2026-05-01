@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useClientes } from "../hooks/useClientes";
+import styles from './ClientesCRUD.module.css';
 
 export default function ClientesCRUD() {
   const { clientes, loading, addCliente, editCliente, removeCliente } = useClientes();
@@ -25,17 +26,28 @@ export default function ClientesCRUD() {
   };
 
   return (
-    <div>
-      <h2>Clientes</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-        <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} required />
-        <input name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
-        <input name="direccion" placeholder="Dirección" value={form.direccion} onChange={handleChange} />
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div>
+          <h2>Clientes</h2>
+          <p>Gestiona los clientes de la tienda</p>
+        </div>
+        <button className={styles.btnNew} onClick={() => setEditingId(null)}>
+          + Nuevo Cliente
+        </button>
+      </div>
+
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formGrid}>
+          <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} required />
+          <input name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
+          <input name="direccion" placeholder="Dirección" value={form.direccion} onChange={handleChange} />
+        </div>
         <button type="submit">{editingId ? "Actualizar" : "Agregar"}</button>
       </form>
 
-      {loading ? <p>Cargando...</p> : (
-        <table border="1" cellPadding="5">
+      {loading ? <p className={styles.loading}>Cargando...</p> : (
+        <table className={styles.tabla}>
           <thead>
             <tr>
               <th>ID</th>

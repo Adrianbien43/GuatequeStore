@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProductos } from "../hooks/useProductos";
+import styles from './ProductosCRUD.module.css';
 
 export default function ProductosCRUD() {
   const { productos, loading, addProducto, editProducto, removeProducto } = useProductos();
@@ -42,34 +43,47 @@ export default function ProductosCRUD() {
   };
 
   return (
-    <div>
-      <h2>CRUD de Productos</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" required/>
-        <select name="categoria" value={form.categoria} onChange={handleChange}>
-          <option value="PANTALON">PANTALON</option>
-          <option value="CAMISETA">CAMISETA</option>
-          <option value="GORRA">GORRA</option>
-          <option value="SUDADERA">SUDADERA</option>
-        </select>
-        <input name="talla" value={form.talla} onChange={handleChange} placeholder="Talla"/>
-        <input name="precioUnitario" value={form.precioUnitario} onChange={handleChange} placeholder="Precio" type="number" step="0.01"/>
-        <input name="marca" value={form.marca} onChange={handleChange} placeholder="Marca"/>
-        <select name="genero" value={form.genero} onChange={handleChange}>
-          <option value="HOMBRE">HOMBRE</option>
-          <option value="MUJER">MUJER</option>
-        </select>
-        <input name="proveedorId" value={form.proveedorId} onChange={handleChange} placeholder="ID Proveedor" required/>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div>
+          <h2>CRUD de Productos</h2>
+          <p>Gestiona los productos de la tienda</p>
+        </div>
+        <button className={styles.btnNew} onClick={() => setEditing({ id: null })}>
+          + Nuevo Producto
+        </button>
+      </div>
+
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formGrid}>
+          <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" required/>
+          <select name="categoria" value={form.categoria} onChange={handleChange}>
+            <option value="PANTALON">PANTALON</option>
+            <option value="CAMISETA">CAMISETA</option>
+            <option value="GORRA">GORRA</option>
+            <option value="SUDADERA">SUDADERA</option>
+          </select>
+          <input name="talla" value={form.talla} onChange={handleChange} placeholder="Talla"/>
+          <input name="precioUnitario" value={form.precioUnitario} onChange={handleChange} placeholder="Precio" type="number" step="0.01"/>
+          <input name="marca" value={form.marca} onChange={handleChange} placeholder="Marca"/>
+          <select name="genero" value={form.genero} onChange={handleChange}>
+            <option value="HOMBRE">HOMBRE</option>
+            <option value="MUJER">MUJER</option>
+          </select>
+          <input name="proveedorId" value={form.proveedorId} onChange={handleChange} placeholder="ID Proveedor" required/>
+        </div>
         <button type="submit">{editing ? "Actualizar" : "Crear"}</button>
       </form>
 
       {loading ? <p>Cargando...</p> : 
-        <ul>
+        <ul className={styles.lista}>
           {productos.map(p => (
-            <li key={p.id}>
-              {p.nombre} - {p.categoria} - ${p.precioUnitario}
-              <button onClick={() => handleEdit(p)}>Editar</button>
-              <button onClick={() => removeProducto(p.id)}>Eliminar</button>
+            <li key={p.id} className={styles.item}>
+              <span>{p.nombre} - {p.categoria} - ${p.precioUnitario}</span>
+              <div>
+                <button onClick={() => handleEdit(p)}>Editar</button>
+                <button onClick={() => removeProducto(p.id)}>Eliminar</button>
+              </div>
             </li>
           ))}
         </ul>
