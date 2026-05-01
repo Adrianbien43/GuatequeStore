@@ -18,13 +18,30 @@ export default function Table({
 
     // Obtener un identificador único para cada fila
     const getRowKey = (row, index) => {
-        return row.id || row.idProducto || row.idUsuario || row.almacenId || index;
+        // Si row.id es un objeto (InventarioId con almacenId + productoId)
+        if (row.id && typeof row.id === 'object') {
+            return `${row.id.almacenId}-${row.id.productoId}`;
+        }
+        
+        // Si row.id es un primitivo (número, string)
+        if (row.id) {
+            return row.id;
+        }
+        
+        // Fallbacks para otros modelos
+        if (row.idProducto) return row.idProducto;
+        if (row.idUsuario) return row.idUsuario;
+        if (row.almacenId && row.productoId) return `${row.almacenId}-${row.productoId}`;
+        if (row.almacenId) return row.almacenId;
+        
+        // Último recurso
+        return index;
     };
 
     // Obtener el valor de una celda, soportando funciones render personalizadas
     const getCellValue = (row, column) => {
         if (column.render) {
-            return column.render(row[column.key]);
+            return column.render(row[column.key], row);  // Pasar row completo también
         }
         
         const value = row[column.key];
@@ -47,9 +64,12 @@ export default function Table({
                 </thead>
                 <tbody>
                     {data.map((row, index) => (
-                        <tr key={getRowKey(row, index)} className={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
+                        <tr 
+                            key={getRowKey(row, index)} 
+                            className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
+                        >
                             {columns.map(column => (
-                                <td key={column.key}>
+                                <td key={`${getRowKey(row, index)}-${column.key}`}>
                                     {getCellValue(row, column)}
                                 </td>
                             ))}
