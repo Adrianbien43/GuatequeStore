@@ -15,19 +15,37 @@ export default function ProductosCRUD() {
     proveedorId: "",
   });
   const [editing, setEditing] = useState(null);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { ...form, precioUnitario: parseFloat(form.precioUnitario), proveedor: { id: form.proveedorId } };
-    if (editing) {
-      editProducto(editing.id, payload);
-      setEditing(null);
-    } else {
-      addProducto(payload);
+    setError("");
+    setSuccess("");
+    
+    if (!form.nombre || !form.proveedorId) {
+      setError("Nombre y Proveedor son campos requeridos");
+      return;
     }
-    setForm({ nombre: "", categoria: "CAMISETA", talla: "", precioUnitario: "", marca: "", genero: "HOMBRE", proveedorId: "" });
+
+    try {
+      const payload = { ...form, precioUnitario: parseFloat(form.precioUnitario), proveedor: { id: form.proveedorId } };
+      if (editing) {
+        await editProducto(editing.id, payload);
+        setSuccess("Producto actualizado exitosamente");
+      } else {
+        await addProducto(payload);
+        setSuccess("Producto creado exitosamente");
+      }
+      setEditing(null);
+      setForm({ nombre: "", categoria: "CAMISETA", talla: "", precioUnitario: "", marca: "", genero: "HOMBRE", proveedorId: "" });
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err) {
+      setError(err.message || "Error al procesar el producto");
+      console.error(err);
+    }
   };
 
   const handleEdit = (p) => {
@@ -41,6 +59,15 @@ export default function ProductosCRUD() {
       genero: p.genero || "HOMBRE",
       proveedorId: p.proveedor?.id || "",
     });
+    setError("");
+    setSuccess("");
+  };
+
+  const handleCancel = () => {
+    setEditing(null);
+    setForm({ nombre: "", categoria: "CAMISETA", talla: "", precioUnitario: "", marca: "", genero: "HOMBRE", proveedorId: "" });
+    setError("");
+    setSuccess("");
   };
 
   const columns = [
@@ -56,33 +83,45 @@ export default function ProductosCRUD() {
     <div className={styles.container}>
       <div className={styles.header}>
         <div>
-          <h2>CRUD de Productos</h2>
-          <p>Gestiona los productos de la tienda</p>
+          <h2>Gestía de Productos</h2>
+          <p>Administra el catálogo de productos de la tienda</p>
         </div>
-        <button className={styles.btnNew} onClick={() => setEditing({ id: null })}>
+        <button className={styles.btnNew} onClick={() => { setEditing(null); setForm({ nombre: "", categoria: "CAMISETA", talla: "", precioUnitario: "", marca: "", genero: "HOMBRE", proveedorId: "" }); setError(""); setSuccess(""); }}>
           + Nuevo Producto
         </button>
       </div>
 
+      {error && <div className={styles.errorAlert}>{error}</div>}
+      {success && <div className={styles.successAlert}>{success}</div>}
+
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formGrid}>
-          <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" required/>
+          <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre del producto" required/>
           <select name="categoria" value={form.categoria} onChange={handleChange}>
-            <option value="PANTALON">PANTALON</option>
+            <option value="PANTALON">PANTALÓN</option>
             <option value="CAMISETA">CAMISETA</option>
             <option value="GORRA">GORRA</option>
             <option value="SUDADERA">SUDADERA</option>
           </select>
-          <input name="talla" value={form.talla} onChange={handleChange} placeholder="Talla"/>
-          <input name="precioUnitario" value={form.precioUnitario} onChange={handleChange} placeholder="Precio" type="number" step="0.01"/>
+          <input name="talla" value={form.talla} onChange={handleChange} placeholder="Talla (S, M, L, XL, etc)"/>
+          <input name="precioUnitario" value={form.precioUnitario} onChange={handleChange} placeholder="Precio unitario" type="number" step="0.01" required/>
           <input name="marca" value={form.marca} onChange={handleChange} placeholder="Marca"/>
           <select name="genero" value={form.genero} onChange={handleChange}>
             <option value="HOMBRE">HOMBRE</option>
             <option value="MUJER">MUJER</option>
           </select>
-          <input name="proveedorId" value={form.proveedorId} onChange={handleChange} placeholder="ID Proveedor" required/>
+          <input name="proveedorId" value={form.proveedorId} onChange={handleChange} placeholder="ID del Proveedor" type="number" required/>
         </div>
-        <button type="submit">{editing ? "Actualizar" : "Crear"}</button>
+        <div className={styles.formActions}>
+          <button type="submit" className={styles.btnSubmit}>
+            {editing ? "Actualizar Producto" : "Crear Producto"}
+          </button>
+          {editing && (
+            <button type="button" className={styles.btnCancel} onClick={handleCancel}>
+              Cancelar
+            </button>
+          )}
+        </div>
       </form>
 
       <Table 

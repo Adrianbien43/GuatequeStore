@@ -58,12 +58,17 @@
   box-shadow: 0 4px 12px rgba(33, 22, 18, 0.2);
 }
 
+.btnNew:active {
+  transform: translateY(0);
+}
+
 .form {
   background: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 30px;
   border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .formGrid {
@@ -81,6 +86,11 @@
   font-size: 14px;
   font-family: inherit;
   transition: all 0.3s ease;
+  background-color: white;
+}
+
+.form input::placeholder {
+  color: #999;
 }
 
 .form input:focus,
@@ -101,10 +111,11 @@
 .formActions {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .btnSubmit {
-  padding: 10px 20px;
+  padding: 10px 24px;
   background-color: #211612;
   color: white;
   border: none;
@@ -114,6 +125,7 @@
   font-weight: 600;
   transition: all 0.3s ease;
   flex: 1;
+  min-width: 150px;
 }
 
 .btnSubmit:hover {
@@ -122,8 +134,12 @@
   box-shadow: 0 2px 8px rgba(33, 22, 18, 0.2);
 }
 
+.btnSubmit:active {
+  transform: translateY(0);
+}
+
 .btnCancel {
-  padding: 10px 20px;
+  padding: 10px 24px;
   background-color: #f0f0f0;
   color: #666;
   border: 1px solid #ddd;
@@ -132,11 +148,17 @@
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s ease;
+  min-width: 150px;
 }
 
 .btnCancel:hover {
   background-color: #e5e5e5;
   color: #333;
+  border-color: #999;
+}
+
+.btnCancel:active {
+  background-color: #ddd;
 }
 
 .errorAlert {
@@ -149,6 +171,14 @@
   font-size: 14px;
   font-weight: 500;
   animation: slideDown 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.errorAlert::before {
+  content: "⚠";
+  margin-right: 10px;
+  font-size: 18px;
 }
 
 .successAlert {
@@ -161,6 +191,15 @@
   font-size: 14px;
   font-weight: 500;
   animation: slideDown 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.successAlert::before {
+  content: "✓";
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 @keyframes slideDown {
@@ -179,6 +218,7 @@
   .header {
     flex-direction: column;
     align-items: stretch;
+    margin-bottom: 20px;
   }
 
   .btnNew {
@@ -192,11 +232,25 @@
   .header p {
     font-size: 12px;
   }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+
+  .btnSubmit,
+  .btnCancel {
+    width: 100%;
+    min-width: unset;
+  }
 }
 
 @media (max-width: 480px) {
   .header {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   .header h2 {
@@ -208,4 +262,29 @@
     padding: 10px 16px;
     font-size: 12px;
   }
+
+  .form {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+  }
+
+  .formGrid {
+    gap: 10px;
+  }
+
+  .btnSubmit,
+  .btnCancel {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .errorAlert,
+  .successAlert {
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
 }
+

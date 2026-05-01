@@ -11,7 +11,7 @@ export function useInventarios() {
     setError(null);
     try {
       const data = await inventarioService.getInventarios();
-      setInventarios(Array.isArray(data) ? data : []);
+      setInventarios(Array.isArray(data?.value) ? data.value : []);
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error cargando inventarios";
       setError(msg);
