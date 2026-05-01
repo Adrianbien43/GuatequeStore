@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styles from "./Login.module.css";
 
 export default function Login() {
@@ -22,7 +22,6 @@ export default function Login() {
 
       login(res.data);
 
-      // Redirigir según rol
       if (res.data.rol === "CLIENTE") navigate("/welcome");
       else if (res.data.rol === "ADMINISTRADOR") navigate("/panel");
     } catch (err) {
@@ -34,27 +33,51 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.login}>
-      <h2>Iniciar sesión</h2>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Cargando..." : "Entrar"}
-        </button>
-      </form>
+    <div className={styles.page}>
+      <div className={styles.login}>
+        <div className={styles.header}>
+          <h2>GS</h2>
+          <p>Guateque Store</p>
+        </div>
+        
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label htmlFor="email">Correo electrónico</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="tu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label htmlFor="password">Contraseña</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" disabled={loading} className={styles.btnSubmit}>
+            {loading ? (
+              <span className={styles.spinner}></span>
+            ) : (
+              "Entrar"
+            )}
+          </button>
+        </form>
+
+        <div className={styles.footer}>
+          <p>¿No tienes cuenta? <Link to="/registro">Regístrate</Link></p>
+        </div>
+      </div>
     </div>
   );
 }

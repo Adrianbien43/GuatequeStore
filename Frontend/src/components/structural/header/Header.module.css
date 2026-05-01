@@ -1,3 +1,4 @@
+/* ===== ESTILOS ORIGINALES (SIN TOCAR) ===== */
 .header {
   position: relative;
   background-color: var(--brown-dark-4);
@@ -35,6 +36,7 @@
 .navLinks {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
 .navLinks a {
@@ -68,15 +70,14 @@
   flex-direction: column;
   background-color: var(--brown-dark-4);
   font-size: 12px;
-
-  position: absolute; 
-  top: 100%;       
+  position: absolute;
+  top: 100%;
   left: 0;
   width: 100%;
-  z-index: 999;    
+  z-index: 999;
   border-top: 0.5px solid var(--gold-base);
   border-bottom: 0.5px solid var(--gold-base);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .mobileMenu a {
@@ -91,6 +92,90 @@
   background-color: var(--brown-dark-2);
 }
 
+/* ===== ESTILOS NUEVOS (INTEGRADOS) ===== */
+
+/* Link activo */
+.activeLink {
+  color: #E7D7C5 !important;
+  font-weight: 600;
+  position: relative;
+}
+
+.activeLink::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold-base, #A47148);
+  border-radius: 1px;
+}
+
+/* Logo como link */
+.logoLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Nombre de usuario logueado */
+.userName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #E7D7C5;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* Botón logout desktop */
+.logoutBtn {
+  background: transparent;
+  border: 1.5px solid rgba(231, 215, 197, 0.4);
+  color: #E7D7C5;
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.logoutBtn:hover {
+  background: rgba(231, 215, 197, 0.1);
+  border-color: #E7D7C5;
+}
+
+/* Nombre usuario en móvil */
+.mobileUserName {
+  padding: 10px 20px;
+  font-weight: 600;
+  color: #E7D7C5;
+  border-top: 0.2px solid var(--gold-base);
+  font-size: 12px;
+}
+
+/* Botón logout móvil */
+.mobileLogoutBtn {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  font-size: 12px;
+  padding: 10px 20px;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  border-top: 0.2px solid var(--gold-base);
+  transition: background-color 0.3s;
+}
+
+.mobileLogoutBtn:hover {
+  background-color: var(--brown-dark-2);
+}
+
+/* ===== RESPONSIVE ORIGINAL (SIN TOCAR) ===== */
 @media (max-width: 450px) {
   .navLinks {
     display: none;

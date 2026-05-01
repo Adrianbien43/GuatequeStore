@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
+import { useContext } from "react";
 import { PrivateRoute } from "./components/PrivateRoute";
 
 import Header from "./components/structural/header/Header";
@@ -14,6 +15,12 @@ import Login from "./pages/login/Login";
 import WelcomeClient from "./pages/welcome/WelcomeClient";
 import Panel from "./pages/panel/Panel";
 
+function HomeRedirect() {
+  const { user } = useContext(AuthContext);
+  if (!user) return <Inicio />;
+  return <WelcomeClient />;
+}
+
 function App() {
   return (
     <AuthProvider>
@@ -22,24 +29,19 @@ function App() {
           <Header />
           <Main>
             <Routes>
-              {/* Rutas públicas */}
-              <Route path="/" element={<Inicio />} />
+              <Route path="/" element={<HomeRedirect />} />
               <Route path="/mujer" element={<Mujer />} />
               <Route path="/hombre" element={<Hombre />} />
               <Route path="/registro" element={<Registro />} />
               <Route path="/iniciar" element={<Login />} />
-
-              {/* Solo clientes */}
               <Route
                 path="/welcome"
                 element={
-                  <PrivateRoute roles={["CLIENTE"]}>
+                  <PrivateRoute roles={["CLIENTE", "ADMINISTRADOR"]}>
                     <WelcomeClient />
                   </PrivateRoute>
                 }
               />
-
-              {/* Solo admin */}
               <Route
                 path="/panel"
                 element={
@@ -48,6 +50,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </Main>
           <Footer />
