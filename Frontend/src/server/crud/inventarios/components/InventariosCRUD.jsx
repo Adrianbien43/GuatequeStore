@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useInventarios } from "../hooks/useInventarios";
 import { useAlmacenes } from "../../almacenes/hooks/useAlmacenes";
 import { useProductos } from "../../productos/hooks/useProductos";
+import Table from "../../../../components/reusable/Table";
 import styles from './InventariosCRUD.module.css';
 
 export default function InventariosCRUD() {
@@ -28,6 +29,12 @@ export default function InventariosCRUD() {
     setEditing(i);
     setForm({ almacenId: i.almacenId, productoId: i.productoId, cantidad: i.cantidad });
   };
+
+  const columns = [
+    { key: 'almacen', label: 'Almacen', render: (row) => row?.nombre || 'N/A' },
+    { key: 'producto', label: 'Producto', render: (row) => row?.nombre || 'N/A' },
+    { key: 'cantidad', label: 'Cantidad' }
+  ];
 
   return (
     <div className={styles.container}>
@@ -56,19 +63,14 @@ export default function InventariosCRUD() {
         <button type="submit">{editing ? "Actualizar" : "Crear"}</button>
       </form>
 
-      {loading ? <p className={styles.loading}>Cargando...</p> :
-        <ul className={styles.lista}>
-          {inventarios.map(i => (
-            <li key={`${i.almacenId}-${i.productoId}`} className={styles.item}>
-              <span>{i.almacen?.nombre} - {i.producto?.nombre} - {i.cantidad}</span>
-              <div>
-                <button onClick={() => handleEdit(i)}>Editar</button>
-                <button onClick={() => removeInventario(i.almacenId, i.productoId)}>Eliminar</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      }
+      <Table
+        columns={columns}
+        data={inventarios}
+        onEdit={handleEdit}
+        onDelete={(row) => removeInventario(row.almacenId, row.productoId)}
+        loading={loading}
+        emptyMessage="No hay inventarios disponibles"
+      />
     </div>
   );
 }

@@ -37,7 +37,7 @@
 /*Primavera*/
 .seccion_titulo1 {
     position: relative;
-    background-image: url('../../src/assets/PrimaverHombres.jpg');
+    background-image: url('../../src/assets/priH.jpg');
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -77,7 +77,7 @@
 /*Verano*/
 .seccion_titulo2 {
     position: relative;
-    background-image: url('../../src/assets/VeranoHombres.jpg');
+    background-image: url('../../src/assets/verah.jpg');
     background-size: cover;
     background-position: center;
     width: 50%;

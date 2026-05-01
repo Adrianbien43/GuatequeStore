@@ -1,187 +1,173 @@
 /* ConfirmDialog.module.css - Estilos para el componente ConfirmDialog reutilizable */
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1100;
-  animation: fadeIn 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    animation: fadeIn 0.3s ease;
 }
 
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideDown {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.dialog {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-  width: 90%;
-  max-width: 400px;
-  overflow: hidden;
-  animation: slideDown 0.3s ease;
-}
-
-.content {
-  padding: 32px 24px;
-  text-align: center;
-}
-
-.icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-  animation: bounce 0.6s ease;
-}
 
 @keyframes bounce {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 .dangerIcon {
-  color: #D32F2F;
+    color: #D32F2F;
 }
 
 .infoIcon {
-  color: #2196F3;
+    color: #2196F3;
 }
 
 .title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #211612;
-  margin: 0 0 12px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #211612;
+    margin: 0 0 12px 0;
 }
 
 .message {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
-  line-height: 1.5;
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .footer {
-  display: flex;
-  gap: 12px;
-  padding: 16px 24px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #eee;
-  justify-content: flex-end;
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #eee;
+    justify-content: flex-end;
 }
 
 .btnCancel,
 .btnConfirm {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  min-width: 100px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 100px;
 }
 
 .btnCancel {
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ddd;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
 }
 
 .btnCancel:hover:not(:disabled) {
-  background-color: #e0e0e0;
-  border-color: #999;
+    background-color: #e0e0e0;
+    border-color: #999;
 }
 
 .btnConfirm {
-  color: white;
+    color: white;
 }
 
 .btnPrimary {
-  background-color: #2196F3;
+    background-color: #2196F3;
 }
 
 .btnPrimary:hover:not(:disabled) {
-  background-color: #1976D2;
-  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    background-color: #1976D2;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
 }
 
 .btnDanger {
-  background-color: #D32F2F;
+    background-color: #D32F2F;
 }
 
 .btnDanger:hover:not(:disabled) {
-  background-color: #B71C1C;
-  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+    background-color: #B71C1C;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
 }
 
 .btnCancel:disabled,
 .btnConfirm:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* Responsive */
 @media (max-width: 480px) {
-  .dialog {
-    width: 95%;
-    max-width: none;
-  }
+    .dialog {
+        width: 95%;
+        max-width: none;
+    }
 
-  .content {
-    padding: 24px 16px;
-  }
+    .content {
+        padding: 24px 16px;
+    }
 
-  .icon {
-    font-size: 40px;
-    margin-bottom: 12px;
-  }
+    .icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+    }
 
-  .title {
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
+    .title {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
 
-  .message {
-    font-size: 13px;
-  }
+    .message {
+        font-size: 13px;
+    }
 
-  .footer {
-    flex-direction: column-reverse;
-    gap: 8px;
-    padding: 12px 16px;
-  }
+    .footer {
+        flex-direction: column-reverse;
+        gap: 8px;
+        padding: 12px 16px;
+    }
 
-  .btnCancel,
-  .btnConfirm {
-    width: 100%;
-    padding: 12px 16px;
-  }
+    .btnCancel,
+    .btnConfirm {
+        width: 100%;
+        padding: 12px 16px;
+    }
 }

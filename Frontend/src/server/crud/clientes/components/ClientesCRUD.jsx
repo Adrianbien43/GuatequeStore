@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useClientes } from "../hooks/useClientes";
+import Table from "../../../../components/reusable/Table";
 import styles from './ClientesCRUD.module.css';
 
 export default function ClientesCRUD() {
@@ -25,6 +26,13 @@ export default function ClientesCRUD() {
     setForm({ nombre: cliente.nombre, email: cliente.email, direccion: cliente.direccion });
   };
 
+  const columns = [
+    { key: 'idUsuario', label: 'ID' },
+    { key: 'nombre', label: 'Nombre' },
+    { key: 'email', label: 'Email' },
+    { key: 'direccion', label: 'Dirección' }
+  ];
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -46,33 +54,14 @@ export default function ClientesCRUD() {
         <button type="submit">{editingId ? "Actualizar" : "Agregar"}</button>
       </form>
 
-      {loading ? <p className={styles.loading}>Cargando...</p> : (
-        <table className={styles.tabla}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Dirección</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientes.map(c => (
-              <tr key={c.idUsuario}>
-                <td>{c.idUsuario}</td>
-                <td>{c.nombre}</td>
-                <td>{c.email}</td>
-                <td>{c.direccion}</td>
-                <td>
-                  <button onClick={() => handleEdit(c)}>Editar</button>
-                  <button onClick={() => removeCliente(c.idUsuario)}>Eliminar</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <Table
+        columns={columns}
+        data={clientes}
+        onEdit={handleEdit}
+        onDelete={(row) => removeCliente(row.idUsuario)}
+        loading={loading}
+        emptyMessage="No hay clientes disponibles"
+      />
     </div>
   );
 }

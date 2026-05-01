@@ -1,10 +1,8 @@
 import api from "../../../../api";
 
-const API_URL = "/inventario";
+const API_URL = "/pedidos";
 
-export const getInventarios = () => api.get(API_URL).then(res => res.data);
-export const createInventario = (data) => api.post(API_URL, data).then(res => res.data);
-export const updateInventario = (almacenId, productoId, data) =>
-  api.put(`${API_URL}/almacen/${almacenId}/producto/${productoId}`, data).then(res => res.data);
-export const deleteInventario = (almacenId, productoId) =>
-  api.delete(`${API_URL}/almacen/${almacenId}/producto/${productoId}`);
+export const getPedidos = () => api.get(API_URL).then(res => res.data);
+export const createPedido = (data) => api.post(API_URL, data).then(res => res.data);
+export const updatePedido = (id, data) => api.put(`${API_URL}/${id}`, data).then(res => res.data);
+export const deletePedido = (id) => api.delete(`${API_URL}/${id}`);

@@ -102,7 +102,7 @@
 /*Otoño*/
 .seccion_titulo3 {
     position: relative;
-    background-image: url('../../src/assets/OtoñoMujer.jpg');
+    background-image: url('../../src/assets/OtonoMujeres.jpg');
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -142,7 +142,7 @@
 /*Invierno*/
 .seccion_titulo4 {
     position: relative;
-    background-image: url('../../src/assets/inviernoMujer.jpg');
+    background-image: url('../../src/assets/inviernoMujeres.jpg');
     background-size: cover;
     background-position: center;
     width: 50%;
