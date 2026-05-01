@@ -58,6 +58,87 @@
   box-shadow: 0 4px 12px rgba(33, 22, 18, 0.2);
 }
 
+.form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid #e5e5e5;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form input,
+.form select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form input:focus,
+.form select:focus {
+  outline: none;
+  border-color: #211612;
+  box-shadow: 0 0 0 3px rgba(33, 22, 18, 0.1);
+  background-color: white;
+}
+
+.form input:disabled,
+.form select:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+}
+
+.btnSubmit {
+  padding: 10px 20px;
+  background-color: #211612;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.btnSubmit:hover {
+  background-color: #3d3d2d;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(33, 22, 18, 0.2);
+}
+
+.btnCancel {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btnCancel:hover {
+  background-color: #e5e5e5;
+  color: #333;
+}
+
 .errorAlert {
   background-color: #ffebee;
   color: #c62828;
@@ -65,6 +146,18 @@
   border-radius: 8px;
   margin-bottom: 20px;
   border-left: 4px solid #d32f2f;
+  font-size: 14px;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+}
+
+.successAlert {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #4caf50;
   font-size: 14px;
   font-weight: 500;
   animation: slideDown 0.3s ease;
@@ -99,6 +192,18 @@
   .header p {
     font-size: 12px;
   }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+
+  .formActions button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -114,5 +219,13 @@
   .btnNew {
     padding: 10px 16px;
     font-size: 12px;
+  }
+
+  .form {
+    padding: 15px;
+  }
+
+  .formGrid {
+    gap: 10px;
   }
 }

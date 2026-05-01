@@ -3,15 +3,20 @@ import * as proveedorService from "../services/proveedorService";
 
 export const useProveedores = () => {
   const [proveedores, setProveedores] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchProveedores = async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await proveedorService.getProveedores();
-      setProveedores(res.data);
+      setProveedores(Array.isArray(res) ? res : []);
     } catch (err) {
-      console.error("Error cargando proveedores:", err.message);
+      const msg = err.response?.data?.message || err.message || "Error cargando proveedores";
+      setError(msg);
+      console.error("Error fetchProveedores:", err);
+      setProveedores([]);
     } finally {
       setLoading(false);
     }
@@ -19,28 +24,42 @@ export const useProveedores = () => {
 
   const addProveedor = async (data) => {
     try {
-      await proveedorService.createProveedor(data);
-      fetchProveedores();
+      setError(null);
+      const res = await proveedorService.createProveedor(data);
+      setProveedores(prev => [...prev, res]);
+      return res;
     } catch (err) {
-      console.error("Error creando proveedor:", err.message);
+      const msg = err.response?.data?.message || err.message || "Error creando proveedor";
+      setError(msg);
+      console.error("Error addProveedor:", err);
+      throw err;
     }
   };
 
   const editProveedor = async (id, data) => {
     try {
-      await proveedorService.updateProveedor(id, data);
-      fetchProveedores();
+      setError(null);
+      const res = await proveedorService.updateProveedor(id, data);
+      setProveedores(prev => prev.map(p => p.id === id ? res : p));
+      return res;
     } catch (err) {
-      console.error("Error editando proveedor:", err.message);
+      const msg = err.response?.data?.message || err.message || "Error editando proveedor";
+      setError(msg);
+      console.error("Error editProveedor:", err);
+      throw err;
     }
   };
 
   const removeProveedor = async (id) => {
     try {
+      setError(null);
       await proveedorService.deleteProveedor(id);
-      fetchProveedores();
+      setProveedores(prev => prev.filter(p => p.id !== id));
     } catch (err) {
-      console.error("Error eliminando proveedor:", err.message);
+      const msg = err.response?.data?.message || err.message || "Error eliminando proveedor";
+      setError(msg);
+      console.error("Error removeProveedor:", err);
+      throw err;
     }
   };
 
@@ -48,5 +67,5 @@ export const useProveedores = () => {
     fetchProveedores();
   }, []);
 
-  return { proveedores, loading, addProveedor, editProveedor, removeProveedor };
+  return { proveedores, loading, error, addProveedor, editProveedor, removeProveedor, setError };
 };
