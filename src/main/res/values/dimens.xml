@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!-- Definicion de texto en la aplicacion -->
-<resources>
-    <dimen name="texto_grande">24sp</dimen>
-    <dimen name="texto_pequeño">16sp</dimen>
-    <dimen name="texto_pequeñito">10sp</dimen>
-</resources>
