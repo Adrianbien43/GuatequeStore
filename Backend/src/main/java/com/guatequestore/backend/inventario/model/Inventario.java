@@ -1,5 +1,6 @@
 package com.guatequestore.backend.inventario.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.guatequestore.backend.almacen.model.Almacen;
 import com.guatequestore.backend.producto.model.Producto;
 import jakarta.persistence.*;
@@ -9,11 +10,11 @@ import jakarta.persistence.*;
  * Representa las cantidades disponibles de cada producto en cada almacén.
  *
  * @author Gorka Jesus
- * @version 1.0.2
+ * @version 1.0.3
  */
 @Entity
 @Table(name = "inventarios")
-@IdClass(InventarioId.class) // Clave compuesta: almacenId + productoId
+@IdClass(InventarioId.class)
 public class Inventario {
 
     // PK parte 1: id del almacén
@@ -32,16 +33,17 @@ public class Inventario {
     // Relación a Almacen (solo lectura)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_almacen", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Almacen almacen;
 
     // Relación a Producto (solo lectura)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Producto producto;
 
     // Constructores
-
-    public Inventario() {} // Constructor vacío para JPA
+    public Inventario() {}
 
     public Inventario(Long almacenId, Long productoId, Integer cantidad) {
         this.almacenId = almacenId;

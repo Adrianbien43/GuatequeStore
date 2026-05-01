@@ -1,7 +1,6 @@
 package com.guatequestore.backend.config;
 
 import com.guatequestore.backend.security.JwtAuthenticationFilter;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -40,29 +39,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> {}) // habilitar CORS
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authz -> authz
-
-                        // Permitir preflight
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                        // Rutas abiertas
-                        .requestMatchers("/api/auth/**").permitAll()
-
-                        // CRUD solo ADMIN
-                        .requestMatchers("/api/productos/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers("/api/proveedores/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers("/api/almacenes/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers("/api/inventarios/**").hasRole("ADMINISTRADOR")
-
-                        // Pedidos: admin y cliente
-                        .requestMatchers("/api/pedidos/**").hasAnyRole("ADMINISTRADOR", "CLIENTE")
-
-                        // resto requiere login
-                        .anyRequest().authenticated()
-                );
+            .cors(cors -> {}) // habilitar CORS
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> 
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(authz -> authz
+                // Permitir preflight CORS
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                
+                // Rutas abiertas
+                .requestMatchers("/api/auth/**").permitAll()
+                
+                // CRUD solo ADMIN - CORREGIDO: inventario (sin S)
+                .requestMatchers("/api/productos/**").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/proveedores/**").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/almacenes/**").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/inventario/**").hasRole("ADMINISTRADOR")
+                
+                // Pedidos: admin y cliente
+                .requestMatchers("/api/pedidos/**").hasAnyRole("ADMINISTRADOR", "CLIENTE")
+                
+                // Resto requiere autenticación
+                .anyRequest().authenticated()
+            );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
