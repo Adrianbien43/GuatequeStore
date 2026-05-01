@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePedidos } from "../hooks/usePedidos";
 import { useAlmacenes } from "../../almacenes/hooks/useAlmacenes";
 import { useClientes } from "../../clientes/hooks/useClientes";
+import Table from "../../../../components/reusable/Table";
 import styles from './PedidosCRUD.module.css';
 
 export default function PedidosCRUD() {
@@ -38,6 +39,13 @@ export default function PedidosCRUD() {
     });
   };
 
+  const columns = [
+    { key: 'fechaPedido', label: 'Fecha' },
+    { key: 'estadoPedido', label: 'Estado' },
+    { key: 'usuario', label: 'Cliente', render: (row) => row?.nombre || 'N/A' },
+    { key: 'almacen', label: 'Almacén', render: (row) => row?.nombre || 'N/A' }
+  ];
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -73,19 +81,14 @@ export default function PedidosCRUD() {
         <button type="submit">{editing ? "Actualizar" : "Crear"}</button>
       </form>
 
-      {loading ? <p className={styles.loading}>Cargando...</p> :
-        <ul className={styles.lista}>
-          {pedidos.map(p => (
-            <li key={p.id} className={styles.item}>
-              <span>{p.fechaPedido} - {p.estadoPedido} - {p.usuario?.nombre} - {p.almacen?.nombre}</span>
-              <div>
-                <button onClick={() => handleEdit(p)}>Editar</button>
-                <button onClick={() => removePedido(p.id)}>Eliminar</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      }
+      <Table 
+        columns={columns}
+        data={pedidos}
+        onEdit={handleEdit}
+        onDelete={(row) => removePedido(row.id)}
+        loading={loading}
+        emptyMessage="No hay pedidos disponibles"
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProductos } from "../hooks/useProductos";
+import Table from "../../../../components/reusable/Table";
 import styles from './ProductosCRUD.module.css';
 
 export default function ProductosCRUD() {
@@ -42,6 +43,15 @@ export default function ProductosCRUD() {
     });
   };
 
+  const columns = [
+    { key: 'nombre', label: 'Nombre' },
+    { key: 'categoria', label: 'Categoría' },
+    { key: 'talla', label: 'Talla' },
+    { key: 'precioUnitario', label: 'Precio' },
+    { key: 'marca', label: 'Marca' },
+    { key: 'genero', label: 'Género' }
+  ];
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -75,19 +85,14 @@ export default function ProductosCRUD() {
         <button type="submit">{editing ? "Actualizar" : "Crear"}</button>
       </form>
 
-      {loading ? <p>Cargando...</p> : 
-        <ul className={styles.lista}>
-          {productos.map(p => (
-            <li key={p.id} className={styles.item}>
-              <span>{p.nombre} - {p.categoria} - ${p.precioUnitario}</span>
-              <div>
-                <button onClick={() => handleEdit(p)}>Editar</button>
-                <button onClick={() => removeProducto(p.id)}>Eliminar</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      }
+      <Table 
+        columns={columns}
+        data={productos}
+        onEdit={handleEdit}
+        onDelete={(row) => removeProducto(row.id)}
+        loading={loading}
+        emptyMessage="No hay productos disponibles"
+      />
     </div>
   );
 }
