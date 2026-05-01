@@ -1,3 +1,4 @@
+// useInventarios.js - CORREGIDO
 import { useState, useEffect } from "react";
 import * as inventarioService from "../services/inventarioService";
 
@@ -11,7 +12,14 @@ export function useInventarios() {
     setError(null);
     try {
       const data = await inventarioService.getInventarios();
-      setInventarios(Array.isArray(data?.value) ? data.value : []);
+      
+      // DEBUG: Ver qué llega del backend
+      console.log("Respuesta del backend:", data);
+      console.log("Es array?", Array.isArray(data));
+      
+      // El backend devuelve array directo, no {value: [...]}
+      const lista = Array.isArray(data) ? data : (data?.value || []);
+      setInventarios(lista);
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error cargando inventarios";
       setError(msg);
@@ -26,7 +34,7 @@ export function useInventarios() {
     try {
       setError(null);
       const data = await inventarioService.createInventario(inv);
-      setInventarios([...inventarios, data]);
+      setInventarios(prev => [...prev, data]);
       return data;
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error creando inventario";
@@ -40,8 +48,11 @@ export function useInventarios() {
     try {
       setError(null);
       const updated = await inventarioService.updateInventario(almacenId, productoId, inv);
-      setInventarios(inventarios.map(i =>
-        i.almacenId === almacenId && i.productoId === productoId ? updated : i
+      setInventarios(prev => prev.map(i =>
+        (i.almacenId === almacenId && i.productoId === productoId) ||
+        (i.id?.almacenId === almacenId && i.id?.productoId === productoId)
+          ? updated
+          : i
       ));
       return updated;
     } catch (err) {
@@ -56,7 +67,10 @@ export function useInventarios() {
     try {
       setError(null);
       await inventarioService.deleteInventario(almacenId, productoId);
-      setInventarios(inventarios.filter(i => !(i.almacenId === almacenId && i.productoId === productoId)));
+      setInventarios(prev => prev.filter(i => 
+        !(i.almacenId === almacenId && i.productoId === productoId) &&
+        !(i.id?.almacenId === almacenId && i.id?.productoId === productoId)
+      ));
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error eliminando inventario";
       setError(msg);
