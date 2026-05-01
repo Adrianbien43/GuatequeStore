@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MenuActivity">
+
+    <!-- Guías para crear dos zonas (50% cada una) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <!-- Margenes (incluido) -->
+    <include layout="@layout/margenes" />
+
+    <!-- Fondo -->
+    <ImageView
+        android:id="@+id/fondo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.6"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Flow para las imágenes decorativas (se reorganizan automáticamente) -->
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_imagenes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        app:flow_wrapMode="chain"
+        app:flow_horizontalGap="16dp"
+        app:flow_verticalGap="16dp"
+        app:flow_maxElementsWrap="3"
+        app:constraint_referenced_ids="imageView,imageView4,imageView2"
+        app:layout_constraintStart_toStartOf="@id/izquierda"
+        app:layout_constraintEnd_toEndOf="@id/derecha"
+        app:layout_constraintTop_toTopOf="@id/arriba" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ropa" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ropa" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ropa" />
+
+    <!-- Título de la app -->
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/color1"
+        android:textSize="@dimen/texto_grande"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/derecha"
+        app:layout_constraintStart_toStartOf="@id/izquierda"
+        app:layout_constraintTop_toBottomOf="@id/flow_imagenes" />
+
+    <!-- Flow para los botones principales -->
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_botones"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="20dp"
+        app:flow_wrapMode="chain"
+        app:flow_horizontalGap="16dp"
+        app:flow_verticalGap="16dp"
+        app:flow_maxElementsWrap="2"
+        app:constraint_referenced_ids="boton_novedades,boton_ropahombre,boton_ropamujer,boton_registrate,boton_login,btnProveedores,btnLogout"
+        app:layout_constraintStart_toStartOf="@id/izquierda"
+        app:layout_constraintEnd_toEndOf="@id/derecha"
+        app:layout_constraintTop_toBottomOf="@id/textView3"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Botones (todos con 0dp para que el Flow los dimensione) -->
+    <Button
+        android:id="@+id/boton_novedades"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color3"
+        android:text="@string/btn_eventos" />
+
+    <Button
+        android:id="@+id/boton_ropahombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_Hombre"
+        android:background="@color/color3" />
+
+    <Button
+        android:id="@+id/boton_ropamujer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_Mujeres"
+        android:background="@color/color3" />
+
+    <Button
+        android:id="@+id/boton_registrate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_Registrate"
+        android:background="@color/color3" />
+
+    <Button
+        android:id="@+id/boton_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:background="@color/color3" />
+
+    <Button
+        android:id="@+id/btnProveedores"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="17dp"
+        android:text="Proveedores"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color3"
+        android:text="Cerrar Sesión"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

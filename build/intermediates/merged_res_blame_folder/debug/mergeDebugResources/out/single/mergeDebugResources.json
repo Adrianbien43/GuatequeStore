@@ -1,0 +1,114 @@
+[
+    {
+        "merged": "com.example.prueba-debug-35:/layout_item_producto.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/item_producto.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-hdpi_icono_logo_round.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-hdpi/icono_logo_round.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-anydpi-v26_icono_logo_round.xml.flat",
+        "source": "com.example.prueba-main-37:/mipmap-anydpi-v26/icono_logo_round.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-mdpi_icono_logo.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-mdpi/icono_logo.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_activity_main3.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/activity_main3.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xxhdpi_icono_logo_round.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xxhdpi/icono_logo_round.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xxhdpi_icono_logo.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xxhdpi/icono_logo.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-anydpi-v26_icono_logo.xml.flat",
+        "source": "com.example.prueba-main-37:/mipmap-anydpi-v26/icono_logo.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_activity_producto_detalle.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/activity_producto_detalle.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_activity_registrate.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/activity_registrate.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xxxhdpi_icono_logo_round.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xxxhdpi/icono_logo_round.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_activity_ropa_hombre.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/activity_ropa_hombre.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_activity_ropa_mujer.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/activity_ropa_mujer.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_margenes.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/margenes.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_activity_main.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xxhdpi_icono_logo_foreground.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xxhdpi/icono_logo_foreground.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.prueba-main-37:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/xml_backup_rules.xml.flat",
+        "source": "com.example.prueba-main-37:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-mdpi_icono_logo_foreground.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-mdpi/icono_logo_foreground.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/layout_activity_evento.xml.flat",
+        "source": "com.example.prueba-main-37:/layout/activity_evento.xml"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-mdpi_icono_logo_round.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-mdpi/icono_logo_round.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xhdpi_icono_logo_round.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xhdpi/icono_logo_round.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-hdpi_icono_logo_foreground.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-hdpi/icono_logo_foreground.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-hdpi_icono_logo.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-hdpi/icono_logo.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xhdpi_icono_logo.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xhdpi/icono_logo.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xhdpi_icono_logo_foreground.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xhdpi/icono_logo_foreground.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xxxhdpi_icono_logo_foreground.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xxxhdpi/icono_logo_foreground.webp"
+    },
+    {
+        "merged": "com.example.prueba-debug-35:/mipmap-xxxhdpi_icono_logo.webp.flat",
+        "source": "com.example.prueba-main-37:/mipmap-xxxhdpi/icono_logo.webp"
+    }
+]
