@@ -1,225 +1,197 @@
-import React from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import styles from "./Inicio.module.css";
 
 /**
  * Adrián Bienvenido Morales Perdomo.
- * 
- * Esta sera la primera vista para los usarios
+ *
+ * Carrusel unificado:
+ *  - En reposo: animación CSS infinita scrolling automático
+ *  - Al pulsar nav: salta a esa carta, pausa 6 s, retoma la animación
  */
 export default function Inicio() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused,    setIsPaused]    = useState(false);
+  const resumeTimer = useRef(null);
+  const intervalRef = useRef(null);
+
+  const cards = [
+    { id: 1, title: "Moda asiática en Canarias",   className: styles.card1, img: "co2.webp",
+      text: "Nuestras fronteras no tienen límites. Presentamos una colección exclusiva de moda asiática para mujeres. Muy pronto estrenaremos también nuestra línea para caballeros." },
+    { id: 2, title: "Ropa VIP para caballeros",    className: styles.card2, img: "co3.webp",
+      text: "Complementos oscuros y elegantes diseñados para destacar en fiestas y eventos. Estilo con carácter, ideal para marcar presencia." },
+    { id: 3, title: "Calzado personalizable",      className: styles.card3, img: "co1.webp",
+      text: "El calzado es uno de los elementos más importantes para un caballero. Ahora puedes personalizar tus diseños para que encajen perfectamente con tu estilo." },
+    { id: 4, title: "Sombreros Bip para damas",    className: styles.card4, img: "co4.webp",
+      text: "Nuestra diseñadora Marta Morales presenta una colección de sombreros exclusivos, perfectos para combinar con nuestros vestidos más elegantes." },
+    { id: 5, title: "Moda joven",                  className: styles.card5, img: "co5.webp",
+      text: "Presentamos nuestra nueva sección juvenil con descuentos del 25%. Porque ustedes también merecen lucir increíbles cada día." },
+    { id: 6, title: "Complementos para caballero", className: styles.card6, img: "co6.webp",
+      text: "Descubre accesorios exclusivos para complementar tus trajes favoritos. Y si buscas algo único, también podrás diseñar tu propio accesorio totalmente personalizado." },
+  ];
+
+  const TOTAL    = cards.length;
+  const AUTO_MS  = 3500;  // velocidad auto-avance
+  const PAUSE_MS = 6000;  // pausa tras pulsar nav
+
+  // ─── Auto-avance ─────────────────────────────────────────────────────────
+  const startAutoPlay = useCallback(() => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setActiveIndex(prev => (prev + 1) % TOTAL);
+    }, AUTO_MS);
+  }, [TOTAL]);
+
+  useEffect(() => {
+    if (!isPaused) startAutoPlay();
+    else           clearInterval(intervalRef.current);
+    return () => clearInterval(intervalRef.current);
+  }, [isPaused, startAutoPlay]);
+
+  // ─── Limpieza al desmontar ────────────────────────────────────────────────
+  useEffect(() => () => {
+    clearTimeout(resumeTimer.current);
+    clearInterval(intervalRef.current);
+  }, []);
+
+  // ─── Pulsar barra de navegación ──────────────────────────────────────────
+  const goTo = useCallback((index) => {
+    setActiveIndex(index);
+    setIsPaused(true);
+    clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => setIsPaused(false), PAUSE_MS);
+  }, []);
+
+  // ─── Swipe táctil ────────────────────────────────────────────────────────
+  const touchX = useRef(null);
+  const onTouchStart = e => { touchX.current = e.touches[0].clientX; };
+  const onTouchEnd   = e => {
+    if (touchX.current === null) return;
+    const diff = touchX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50)
+      goTo(diff > 0 ? (activeIndex + 1) % TOTAL : (activeIndex - 1 + TOTAL) % TOTAL);
+    touchX.current = null;
+  };
+
   return (
     <div className={styles.inicio}>
       <span className={styles.pre1}><h1>BIENVENIDOS</h1></span>
       <span className={styles.pre2}><h6>Viste bien todos los días</h6></span>
 
+      {/* ── Sección 1 ── */}
       <section className={styles.seccion1}>
         <div className={styles.contenedor_i_1}>
           <div className={styles.info_container_1}>
             <h2>Moda que Respira</h2>
-            <p>
-              Por unos mares más limpios y un planeta más sano.
-            </p>
-            <p>
-              Guateque es una tienda de ropa comprometida con la sostenibilidad,
-              creando prendas que respetan la naturaleza y realzan tu estilo con armonía.
-            </p>
+            <p>Por unos mares más limpios y un planeta más sano.</p>
+            <p>Guateque es una tienda de ropa comprometida con la sostenibilidad, creando prendas que respetan la naturaleza y realzan tu estilo con armonía.</p>
           </div>
         </div>
       </section>
 
-      <div className={styles.carousel}>
+      {/*
+        ── Carrusel ──────────────────────────────────────────────────────────
+        Dos capas superpuestas con crossfade:
 
-        <div className={styles.group}>
+        CAPA 1 (.carouselAuto)  → banda infinita CSS, siempre corriendo.
+                                   Se muestra cuando isPaused=false.
+        CAPA 2 (.carouselManual)→ la carta concreta seleccionada, fija.
+                                   Se muestra cuando isPaused=true.
 
-          <div className={`${styles.card} ${styles.card1}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Moda asiática en Canarias</h3>
-              <p>
-                Nuestras fronteras no tienen límites. Presentamos una colección exclusiva de moda asiática para mujeres.
-                Muy pronto estrenaremos también nuestra línea para caballeros.
-              </p>
-              <button>Ver más</button>
+        La transición opacity:0.6s hace el fade suave entre ambas.
+      */}
+      <div
+        className={styles.carouselWrapper}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* CAPA 1 — Banda infinita */}
+        <div
+          className={`${styles.carouselAuto} ${isPaused ? styles.hidden : ""}`}
+          aria-hidden={isPaused}
+        >
+          {[...cards, ...cards].map((card, i) => (
+            <div key={`auto-${i}`} className={`${styles.autoSlide} ${card.className}`}>
+              <div className={styles.card_Info}>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+                <button>Ver más</button>
+              </div>
             </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card2}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Ropa VIP para caballeros</h3>
-              <p>
-                Complementos oscuros y elegantes diseñados para destacar en fiestas y eventos. Estilo con carácter,
-                ideal para marcar presencia.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card3}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Calzado personalizable</h3>
-              <p>
-                El calzado es uno de los elementos más importantes para un caballero. Ahora puedes personalizar tus
-                diseños para que encajen perfectamente con tu estilo.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card4}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Sombreros Bip para damas</h3>
-              <p>
-                Nuestra diseñadora Marta Morales presenta una colección de sombreros exclusivos, perfectos para combinar
-                con nuestros vestidos más elegantes.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card5}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Moda joven</h3>
-              <p>
-                Presentamos nuestra nueva sección juvenil con descuentos del 25%. Porque ustedes también merecen lucir
-                increíbles cada día.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card6}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Complementos para caballero</h3>
-              <p>
-                Descubre accesorios exclusivos para complementar tus trajes favoritos. Y si buscas algo único,
-                también podrás diseñar tu propio accesorio totalmente personalizado.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
+          ))}
         </div>
 
-        {/* Segundo grupo para el loop del carrusel */}
-        <div aria-hidden className={styles.group}>
-
-          <div className={`${styles.card} ${styles.card1}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Moda asiática en Canarias</h3>
-              <p>
-                Nuestras fronteras no tienen límites. Presentamos una colección exclusiva de moda asiática para mujeres.
-                Muy pronto estrenaremos también nuestra línea para caballeros.
-              </p>
+        {/* CAPA 2 — Carta fija al hacer clic */}
+        <div
+          className={`${styles.carouselManual} ${isPaused ? styles.visible : ""}`}
+          aria-hidden={!isPaused}
+        >
+          <div className={`${styles.manualSlide} ${cards[activeIndex].className}`}>
+            <div className={styles.card_Info}>
+              <h3>{cards[activeIndex].title}</h3>
+              <p>{cards[activeIndex].text}</p>
               <button>Ver más</button>
             </div>
           </div>
-
-          <div className={`${styles.card} ${styles.card2}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Ropa VIP para caballeros</h3>
-              <p>
-                Complementos oscuros y elegantes diseñados para destacar en fiestas y eventos. Estilo con carácter,
-                ideal para marcar presencia.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card3}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Calzado personalizable</h3>
-              <p>
-                El calzado es uno de los elementos más importantes para un caballero. Ahora puedes personalizar tus
-                diseños para que encajen perfectamente con tu estilo.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card4}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Sombreros Bip para damas</h3>
-              <p>
-                Nuestra diseñadora Marta Morales presenta una colección de sombreros exclusivos, perfectos para combinar
-                con nuestros vestidos más elegantes.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card5}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Moda joven</h3>
-              <p>
-                Presentamos nuestra nueva sección juvenil con descuentos del 25%. Porque ustedes también merecen lucir
-                increíbles cada día.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
-          <div className={`${styles.card} ${styles.card6}`}>
-            <div className={`${styles.card_Info} ${styles.card1_Info}`}>
-              <h3>Complementos para caballero</h3>
-              <p>
-                Descubre accesorios exclusivos para complementar tus trajes favoritos. Y si buscas algo único
-                también podrás diseñar tu propio accesorio totalmente personalizado.
-              </p>
-              <button>Ver más</button>
-            </div>
-          </div>
-
         </div>
       </div>
 
+      {/* ── Barra de navegación ── */}
+      <div className={styles.navSection}>
+        <div className={styles.navBar}>
+          {cards.map((card, index) => (
+            <button
+              key={card.id}
+              className={`${styles.navItem} ${activeIndex === index ? styles.navItemActive : ""}`}
+              onClick={() => goTo(index)}
+              title={card.title}
+              aria-label={`Ir a ${card.title}`}
+            >
+              <div
+                className={styles.navThumb}
+                style={{ backgroundImage: `url('../../src/assets/${card.img}')` }}
+              />
+              <span className={styles.navDot} />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Sección 2 ── */}
       <section className={styles.seccion2}>
         <div className={styles.container_seccion2}>
           <div className={styles.seccion2_info}>
-            <h2>Vestido Dama</h2>
-            <h4>Ropa del momento</h4>
-            <p>
-              Guateque viste tus días de encanto y elegancia, con diseños 
-              que fluyen contigo y elevan tu presencia, transformando cada 
-              prenda en una expresión sutil de estilo, identidad y sofisticación.
-            </p>
+            <h2>Vestido Dama</h2><h4>Ropa del momento</h4>
+            <p>Guateque viste tus días de encanto y elegancia, con diseños que fluyen contigo y elevan tu presencia.</p>
           </div>
           <div className={styles.card1_sec2}></div>
         </div>
         <div className={styles.container1_seccion2}>
           <div className={styles.seccion2_info}>
-            <h2>Lorenzo Piedra</h2>
-            <h4>Diseñador estrella</h4>
+            <h2>Lorenzo Piedra</h2><h4>Diseñador estrella</h4>
             <p>Aquí presentamos los nuevos modelos para que luzcas como una reina.</p>
-            <p>De la mano de Lorenzo Piedra, los mejores complementos para despedir el año y celebrar todo tipo de fiestas.</p>
+            <p>De la mano de Lorenzo Piedra, los mejores complementos para despedir el año.</p>
           </div>
           <div className={styles.card2_sec2}></div>
         </div>
       </section>
 
-
       <section className={styles.seccion2}>
         <div className={styles.container_seccion2}>
           <div className={styles.seccion2_info}>
-            <h2>Traje Caballero</h2>
-            <h4>Ropa del momento</h4>
-            <p>
-              Descubre trajes que inspiran confianza.
-              Viste tu éxito y destaca en cada ocasión.
-              Porque la elegancia también se siente.
-            </p>
+            <h2>Traje Caballero</h2><h4>Ropa del momento</h4>
+            <p>Descubre trajes que inspiran confianza. Viste tu éxito y destaca en cada ocasión.</p>
           </div>
           <div className={styles.card3_sec2}></div>
         </div>
         <div className={styles.container1_seccion2}>
           <div className={styles.seccion2_info}>
-            <h2>Martín Jesús</h2>
-            <h4>Diseñador estrella</h4>
+            <h2>Martín Jesús</h2><h4>Diseñador estrella</h4>
             <p>Los mejores trajes para sentirte bien y cómodo en fiestas y cenas.</p>
-            <p>“Luce bien y cómodo”, comenta nuestro diseñador Martín Jesús. Ropa capaz de conquistar corazones.</p>
+            <p>"Luce bien y cómodo", comenta nuestro diseñador Martín Jesús.</p>
           </div>
           <div className={styles.card4_sec2}></div>
         </div>
       </section>
-
     </div>
   );
 }
