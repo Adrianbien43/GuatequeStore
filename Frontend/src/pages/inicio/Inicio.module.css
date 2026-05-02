@@ -56,13 +56,6 @@
 .contenedor_i_1 h2 { font-size: clamp(1.4rem, 5vw, 2.3rem); margin-bottom: 15px; margin-left: 15px; }
 .contenedor_i_1 p  { font-size: clamp(1rem, 3.5vw, 1.4rem); margin-bottom: 6px;  margin-left: 15px; }
 
-/* ============================================================
-   CARRUSEL UNIFICADO
-   .carouselWrapper  → contenedor de altura fija, overflow hidden
-   .carouselAuto     → banda infinita CSS  (capa inferior)
-   .carouselManual   → carta fija al clic  (capa superior)
-   Crossfade con opacity + transition
-   ============================================================ */
 
 .carouselWrapper {
   position: relative;

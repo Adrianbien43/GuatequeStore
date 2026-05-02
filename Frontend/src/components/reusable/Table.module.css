@@ -1,13 +1,23 @@
-/* Table.module.css - Estilos para el componente Table reutilizable */
+/* Table.module.css - Estilos responsivos con conversión a cards */
 
+/* Base */
 .tableWrapper {
     width: 100%;
-    overflow-x: auto;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     background-color: white;
 }
 
+/* Pantallas grandes: mostramos la tabla */
+.desktopOnly {
+    display: block;
+}
+
+.mobileOnly {
+    display: none;
+}
+
+/* Estilos de la tabla clásica */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -53,7 +63,7 @@
     transition: background-color 0.2s ease;
 }
 
-/* Actions */
+/* Botones de acción comunes */
 .actions {
     display: flex;
     gap: 8px;
@@ -97,65 +107,128 @@
     box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3);
 }
 
-.loading {
+.loading, .empty {
     text-align: center;
     padding: 40px;
+    font-size: 14px;
+}
+
+.loading {
     color: #666;
-    font-size: 16px;
 }
 
 .empty {
-    text-align: center;
-    padding: 40px;
     color: #999;
-    font-size: 14px;
     background-color: white;
     border-radius: 8px;
     border: 1px dashed #ddd;
 }
 
-/* Responsive */
+/* ========== VISTA MÓVIL (tarjetas) ========== */
 @media (max-width: 768px) {
-    .table {
-        font-size: 12px;
+    .desktopOnly {
+        display: none;
     }
-
-    .table th,
-    .table td {
-        padding: 10px 12px;
-    }
-
-    .btn {
-        padding: 6px 10px;
-        font-size: 11px;
-    }
-
-    .actions {
+    
+    .mobileOnly {
+        display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 16px;
+        padding: 8px;
     }
-
-    .actionsHeader {
-        width: auto;
+    
+    .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 16px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #eee;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    
+    .cardRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .cardRow:last-of-type {
+        border-bottom: none;
+    }
+    
+    .cardLabel {
+        font-weight: 600;
+        color: #211612;
+        font-size: 13px;
+        min-width: 100px;
+        background: #f5f5f5;
+        padding: 4px 8px;
+        border-radius: 6px;
+        display: inline-block;
+    }
+    
+    .cardValue {
+        color: #333;
+        font-size: 13px;
+        word-break: break-word;
+        text-align: right;
+        flex: 1;
+    }
+    
+    .cardActions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 12px;
+        padding-top: 8px;
+        border-top: 1px solid #e0e0e0;
+    }
+    
+    .btn {
+        padding: 6px 12px;
+        font-size: 12px;
     }
 }
 
+/* Ajustes extra para móviles muy pequeños */
 @media (max-width: 480px) {
-    .tableWrapper {
+    .card {
+        padding: 12px;
+    }
+    
+    .cardRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .cardLabel {
+        min-width: auto;
         font-size: 12px;
     }
-
-    .table th,
-    .table td {
-        padding: 8px 10px;
+    
+    .cardValue {
+        text-align: left;
+        font-size: 13px;
+        padding-left: 8px;
     }
-
+    
+    .cardActions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
     .btn {
-        padding: 5px 8px;
-        font-size: 10px;
-    }
-
-    .actions {
-        gap: 3px;
+        flex: 1;
+        justify-content: center;
     }
 }
