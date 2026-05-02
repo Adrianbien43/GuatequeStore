@@ -68,35 +68,27 @@
   letter-spacing: 0.5px;
 }
 
-/* ============================================
-   CORREGIDO: Inputs con texto más visible
-   ============================================ */
 .form input {
   padding: 14px 16px;
   font-size: 16px;
-  font-weight: 600;                        /* NUEVO - texto más grueso */
   border: 2px solid transparent;
   border-radius: 10px;
   outline: none;
-  background: rgba(255, 255, 255, 0.95);   /* antes 0.9 - fondo más opaco */
-  color: #1a0f0b;                          /* antes var(--brown-dark-4) - más oscuro */
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--brown-dark-4, #211612);
   transition: all 0.3s ease;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .form input::placeholder {
-  color: #7a5c4a;                          /* antes var(--brown-mid-5) - placeholder más oscuro */
-  font-weight: 400;
-  opacity: 0.9;                            /* NUEVO - menos transparente */
+  color: var(--brown-mid-5, #9C6E4F);
 }
 
 .form input:focus {
   border-color: var(--brown-dark-4, #211612);
-  background: #ffffff;                     /* fondo sólido al escribir */
-  box-shadow: 0 0 0 4px rgba(33, 22, 18, 0.15);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(33, 22, 18, 0.1);
 }
-k
+
 /* ===== SUBMIT BUTTON ===== */
 .btnSubmit {
   padding: 14px;

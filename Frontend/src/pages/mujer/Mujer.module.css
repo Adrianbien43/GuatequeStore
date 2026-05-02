@@ -6,11 +6,10 @@
     font-display: swap;
 }
 
-
 .seccion_mujer {
     display: flex;
     flex-direction: column;
-    height: 81vh;
+    min-height: 81vh; /* Cambiado de height a min-height para evitar desbordes */
 }
 
 .seccion_header {
@@ -19,7 +18,7 @@
     min-height: 300px;
 }
 
-/*Primavera*/
+/* Primavera */
 .seccion_titulo1 {
     position: relative;
     background-image: url('../../src/assets/co18.webp');
@@ -40,7 +39,7 @@
 }
 
 .seccion_card {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -48,18 +47,18 @@
 }
 
 @keyframes alternarFondo {
-  0% {
-    background-image: url('../../src/assets/co17.webp');
-  }
-  50% {
-    background-image: url('../../src/assets/co19.webp');
-  }
-  100% {
-    background-image: url('../../src/assets/co17.webp');
-  }
+    0% {
+        background-image: url('../../src/assets/co17.webp');
+    }
+    50% {
+        background-image: url('../../src/assets/co19.webp');
+    }
+    100% {
+        background-image: url('../../src/assets/co17.webp');
+    }
 }
 
-/*Verano*/
+/* Verano */
 .seccion_titulo2 {
     position: relative;
     background-image: url('../../src/assets/verano.jpg');
@@ -80,7 +79,7 @@
 }
 
 .seccion_card1 {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -88,18 +87,18 @@
 }
 
 @keyframes alternarFondo1 {
-  0% {
-    background-image: url('../../src/assets/co15.webp');
-  }
-  50% {
-    background-image: url('../../src/assets/mujerverano.jpg');
-  }
-  100% {
-    background-image: url('../../src/assets/co15.webp');
-  }
+    0% {
+        background-image: url('../../src/assets/co15.webp');
+    }
+    50% {
+        background-image: url('../../src/assets/mujerverano.jpg');
+    }
+    100% {
+        background-image: url('../../src/assets/co15.webp');
+    }
 }
 
-/*Otoño*/
+/* Otoño */
 .seccion_titulo3 {
     position: relative;
     background-image: url('../../src/assets/OtonoMujeres.jpg');
@@ -120,7 +119,7 @@
 }
 
 .seccion_card2 {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -128,18 +127,18 @@
 }
 
 @keyframes alternarFondo2 {
-  0% {
-    background-image: url('../../src/assets/mujerOtoño1.jpg');
-  }
-  50% {
-    background-image: url('../../src/assets/mujerOtoño2.jpg');
-  }
-  100% {
-    background-image: url('../../src/assets/mujerOtoño1.jpg');
-  }
+    0% {
+        background-image: url('../../src/assets/mujerOtoño1.jpg');
+    }
+    50% {
+        background-image: url('../../src/assets/mujerOtoño2.jpg');
+    }
+    100% {
+        background-image: url('../../src/assets/mujerOtoño1.jpg');
+    }
 }
 
-/*Invierno*/
+/* Invierno */
 .seccion_titulo4 {
     position: relative;
     background-image: url('../../src/assets/inviernoMujeres.jpg');
@@ -160,7 +159,7 @@
 }
 
 .seccion_card3 {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -168,18 +167,18 @@
 }
 
 @keyframes alternarFondo3 {
-  0% {
-    background-image: url('../../src/assets/mujerInvierno1.jpg');
-  }
-  50% {
-    background-image: url('../../src/assets/mujerInvierno.jpg');
-  }
-  100% {
-    background-image: url('../../src/assets/mujerInvierno1.jpg');
-  }
+    0% {
+        background-image: url('../../src/assets/mujerInvierno1.jpg');
+    }
+    50% {
+        background-image: url('../../src/assets/mujerInvierno.jpg');
+    }
+    100% {
+        background-image: url('../../src/assets/mujerInvierno1.jpg');
+    }
 }
 
-
+/* Texto responsivo con clamp() - ajusta tamaño suavemente sin romper estructura */
 .titulo1 {
     width: 250px;
     z-index: 2;
@@ -189,12 +188,12 @@
 }
 
 .titulo1 h2 {
-    font-size: 3.1rem;
+    font-size: clamp(1.6rem, 6vw, 3.1rem);
     margin: 2px;
 }
 
 .titulo1 h5 {
-    font-size: 1.2rem;
+    font-size: clamp(0.8rem, 3vw, 1.2rem);
     margin: 1px;
 }
 
@@ -206,66 +205,86 @@
     margin-top: auto;
 }
 
+/* Texto responsivo para el párrafo del footer */
+.seccion_footer p {
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    margin: 0;
+}
 
-
-/*No tocar esta parte es cositas de diseño de botones*/
-
+/* Botones responsivos */
 .button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  --border-right: 4px;
-  --fs-size: 1.2em; /* tamaño más pequeño */
-  letter-spacing: 2px;
-  font-size: var(--fs-size);
-  font-family: "Arial";
-  position: absolute; /* se posiciona dentro del card */
-  bottom: 20px; /* abajo dentro del card */
-  left: 50%; /* centrado horizontal */
-  transform: translateX(-50%);
-  text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--text-stroke-color);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    --border-right: 4px;
+    --fs-size: clamp(0.8rem, 3vw, 1.2rem);
+    letter-spacing: 2px;
+    font-size: var(--fs-size);
+    font-family: "Arial";
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-stroke-color);
 }
 
 .button1 {
-  --text-stroke-color: rgba(255, 255, 255, 0.6);
-  --animation-color: #37FF8B;
+    --text-stroke-color: rgba(255, 255, 255, 0.6);
+    --animation-color: #37FF8B;
 }
 
 .button2 {
-  --text-stroke-color: rgba(255, 255, 255, 0.6);
-  --animation-color: #ffff00;
+    --text-stroke-color: rgba(255, 255, 255, 0.6);
+    --animation-color: #ffff00;
 }
 
 .button3 {
-  --text-stroke-color: rgba(255, 255, 255, 0.6);
-  --animation-color: #ff9500;
+    --text-stroke-color: rgba(255, 255, 255, 0.6);
+    --animation-color: #ff9500;
 }
 
 .button4 {
-  --text-stroke-color: rgba(255, 255, 255, 0.6);
-  --animation-color: #c0f4ff;
+    --text-stroke-color: rgba(255, 255, 255, 0.6);
+    --animation-color: #c0f4ff;
 }
 
 .actualText {
-  position: relative;
+    position: relative;
 }
 
 .hoverText {
-  position: absolute;
-  box-sizing: border-box;
-  content: attr(data-text);
-  color: var(--animation-color);
-  width: 0%;
-  inset: 0;
-  border-right: var(--border-right) solid var(--animation-color);
-  overflow: hidden;
-  transition: 0.5s;
-  -webkit-text-stroke: 1px var(--animation-color);
+    position: absolute;
+    box-sizing: border-box;
+    content: attr(data-text);
+    color: var(--animation-color);
+    width: 0%;
+    inset: 0;
+    border-right: var(--border-right) solid var(--animation-color);
+    overflow: hidden;
+    transition: 0.5s;
+    -webkit-text-stroke: 1px var(--animation-color);
 }
 
 .button:hover .hoverText {
-  width: 100%;
-  filter: drop-shadow(0 0 23px var(--animation-color));
+    width: 100%;
+    filter: drop-shadow(0 0 23px var(--animation-color));
+}
+
+/* Media queries adicionales para ajustes finos en dispositivos muy pequeños (opcional) */
+@media (max-width: 480px) {
+    .seccion_header {
+        min-height: 200px; /* Reduce altura mínima en móviles para mejor proporción */
+    }
+    
+    .titulo1 {
+        width: 180px; /* Reduce ancho del contenedor del título */
+        top: 10px;
+        left: 10px;
+    }
+    
+    .button {
+        bottom: 10px; /* Ajusta posición del botón en pantallas muy pequeñas */
+    }
 }

@@ -15,26 +15,26 @@
 .seccion_hombre {
   display: flex;
   flex-direction: column;
-  height: 81vh;
+  min-height: 81vh; /* Cambiado de height a min-height para evitar desbordes */
 }
 
 /* PRIMAVERA */
 .seccion_primavera {
   display: flex;
   flex-direction: column;
-  height: 81vh;
+  min-height: 81vh; /* Cambiado de height a min-height */
   background-color: red;
 }
 
 /* HEADER */
 .seccion_header {
   display: flex;
-  flex: 1; /* ocupa todo el espacio libre */
+  flex: 1;
   min-height: 300px;
   background-color: blue;
 }
 
-/*Primavera*/
+/* Primavera */
 .seccion_titulo1 {
     position: relative;
     background-image: url('../../src/assets/priH.jpg');
@@ -55,7 +55,7 @@
 }
 
 .seccion_card {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -74,7 +74,7 @@
   }
 }
 
-/*Verano*/
+/* Verano */
 .seccion_titulo2 {
     position: relative;
     background-image: url('../../src/assets/verah.jpg');
@@ -95,7 +95,7 @@
 }
 
 .seccion_card1 {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -114,7 +114,7 @@
   }
 }
 
-/*Otoño*/
+/* Otoño */
 .seccion_titulo3 {
     position: relative;
     background-image: url('../../src/assets/OtoñoHombres.jpg');
@@ -135,7 +135,7 @@
 }
 
 .seccion_card2 {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -154,7 +154,7 @@
   }
 }
 
-/*Invierno*/
+/* Invierno */
 .seccion_titulo4 {
     position: relative;
     background-image: url('../../src/assets/InviernoHombres.jpg');
@@ -175,7 +175,7 @@
 }
 
 .seccion_card3 {
-    position: relative; /* permite que el botón se posicione dentro */
+    position: relative;
     background-size: cover;
     background-position: center;
     width: 50%;
@@ -194,6 +194,7 @@
   }
 }
 
+/* Títulos responsivos con clamp() */
 .titulo1 {
     width: 250px;
     z-index: 2;
@@ -203,12 +204,12 @@
 }
 
 .titulo1 h2 {
-    font-size: 3.1rem;
+    font-size: clamp(1.6rem, 6vw, 3.1rem);
     margin: 2px;
 }
 
 .titulo1 h5 {
-    font-size: 1.2rem;
+    font-size: clamp(0.8rem, 3vw, 1.2rem);
     margin: 1px;
 }
 
@@ -221,8 +222,14 @@
   margin-top: auto;
 }
 
+/* Texto responsivo para el párrafo del footer */
+.seccion_footer p {
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    margin: 0;
+}
+
 /* ========================= */
-/* NO TOCAR — DISEÑO BOTONES */
+/* BOTONES RESPONSIVOS       */
 /* ========================= */
 
 .button {
@@ -230,7 +237,7 @@
   border: none;
   cursor: pointer;
   --border-right: 4px;
-  --fs-size: 1.2em;
+  --fs-size: clamp(0.8rem, 3vw, 1.2rem); /* Tamaño responsivo */
   letter-spacing: 2px;
   font-size: var(--fs-size);
   font-family: "Arial";
@@ -283,4 +290,23 @@
 .button:hover .hoverText {
   width: 100%;
   filter: drop-shadow(0 0 23px var(--animation-color));
+}
+
+/* ========================= */
+/* MEDIA QUERY OPCIONAL      */
+/* ========================= */
+@media (max-width: 480px) {
+    .seccion_header {
+        min-height: 200px; /* Reduce altura mínima en móviles */
+    }
+    
+    .titulo1 {
+        width: 180px;
+        top: 10px;
+        left: 10px;
+    }
+    
+    .button {
+        bottom: 10px;
+    }
 }

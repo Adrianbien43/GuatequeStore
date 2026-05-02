@@ -101,7 +101,7 @@
 }
 
 .autoSlide {
-  flex: 0 0 320px;       /* ancho de cada carta en la banda */
+  flex: 0 0 326px;       /* ancho de cada carta en la banda */
   height: 301px;
   margin-right: 12px;
   position: relative;
@@ -231,7 +231,8 @@
   padding: 5px;
   display: flex;
   flex-direction: column;
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 35px;
 }
 
 .container_seccion2 {
@@ -240,25 +241,24 @@
   flex-direction: row-reverse;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 .seccion2_info {
   width: min(400px, 95vw);
   height: auto;
-  min-height: 280px;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 10px;
-  padding-top: 70px;
+  justify-content: flex-start;
+  padding: 68px 12px 12px 12px;
   margin: 5px;
   text-align: justify;
 }
 
-.seccion2_info h2 { top:10px; left:25px; position:absolute; font-size: clamp(22px, 5vw, 35px); }
-.seccion2_info h4 { top:46px; left:42px; position:absolute; font-size: clamp(15px, 3.5vw, 22px); }
-.seccion2_info p  { font-size: clamp(14px, 3vw, 18px); margin-top:8px; }
+.seccion2_info h2 { top:10px; left:25px; position:absolute; font-size: clamp(22px, 5vw, 35px); margin:0; }
+.seccion2_info h4 { top:46px; left:42px; position:absolute; font-size: clamp(15px, 3.5vw, 22px); margin:0; }
+.seccion2_info p  { font-size: clamp(14px, 3vw, 18px); margin-top: 6px; margin-bottom: 0; line-height: 1.55; }
 
 .card1_sec2 { height:350px; width: min(220px, 90vw); background-image:url('../../src/assets/co10.webp'); background-size:cover; background-position:center; margin-right:10px; }
 .card2_sec2 { height:350px; width: min(220px, 90vw); background-image:url('../../src/assets/co8.webp');  background-size:cover; background-position:center; margin-right:10px; }
@@ -275,18 +275,14 @@
 
 /* ── Responsive ── */
 @media (max-width: 480px) {
-  /* Carrusel más bajo en móvil pequeño */
   .carouselWrapper { height: 220px; }
-  .autoSlide       { flex: 0 0 85vw; height: 220px; }
+  .autoSlide       { flex: 0 0 calc(85vw + 6px); height: 220px; }
 
-  /* Barra nav: dos filas si no caben los 6 botones */
   .navSection  { padding: 12px 4px; }
   .navBar      { gap: 8px; padding: 8px; }
 
-  /* Sección 1: gradiente arriba para no tapar tanto */
   .contenedor_i_1 { top: 280px; }
 
-  /* Sección 2: imágenes a ancho completo */
   .card1_sec2,
   .card2_sec2,
   .card3_sec2,
@@ -295,5 +291,5 @@
 
 @media (max-width: 768px) and (min-width: 481px) {
   .carouselWrapper { height: 260px; }
-  .autoSlide       { flex: 0 0 280px; height: 260px; }
+  .autoSlide       { flex: 0 0 286px; height: 260px; }
 }

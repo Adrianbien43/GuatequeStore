@@ -1,9 +1,15 @@
+/* Asegurar modelo de caja consistente */
+* {
+  box-sizing: border-box;
+}
+
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
+  padding: clamp(16px, 4vw, 24px);
   animation: fadeIn 0.5s ease;
+  overflow-x: hidden; /* Evita scroll horizontal no deseado */
 }
 
 @keyframes fadeIn {
@@ -13,23 +19,24 @@
 
 .hero {
   background: linear-gradient(135deg, #211612 0%, #4A3A34 100%);
-  border-radius: 16px;
-  padding: 48px;
+  border-radius: clamp(12px, 3vw, 16px);
+  padding: clamp(24px, 6vw, 48px);
   color: #F0E2D2;
-  margin-bottom: 32px;
+  margin-bottom: clamp(20px, 5vw, 32px);
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Contiene el pseudo-elemento */
 }
 
 .hero::before {
   content: '';
   position: absolute;
   top: -50%;
-  right: -10%;
-  width: 300px;
-  height: 300px;
+  right: -50px; /* Cambiado de -10% a valor fijo negativo para no sobresalir */
+  width: min(300px, 40vw); /* Se adapta al ancho de pantalla */
+  height: min(300px, 40vw);
   background: radial-gradient(circle, rgba(164, 113, 72, 0.2) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 
 .heroContent {
@@ -41,49 +48,79 @@
   display: inline-block;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  padding: 6px 16px;
+  padding: clamp(4px, 2vw, 6px) clamp(12px, 3vw, 16px);
   border-radius: 20px;
-  font-size: 13px;
+  font-size: clamp(11px, 3vw, 13px);
   font-weight: 500;
-  margin-bottom: 16px;
+  margin-bottom: clamp(12px, 4vw, 16px);
   color: #E7D7C5;
+  word-break: keep-all;
 }
 
 .hero h1 {
-  font-size: 36px;
+  font-size: clamp(24px, 7vw, 36px);
   font-weight: 700;
-  margin: 0 0 12px 0;
+  margin: 0 0 clamp(8px, 2vw, 12px) 0;
   color: #F0E2D2;
+  line-height: 1.2;
+  word-break: break-word;
 }
 
 .hero p {
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: 1.5;
   color: #C8AB8F;
-  margin: 0 0 24px 0;
-  max-width: 500px;
+  margin: 0 0 clamp(16px, 5vw, 24px) 0;
+  max-width: 100%; /* En lugar de 500px para móviles */
+}
+
+/* En pantallas grandes mantiene el ancho original */
+@media (min-width: 768px) {
+  .hero p {
+    max-width: 500px;
+  }
 }
 
 .actions {
   display: flex;
-  gap: 12px;
+  gap: clamp(8px, 3vw, 12px);
   flex-wrap: wrap;
 }
 
-.btnPrimary {
+.btnPrimary,
+.btnSecondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 14px 28px;
-  background: #F0E2D2;
-  color: #211612;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: clamp(12px, 3vw, 14px) clamp(20px, 5vw, 28px);
+  font-size: clamp(13px, 4vw, 14px);
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-align: center;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+/* En móviles los botones pueden ocupar todo el ancho y permitir texto multilínea */
+@media (max-width: 480px) {
+  .btnPrimary,
+  .btnSecondary {
+    white-space: normal;
+    width: 100%;
+  }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.btnPrimary {
+  background: #F0E2D2;
+  color: #211612;
+  border: none;
 }
 
 .btnPrimary:hover {
@@ -92,19 +129,9 @@
 }
 
 .btnSecondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
   background: transparent;
   color: #E7D7C5;
   border: 1.5px solid rgba(231, 215, 197, 0.3);
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .btnSecondary:hover {
@@ -113,34 +140,35 @@
 }
 
 .section {
-  margin-bottom: 32px;
+  margin-bottom: clamp(24px, 6vw, 32px);
 }
 
 .section h2 {
-  font-size: 20px;
+  font-size: clamp(18px, 5vw, 20px);
   font-weight: 600;
   color: #211612;
-  margin: 0 0 20px 0;
+  margin: 0 0 clamp(16px, 4vw, 20px) 0;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(16px, 4vw, 20px);
 }
 
 .card {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 24px;
+  padding: clamp(20px, 5vw, 24px);
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: clamp(12px, 3vw, 12px);
   border: 1px solid rgba(200, 171, 143, 0.3);
   text-decoration: none;
   color: #211612;
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(33, 22, 18, 0.08);
+  word-break: break-word;
 }
 
 .card:hover {
@@ -160,15 +188,16 @@
 }
 
 .cardIcon {
-  font-size: 32px;
-  width: 56px;
-  height: 56px;
+  font-size: clamp(28px, 7vw, 32px);
+  width: clamp(48px, 12vw, 56px);
+  height: clamp(48px, 12vw, 56px);
   display: flex;
   align-items: center;
   justify-content: center;
   background: #F0E2D2;
-  border-radius: 12px;
+  border-radius: clamp(10px, 3vw, 12px);
   margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .cardAdmin .cardIcon {
@@ -176,15 +205,16 @@
 }
 
 .card h3 {
-  font-size: 16px;
+  font-size: clamp(15px, 4vw, 16px);
   font-weight: 600;
   margin: 0;
 }
 
 .card p {
-  font-size: 13px;
+  font-size: clamp(12px, 3.5vw, 13px);
   color: #9C6E4F;
   margin: 0;
+  line-height: 1.4;
 }
 
 .cardAdmin p {
@@ -193,58 +223,71 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
+  gap: clamp(12px, 3vw, 16px);
 }
 
 .stat {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 20px;
+  padding: clamp(16px, 4vw, 20px);
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: clamp(10px, 3vw, 12px);
   border: 1px solid rgba(200, 171, 143, 0.3);
   text-align: center;
 }
 
 .statValue {
-  font-size: 28px;
+  font-size: clamp(22px, 7vw, 28px);
   font-weight: 700;
   color: #211612;
 }
 
 .statLabel {
-  font-size: 12px;
+  font-size: clamp(10px, 3vw, 12px);
   color: #9C6E4F;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 16px;
-  }
-
+/* Ajustes específicos para móviles muy pequeños (≤480px) */
+@media (max-width: 480px) {
   .hero {
-    padding: 32px 24px;
+    text-align: center;
+    padding: clamp(20px, 5vw, 32px);
   }
-
-  .hero h1 {
-    font-size: 28px;
+  
+  .hero p {
+    max-width: 100%;
   }
-
+  
   .grid {
     grid-template-columns: 1fr;
   }
-
-  .actions {
-    flex-direction: column;
+  
+  .stats {
+    grid-template-columns: 1fr;
   }
+  
+  .card {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .cardIcon {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
-  .btnPrimary,
-  .btnSecondary {
-    width: 100%;
-    justify-content: center;
+/* Tablets pequeñas (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

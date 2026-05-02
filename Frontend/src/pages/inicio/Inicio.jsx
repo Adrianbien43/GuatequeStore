@@ -162,6 +162,8 @@ export default function Inicio() {
           <div className={styles.seccion2_info}>
             <h2>Vestido Dama</h2><h4>Ropa del momento</h4>
             <p>Guateque viste tus días de encanto y elegancia, con diseños que fluyen contigo y elevan tu presencia.</p>
+            <p>Cada prenda está pensada para realzar tu figura con telas ligeras y patrones exclusivos que combinan lo clásico con lo contemporáneo.</p>
+            <p>Porque vestirse bien es también una forma de cuidarte y expresar quién eres cada día.</p>
           </div>
           <div className={styles.card1_sec2}></div>
         </div>
@@ -169,7 +171,8 @@ export default function Inicio() {
           <div className={styles.seccion2_info}>
             <h2>Lorenzo Piedra</h2><h4>Diseñador estrella</h4>
             <p>Aquí presentamos los nuevos modelos para que luzcas como una reina.</p>
-            <p>De la mano de Lorenzo Piedra, los mejores complementos para despedir el año.</p>
+            <p>De la mano de Lorenzo Piedra, los mejores complementos para despedir el año y celebrar todo tipo de fiestas con un estilo inconfundible.</p>
+            <p>Diseños que fusionan elegancia y atrevimiento, pensados para mujeres que no pasan desapercibidas.</p>
           </div>
           <div className={styles.card2_sec2}></div>
         </div>
@@ -180,6 +183,8 @@ export default function Inicio() {
           <div className={styles.seccion2_info}>
             <h2>Traje Caballero</h2><h4>Ropa del momento</h4>
             <p>Descubre trajes que inspiran confianza. Viste tu éxito y destaca en cada ocasión.</p>
+            <p>Confeccionados con tejidos de primera calidad, nuestros trajes combinan corte moderno y comodidad para que te sientas impecable de la mañana a la noche.</p>
+            <p>Desde reuniones de negocios hasta celebraciones especiales, siempre tendrás el look perfecto.</p>
           </div>
           <div className={styles.card3_sec2}></div>
         </div>
@@ -187,7 +192,8 @@ export default function Inicio() {
           <div className={styles.seccion2_info}>
             <h2>Martín Jesús</h2><h4>Diseñador estrella</h4>
             <p>Los mejores trajes para sentirte bien y cómodo en fiestas y cenas.</p>
-            <p>"Luce bien y cómodo", comenta nuestro diseñador Martín Jesús.</p>
+            <p>"Luce bien y cómodo", comenta nuestro diseñador Martín Jesús. Ropa capaz de conquistar corazones con cada detalle cuidado al milímetro.</p>
+            <p>Una colección que demuestra que la elegancia masculina no está reñida con la comodidad.</p>
           </div>
           <div className={styles.card4_sec2}></div>
         </div>
