@@ -24,6 +24,27 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ===== GLOBAL ERROR MESSAGE ===== */
+.globalError {
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  background-color: rgba(231, 76, 60, 0.15);
+  border-left: 4px solid #e74c3c;
+  border-radius: 6px;
+  color: #c0392b;
+  font-size: 14.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 /* ===== HEADER ===== */
 .header {
   text-align: center;
@@ -31,7 +52,7 @@
 }
 
 .header h2 {
-  font-size: 42px;
+  font-size: 40.5px;
   font-weight: 800;
   margin: 0;
   color: var(--brown-dark-4, #211612);
@@ -39,7 +60,7 @@
 }
 
 .header p {
-  font-size: 16px;
+  font-size: 16.5px;
   color: var(--brown-dark-3, #5A4637);
   margin: 8px 0 0 0;
   font-weight: 500;
@@ -61,45 +82,67 @@
 }
 
 .inputGroup label {
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 600;
   color: var(--brown-dark-4, #211612);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.requirement {
+  font-size: 12.5px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--brown-mid-5, #9C6E4F);
+  opacity: 0.8;
+}
+
+/* ============================================
+   CORREGIDO: Inputs con texto más visible
+   ============================================ */
 .form input {
   padding: 14px 16px;
-  font-size: 16px;
+  font-size: 17.5px;
   border: 2px solid transparent;
   border-radius: 10px;
   outline: none;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--brown-dark-4, #211612);
+  /* Fondo más opaco para que el texto resalte */
+  background: rgba(255, 255, 255, 0.95);   /* antes 0.9 */
+  /* Texto más oscuro y sin transparencia */
+  color: #1a0f0b;                          /* antes var(--brown-dark-4, #211612) - ahora más oscuro */
+  font-weight: 600;                        /* NUEVO - más grosor para mejor legibilidad */
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
 }
 
 .form input::placeholder {
-  color: var(--brown-mid-5, #9C6E4F);
+  /* Placeholder también más visible */
+  color: #7a5c4a;                          /* antes var(--brown-mid-5, #9C6E4F) - ahora más oscuro */
+  font-weight: 400;
+  opacity: 0.9;                            /* NUEVO - menos transparente */
 }
 
 .form input:focus {
   border-color: var(--brown-dark-4, #211612);
-  background: white;
-  box-shadow: 0 0 0 4px rgba(33, 22, 18, 0.1);
+  /* Fondo completamente blanco al escribir */
+  background: #ffffff;                   /* antes white */
+  box-shadow: 0 0 0 4px rgba(33, 22, 18, 0.15);
 }
 
 .inputError {
   border-color: #e74c3c !important;
-  background: rgba(231, 76, 60, 0.05) !important;
+  background: rgba(231, 76, 60, 0.08) !important;   /* antes 0.05 - un poco más visible */
 }
 
 /* ===== ERROR MESSAGES ===== */
 .error {
   color: #c0392b;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -108,13 +151,46 @@
 
 .error::before {
   content: "⚠";
-  font-size: 14px;
+  font-size: 15.5px;
+}
+
+/* ===== WARNING MESSAGES ===== */
+.warning {
+  color: #d68910;
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== HINT/SUCCESS MESSAGES ===== */
+.hint {
+  color: #27ae60;
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== REQUIREMENT INFO ===== */
+.requirement {
+  color: var(--brown-mid-5, #9e7050);
+  font-size: 12.5px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-top: 2px;
+  display: block;
+  opacity: 0.85;
+  line-height: 1.4;
 }
 
 /* ===== SUBMIT BUTTON ===== */
 .btnSubmit {
   padding: 14px;
-  font-size: 16px;
+  font-size: 17.5px;
   font-weight: 700;
   border: none;
   border-radius: 10px;
@@ -168,7 +244,7 @@
 }
 
 .footer p {
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--brown-dark-3, #5A4637);
   margin: 0;
 }
@@ -199,11 +275,11 @@
   }
 
   .header h2 {
-    font-size: 36px;
+    font-size: 37.5px;
   }
 
   .header p {
-    font-size: 14px;
+    font-size: 15.5px;
     letter-spacing: 2px;
   }
 
@@ -213,12 +289,22 @@
 
   .form input {
     padding: 12px 14px;
-    font-size: 15px;
+    font-size: 16.5px;
   }
 
   .btnSubmit {
     padding: 12px;
-    font-size: 15px;
+    font-size: 16.5px;
+  }
+
+  .requirement {
+    font-size: 11.5px;
+  }
+
+  .error,
+  .warning,
+  .hint {
+    font-size: 12.5px;
   }
 }
 
@@ -228,7 +314,7 @@
   }
 
   .header h2 {
-    font-size: 32px;
+    font-size: 33.5px;
   }
 
   .header {
@@ -242,6 +328,6 @@
   }
 
   .header h2 {
-    font-size: 48px;
+    font-size: 49.5px;
   }
 }
