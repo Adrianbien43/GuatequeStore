@@ -1,7 +1,9 @@
 package com.guatequestore.backend.pedido.service;
 
 import com.guatequestore.backend.pedido.model.Pedido;
+import com.guatequestore.backend.lineapedido.model.LineaPedido;
 import com.guatequestore.backend.pedido.repository.PedidoRepository;
+import com.guatequestore.backend.lineapedido.repository.LineaPedidoRepository;
 import com.guatequestore.backend.usuario.model.Usuario;
 import com.guatequestore.backend.usuario.repository.UsuarioRepository;
 import com.guatequestore.backend.almacen.model.Almacen;
@@ -19,13 +21,16 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final UsuarioRepository usuarioRepository;
     private final AlmacenRepository almacenRepository;
+    private final LineaPedidoRepository lineaPedidoRepository;
 
     public PedidoService(PedidoRepository pedidoRepository,
                          UsuarioRepository usuarioRepository,
-                         AlmacenRepository almacenRepository) {
+                         AlmacenRepository almacenRepository,
+                         LineaPedidoRepository lineaPedidoRepository) {
         this.pedidoRepository = pedidoRepository;
         this.usuarioRepository = usuarioRepository;
         this.almacenRepository = almacenRepository;
+        this.lineaPedidoRepository = lineaPedidoRepository;
     }
 
     public List<Pedido> getAllPedidos() {
@@ -34,6 +39,10 @@ public class PedidoService {
 
     public Pedido getPedidoById(Long id) {
         return pedidoRepository.findById(id).orElse(null);
+    }
+
+    public List<Pedido> getPedidosByUsuarioId(Long usuarioId) {
+        return pedidoRepository.findByUsuario_IdUsuarioWithLineas(usuarioId);
     }
 
     public Pedido createPedido(Pedido pedido) {
@@ -54,7 +63,8 @@ public class PedidoService {
                 System.out.println("- Almacén ID: " + pedido.getAlmacen().getId());
             }
 
-            // 1. VALIDAR Y ESTABLECER VALORES POR DEFECTO
+            System.out.println("- Líneas del pedido: " + (pedido.getLineas() != null ? pedido.getLineas().size() : 0));
+
             if (pedido.getFechaPedido() == null) {
                 pedido.setFechaPedido(LocalDate.now());
             }
@@ -63,23 +73,19 @@ public class PedidoService {
                 pedido.setEstadoPedido(Pedido.EstadoPedido.PENDIENTE);
             }
 
-            // 2. VALIDAR Y OBTENER USUARIO
             if (pedido.getUsuario() == null) {
                 throw new IllegalArgumentException("El usuario es requerido");
             }
 
-            // ¡IMPORTANTE: Ahora Usuario tiene getId() gracias al cambio en Usuario.java!
             Long usuarioId = pedido.getUsuario().getId();
 
             if (usuarioId == null) {
-                // Intentar con getIdUsuario() como respaldo
                 usuarioId = pedido.getUsuario().getIdUsuario();
                 if (usuarioId == null) {
                     throw new IllegalArgumentException("ID de usuario no proporcionado");
                 }
             }
 
-            // Buscar usuario en la base de datos
             Usuario usuario = usuarioRepository.findById(usuarioId)
                     .orElseThrow(() -> {
                         List<Usuario> usuarios = usuarioRepository.findAll();
@@ -95,7 +101,6 @@ public class PedidoService {
                         return new RuntimeException(error.toString());
                     });
 
-            // 3. VALIDAR Y OBTENER ALMACÉN
             if (pedido.getAlmacen() == null) {
                 throw new IllegalArgumentException("El almacén es requerido");
             }
@@ -106,7 +111,6 @@ public class PedidoService {
                 throw new IllegalArgumentException("ID de almacén es requerido");
             }
 
-            // Buscar almacén en la base de datos
             Almacen almacen = almacenRepository.findById(almacenId)
                     .orElseThrow(() -> {
                         List<Almacen> almacenes = almacenRepository.findAll();
@@ -122,13 +126,25 @@ public class PedidoService {
                         return new RuntimeException(error.toString());
                     });
 
-            // 4. ASIGNAR LAS RELACIONES COMPLETAS
             pedido.setUsuario(usuario);
             pedido.setAlmacen(almacen);
 
-            // 5. GUARDAR EL PEDIDO
             Pedido pedidoGuardado = pedidoRepository.save(pedido);
             System.out.println("✓ Pedido creado exitosamente con ID: " + pedidoGuardado.getId());
+
+            if (pedido.getLineas() != null && !pedido.getLineas().isEmpty()) {
+                System.out.println("Guardando líneas del pedido...");
+                for (LineaPedido linea : pedido.getLineas()) {
+                    linea.setPedido(pedidoGuardado);
+                    if (linea.getSubtotal() == null) {
+                        linea.setSubtotal(linea.getCantidad() * linea.getPrecioUnitarioVenta());
+                    }
+                    lineaPedidoRepository.save(linea);
+                    System.out.println("✓ Línea guardada - Producto ID: " + linea.getProductoId() +
+                            ", Cantidad: " + linea.getCantidad() +
+                            ", Subtotal: " + linea.getSubtotal());
+                }
+            }
 
             return pedidoGuardado;
 
@@ -142,7 +158,6 @@ public class PedidoService {
     public Pedido updatePedido(Long id, Pedido pedidoActualizado) {
         return pedidoRepository.findById(id).map(pedidoExistente -> {
 
-            // Actualizar campos básicos
             if (pedidoActualizado.getFechaPedido() != null) {
                 pedidoExistente.setFechaPedido(pedidoActualizado.getFechaPedido());
             }
@@ -151,7 +166,6 @@ public class PedidoService {
                 pedidoExistente.setEstadoPedido(pedidoActualizado.getEstadoPedido());
             }
 
-            // Actualizar usuario si se proporciona
             if (pedidoActualizado.getUsuario() != null) {
                 Long usuarioId = pedidoActualizado.getUsuario().getId();
                 if (usuarioId == null) {
@@ -165,7 +179,6 @@ public class PedidoService {
                 }
             }
 
-            // Actualizar almacén si se proporciona
             if (pedidoActualizado.getAlmacen() != null &&
                     pedidoActualizado.getAlmacen().getId() != null) {
 

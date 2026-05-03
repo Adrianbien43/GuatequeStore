@@ -1,4 +1,4 @@
-package com.guatequestore.backend.pedido.model; // Paquete pedido
+package com.guatequestore.backend.pedido.model;
 
 import com.guatequestore.backend.almacen.model.Almacen;
 import com.guatequestore.backend.usuario.model.Usuario;
@@ -6,71 +6,108 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import com.guatequestore.backend.lineapedido.model.LineaPedido;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Modelo para los pedidos que esta relacionado con los usuarios.
- * Representan los pedidos.
- * @author Gorka Jesus
- * @version 1.0.3
- */
+@Entity
+@Table(name = "pedidos")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Pedido {
 
-@Entity // Entidad JPA
-@Table(name = "pedidos") // Tabla 'pedidos'
-@JsonInclude(JsonInclude.Include.NON_NULL) // omite null en JSON
-public class Pedido { // Clase Pedido
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Id // clave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment
-    private Long id; // id pedido
+    @NotNull
+    @Column(nullable = false)
+    private LocalDate fechaPedido;
 
-    @NotNull // no nulo
-    @Column(nullable = false) // columna no nula
-    private LocalDate fechaPedido; // fecha del pedido
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EstadoPedido estadoPedido;
 
-    @NotNull // no nulo
-    @Enumerated(EnumType.STRING) // guarda enum como String
-    @Column(nullable = false) // columna no nula
-    private EstadoPedido estadoPedido; // estado del pedido
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "pedidos", "telefonos", "contraseña"})
+    private Usuario usuario;
 
-    // RELACIÓN BIDIRECCIONAL CON USUARIO
-    @NotNull // no nulo
-    @ManyToOne(fetch = FetchType.EAGER) // relación many-to-one EAGER
-    @JoinColumn(name = "usuario_id", nullable = false) // FK usuario_id (cambiado de cliente_id)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "pedidos", "telefonos", "contraseña"}) // evita propiedades en JSON
-    private Usuario usuario; // usuario asociado (cambiado de cliente)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "almacen_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "pedidos", "inventarios"})
+    private Almacen almacen;
 
-    // RELACIÓN BIDIRECCIONAL CON ALMACEN
-    @NotNull // no nulo
-    @ManyToOne(fetch = FetchType.EAGER) // relación many-to-one EAGER
-    @JoinColumn(name = "almacen_id", nullable = false) // FK almacen_id
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "pedidos", "inventarios"}) // evita propiedades en JSON
-    private Almacen almacen; // almacen asociado
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, orphanRemoval = true)
+    @JsonIgnoreProperties({"pedido"})
+    private List<LineaPedido> lineas = new ArrayList<>();
 
-    public Pedido() {} // ctor vacío
+    public Pedido() {}
 
     public Pedido(LocalDate fechaPedido, EstadoPedido estadoPedido, Usuario usuario, Almacen almacen) {
-        this.fechaPedido = fechaPedido; // asigna fecha
-        this.estadoPedido = estadoPedido; // asigna estado
-        this.usuario = usuario; // asigna usuario (cambiado de cliente)
-        this.almacen = almacen; // asigna almacen
+        this.fechaPedido = fechaPedido;
+        this.estadoPedido = estadoPedido;
+        this.usuario = usuario;
+        this.almacen = almacen;
     }
 
-    public Long getId() { return id; } // get id
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDate getFechaPedido() { return fechaPedido; } // get fechaPedido
-    public void setFechaPedido(LocalDate fechaPedido) { this.fechaPedido = fechaPedido; } // set fechaPedido
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public EstadoPedido getEstadoPedido() { return estadoPedido; } // get estadoPedido
-    public void setEstadoPedido(EstadoPedido estadoPedido) { this.estadoPedido = estadoPedido; } // set estadoPedido
+    public LocalDate getFechaPedido() {
+        return fechaPedido;
+    }
 
-    public Usuario getUsuario() { return usuario; } // get usuario (cambiado de getCliente)
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; } // set usuario (cambiado de setCliente)
+    public void setFechaPedido(LocalDate fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
 
-    public Almacen getAlmacen() { return almacen; } // get almacen
-    public void setAlmacen(Almacen almacen) { this.almacen = almacen; } // set almacen
+    public EstadoPedido getEstadoPedido() {
+        return estadoPedido;
+    }
 
-    // Método toString() seguro
+    public void setEstadoPedido(EstadoPedido estadoPedido) {
+        this.estadoPedido = estadoPedido;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Almacen getAlmacen() {
+        return almacen;
+    }
+
+    public void setAlmacen(Almacen almacen) {
+        this.almacen = almacen;
+    }
+
+    public List<LineaPedido> getLineas() {
+        return lineas;
+    }
+
+    public void setLineas(List<LineaPedido> lineas) {
+        this.lineas = lineas;
+    }
+
+    public void addLinea(LineaPedido linea) {
+        lineas.add(linea);
+        linea.setPedido(this);
+    }
+
     @Override
     public String toString() {
         return "Pedido{" +
@@ -82,8 +119,7 @@ public class Pedido { // Clase Pedido
                 '}';
     }
 
-    // ENUM
-    public enum EstadoPedido { // estados posibles
+    public enum EstadoPedido {
         PENDIENTE, CONFIRMADO, EN_PREPARACION, ENVIADO, ENTREGADO, CANCELADO
     }
 }

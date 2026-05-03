@@ -1,9 +1,10 @@
-package lineapedido.model;
+package com.guatequestore.backend.lineapedido.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guatequestore.backend.pedido.model.Pedido;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 @Entity
@@ -14,7 +15,6 @@ public class LineaPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false)
     @JsonIgnore
@@ -50,7 +50,6 @@ public class LineaPedido {
         this.createdAt = LocalDate.now();
     }
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }

@@ -38,6 +38,7 @@ public class AuthController {
             Usuario usuario = authService.register(registerRequest);
             LoginResponse response = new LoginResponse(
                     authService.generateToken(usuario.getEmail()),
+                    usuario.getIdUsuario(),
                     usuario.getEmail(),
                     usuario.getNombre(),
                     usuario.getRol().name()

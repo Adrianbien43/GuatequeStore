@@ -56,6 +56,7 @@ public class AuthService {
 
         return new LoginResponse(
                 token,
+                usuario.getIdUsuario(),
                 usuario.getEmail(),
                 usuario.getNombre(),
                 usuario.getRol().name()

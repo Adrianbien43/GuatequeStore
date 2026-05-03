@@ -9,6 +9,9 @@ public class LoginResponse {
     // Tipo de token
     private String tipo;
 
+    // ID del usuario
+    private Long id;
+
     // Email del usuario
     private String email;
 
@@ -22,9 +25,10 @@ public class LoginResponse {
     private String mensaje;
 
     // Constructor
-    public LoginResponse(String token, String email, String nombre, String rol) {
+    public LoginResponse(String token, Long id, String email, String nombre, String rol) {
         this.token = token;
         this.tipo = "Bearer";
+        this.id = id;
         this.email = email;
         this.nombre = nombre;
         this.rol = rol;
@@ -46,6 +50,14 @@ public class LoginResponse {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {

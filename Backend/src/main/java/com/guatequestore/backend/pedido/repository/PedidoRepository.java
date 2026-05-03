@@ -2,9 +2,17 @@ package com.guatequestore.backend.pedido.repository;
 
 import com.guatequestore.backend.pedido.model.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-// Esta interfaz se encarga de comunicarse con la base de datos
-// JpaRepository nos da métodos gratis como save, findAll, findById, delete
+import java.util.List;
+
+@Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
-    // No necesitamos escribir métodos básicos, Spring Data JPA los provee automáticamente
+
+    List<Pedido> findByUsuario_IdUsuario(Long usuarioId);
+
+    @Query("SELECT DISTINCT p FROM Pedido p LEFT JOIN FETCH p.lineas WHERE p.usuario.idUsuario = :usuarioId")
+    List<Pedido> findByUsuario_IdUsuarioWithLineas(@Param("usuarioId") Long usuarioId);
 }

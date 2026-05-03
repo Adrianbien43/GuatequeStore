@@ -39,29 +39,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> {}) // habilitar CORS
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(authz -> authz
-                // Permitir preflight CORS
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                
-                // Rutas abiertas
-                .requestMatchers("/api/auth/**").permitAll()
-                
-                // CRUD solo ADMIN - CORREGIDO: inventario (sin S)
-                .requestMatchers("/api/productos/**").hasRole("ADMINISTRADOR")
-                .requestMatchers("/api/proveedores/**").hasRole("ADMINISTRADOR")
-                .requestMatchers("/api/almacenes/**").hasRole("ADMINISTRADOR")
-                .requestMatchers("/api/inventario/**").hasRole("ADMINISTRADOR")
-                
-                // Pedidos: admin y cliente
-                .requestMatchers("/api/pedidos/**").hasAnyRole("ADMINISTRADOR", "CLIENTE")
-                
-                // Resto requiere autenticación
-                .anyRequest().authenticated()
-            );
+                .cors(cors -> {}) // habilitar CORS
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authz -> authz
+                        // Permitir preflight CORS
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Rutas abiertas
+                        .requestMatchers("/api/auth/**").permitAll()
+
+                        // PRODUCTOS: Clientes pueden VER (GET), solo ADMIN puede modificar
+                        .requestMatchers(HttpMethod.GET, "/api/productos/**").hasAnyRole("ADMINISTRADOR", "CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/productos/**").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMINISTRADOR")
+
+                        // Proveedores, almacenes, inventario - solo ADMIN
+                        .requestMatchers("/api/proveedores/**").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/almacenes/**").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/inventario/**").hasRole("ADMINISTRADOR")
+
+                        // Pedidos: admin y cliente pueden ver y crear
+                        .requestMatchers("/api/pedidos/**").hasAnyRole("ADMINISTRADOR", "CLIENTE")
+
+                        // Resto requiere autenticación
+                        .anyRequest().authenticated()
+                );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
