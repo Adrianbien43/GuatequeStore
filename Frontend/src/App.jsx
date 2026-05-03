@@ -14,6 +14,8 @@ import Registro from "./pages/registro/Registro";
 import Login from "./pages/login/Login";
 import WelcomeClient from "./pages/welcome/WelcomeClient";
 import Panel from "./pages/panel/Panel";
+import ClientProductos from "./pages/cliente/ClientProductos";
+import MisPedidos from "./pages/cliente/MisPedidos";
 
 function HomeRedirect() {
   const { user } = useContext(AuthContext);
@@ -47,6 +49,22 @@ function App() {
                 element={
                   <PrivateRoute roles={["ADMINISTRADOR"]}>
                     <Panel />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tienda"
+                element={
+                  <PrivateRoute roles={["CLIENTE"]}>
+                    <ClientProductos />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/mis-pedidos"
+                element={
+                  <PrivateRoute roles={["CLIENTE"]}>
+                    <MisPedidos />
                   </PrivateRoute>
                 }
               />

@@ -20,6 +20,14 @@ export default function Login() {
         password
       });
 
+      // === DIAGNÓSTICO - MUESTRA LA RESPUESTA ===
+      console.log("=== RESPUESTA DEL BACKEND ===");
+      console.log("Datos completos:", res.data);
+      console.log("ID que llega:", res.data.id);
+      console.log("idUsuario que llega:", res.data.idUsuario);
+      console.log("Todos los campos:", Object.keys(res.data));
+      console.log("==============================");
+
       login(res.data);
 
       if (res.data.rol === "CLIENTE") navigate("/welcome");

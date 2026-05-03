@@ -66,20 +66,20 @@ export default function WelcomeClient() {
             </>
           ) : (
             <>
-              <Link to="/mujer" className={styles.card}>
-                <span className={styles.cardIcon}>👗</span>
-                <h3>Mujer</h3>
-                <p>Explora la colección femenina</p>
+              <Link to="/tienda" className={styles.card}>
+                <span className={styles.cardIcon}>🛍️</span>
+                <h3>Catálogo de Productos</h3>
+                <p>Ver productos disponibles</p>
               </Link>
-              <Link to="/hombre" className={styles.card}>
-                <span className={styles.cardIcon}>👔</span>
-                <h3>Hombre</h3>
-                <p>Explora la colección masculina</p>
-              </Link>
-              <Link to="/welcome" className={styles.card}>
+              <Link to="/mis-pedidos" className={styles.card}>
                 <span className={styles.cardIcon}>📦</span>
                 <h3>Mis Pedidos</h3>
                 <p>Ver historial de compras</p>
+              </Link>
+              <Link to="/mujer" className={styles.card}>
+                <span className={styles.cardIcon}>👗</span>
+                <h3>Catálogo Femenino</h3>
+                <p>Colección exclusiva para mujer</p>
               </Link>
             </>
           )}

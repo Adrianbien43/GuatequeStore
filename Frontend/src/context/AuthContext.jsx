@@ -11,8 +11,9 @@ export const AuthProvider = ({ children }) => {
             const savedToken = localStorage.getItem("token");
             const savedUser = localStorage.getItem("user");
             if (savedToken && savedUser) {
+                const userData = JSON.parse(savedUser);
                 setToken(savedToken);
-                setUser(JSON.parse(savedUser));
+                setUser(userData);
             }
         } catch (error) {
             console.error("Error al cargar datos de autenticación:", error);
@@ -24,11 +25,11 @@ export const AuthProvider = ({ children }) => {
 
     const login = (data) => {
         setToken(data.token);
-        setUser({ nombre: data.nombre, email: data.email, rol: data.rol });
+        setUser({ id: data.id || data.idUsuario, nombre: data.nombre, email: data.email, rol: data.rol });
         localStorage.setItem("token", data.token);
         localStorage.setItem(
             "user",
-            JSON.stringify({ nombre: data.nombre, email: data.email, rol: data.rol })
+            JSON.stringify({ id: data.id || data.idUsuario, nombre: data.nombre, email: data.email, rol: data.rol })
         );
     };
 

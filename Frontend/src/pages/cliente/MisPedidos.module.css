@@ -1,0 +1,220 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.errorAlert {
+  padding: 1rem;
+  background-color: #fee;
+  color: #c33;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.emptyState h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.emptyState p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.pedidosList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pedidoCard {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.pedidoCard:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateX(4px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+.orderNumber h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin: 0 0 0.25rem 0;
+}
+
+.fecha {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 0;
+}
+
+.estado {
+  padding: 0.5rem 1rem;
+  border: 2px solid;
+  border-radius: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.cardContent {
+  padding: 1.5rem;
+}
+
+.productos {
+  margin-bottom: 1rem;
+}
+
+.productos h4 {
+  font-size: 1rem;
+  color: #333;
+  margin: 0 0 0.75rem 0;
+  font-weight: 600;
+}
+
+.productos ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.productos li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.productos li:last-child {
+  border-bottom: none;
+}
+
+.productoNombre {
+  color: #333;
+  font-weight: 500;
+  flex: 1;
+}
+
+.productoDetalles {
+  color: #666;
+  text-align: right;
+  min-width: 120px;
+}
+
+.sinDetalles {
+  color: #999;
+  font-style: italic;
+  margin: 0;
+}
+
+.almacen {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.almacen strong {
+  color: #333;
+}
+
+.cardFooter {
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+}
+
+.total span {
+  color: #666;
+  font-weight: 500;
+}
+
+.total strong {
+  font-size: 1.3rem;
+  color: #667eea;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .estado {
+    align-self: flex-start;
+  }
+
+  .cardFooter {
+    justify-content: flex-start;
+  }
+}
