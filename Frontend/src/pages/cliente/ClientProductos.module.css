@@ -1,21 +1,37 @@
-/* ─── TOKENS ──────────────────────────────────────────────────────────────── */
+/* ─── TOKENS (Paleta marrones profesional) ───────────────────────────────── */
 :root {
-  --bg: #0e0e0e;
-  --surface: #161616;
-  --card: #1a1a1a;
-  --card-hover: #1f1f1f;
-  --border: #2a2a2a;
-  --accent: #c8a96e;
-  --accent-light: #e8d5b0;
-  --text: #f0ece4;
-  --muted: #888;
-  --white: #ffffff;
-  --success-bg: rgba(100, 200, 100, 0.1);
-  --success-border: rgba(100, 200, 100, 0.3);
-  --success-text: #90ee90;
-  --error-bg: rgba(200, 80, 80, 0.1);
-  --error-border: rgba(200, 80, 80, 0.3);
-  --error-text: #ff9999;
+  --brown-dark-1: #3B2F2F;
+  --brown-dark-2: #4A3A34;
+  --brown-dark-3: #5A4637;
+  --brown-dark-4: #211612;
+  --brown-dark-5: #6B5244;
+  --brown-mid-1: #8B5E3C;
+  --brown-mid-2: #A47148;
+  --brown-mid-3: #7A5330;
+  --brown-mid-4: #B38A68;
+  --brown-mid-5: #9C6E4F;
+  --brown-light-1: #D6C0A8;
+  --brown-light-2: #E7D7C5;
+  --brown-light-3: #C8AB8F;
+  --brown-light-4: #E4CDB8;
+  --brown-light-5: #F0E2D2;
+
+  --bg: var(--brown-dark-4);
+  --surface: var(--brown-dark-1);
+  --card: var(--brown-dark-2);
+  --card-hover: var(--brown-dark-3);
+  --border: var(--brown-dark-5);
+  --accent: var(--brown-mid-2);
+  --accent-light: var(--brown-mid-4);
+  --text: var(--brown-light-5);
+  --muted: var(--brown-light-3);
+  --white: var(--brown-light-2);
+  --success-bg: rgba(167, 139, 102, 0.12);
+  --success-border: rgba(167, 139, 102, 0.3);
+  --success-text: var(--brown-light-4);
+  --error-bg: rgba(180, 100, 80, 0.12);
+  --error-border: rgba(180, 100, 80, 0.3);
+  --error-text: #e0b4a4;
 }
 
 /* ─── LAYOUT ──────────────────────────────────────────────────────────────── */
@@ -97,7 +113,7 @@
 .filterBtnActive {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(200, 169, 110, 0.1);
+  background: rgba(164, 113, 72, 0.15);
 }
 
 /* ─── ALERTAS ─────────────────────────────────────────────────────────────── */
@@ -146,24 +162,24 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .productCard:hover {
   background: var(--card-hover);
+  transform: translateY(-2px);
 }
 
 .productCard:hover .productImage img {
   transform: scale(1.07);
 }
 
-/* Imagen */
 .productImage {
   width: 100%;
   height: 340px;
   overflow: hidden;
   position: relative;
-  background: #111;
+  background: var(--brown-dark-4);
 }
 
 .productImage img {
@@ -180,7 +196,7 @@
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.6) 0%,
     rgba(0, 0, 0, 0.1) 55%,
     transparent 100%
   );
@@ -197,7 +213,7 @@
   text-transform: uppercase;
   padding: 4px 10px;
   background: var(--accent);
-  color: #000;
+  color: var(--brown-dark-4);
   font-weight: 600;
 }
 
@@ -215,7 +231,6 @@
   backdrop-filter: blur(8px);
 }
 
-/* Info */
 .productInfo {
   padding: 20px;
   border-top: 1px solid var(--border);
@@ -270,7 +285,7 @@
 
 .btnPedir {
   background: var(--accent);
-  color: #000;
+  color: var(--brown-dark-4);
   border: none;
   padding: 11px 18px;
   font-family: inherit;
@@ -280,11 +295,12 @@
   font-weight: 700;
   cursor: pointer;
   width: 100%;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .btnPedir:hover {
   background: var(--accent-light);
+  transform: scale(0.98);
 }
 
 /* ─── MODAL ───────────────────────────────────────────────────────────────── */
@@ -345,7 +361,6 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
-/* Producto dentro del modal */
 .modalProduct {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -478,12 +493,11 @@
   outline: none;
 }
 
-/* Total */
 .totalPrice {
   margin: 24px 40px 0;
   padding: 16px 20px;
-  background: rgba(200, 169, 110, 0.07);
-  border: 1px solid rgba(200, 169, 110, 0.2);
+  background: rgba(164, 113, 72, 0.07);
+  border: 1px solid rgba(164, 113, 72, 0.2);
   display: flex;
   align-items: baseline;
 }
@@ -507,7 +521,6 @@
   color: var(--accent);
 }
 
-/* Acciones del modal */
 .modalActions {
   display: flex;
   gap: 10px;
@@ -537,7 +550,7 @@
   padding: 14px;
   background: var(--accent);
   border: none;
-  color: #000;
+  color: var(--brown-dark-4);
   font-family: inherit;
   font-size: 11px;
   letter-spacing: 0.15em;
@@ -559,54 +572,19 @@
 
 /* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .container {
-    padding: 32px 16px;
-  }
-
-  .header h1 {
-    font-size: clamp(36px, 12vw, 64px);
-  }
-
-  .productsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 2px;
-  }
-
-  .productImage {
-    height: 260px;
-  }
-
-  .modalProduct {
-    grid-template-columns: 1fr;
-  }
-
-  .modalImageWrap {
-    min-height: 280px;
-  }
-
-  .modalInfo {
-    padding: 28px 24px 0;
-  }
-
-  .modalDetails {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .quantitySection {
-    margin: 24px 24px 0;
-  }
-
-  .totalPrice {
-    margin: 20px 24px 0;
-  }
-
-  .modalActions {
-    margin: 20px 24px 32px;
-  }
+  .container { padding: 32px 16px; }
+  .header h1 { font-size: clamp(36px, 12vw, 64px); }
+  .productsGrid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2px; }
+  .productImage { height: 260px; }
+  .modalProduct { grid-template-columns: 1fr; }
+  .modalImageWrap { min-height: 280px; }
+  .modalInfo { padding: 28px 24px 0; }
+  .modalDetails { grid-template-columns: 1fr 1fr; }
+  .quantitySection { margin: 24px 24px 0; }
+  .totalPrice { margin: 20px 24px 0; }
+  .modalActions { margin: 20px 24px 32px; }
 }
 
 @media (max-width: 480px) {
-  .modalDetails {
-    grid-template-columns: 1fr;
-  }
+  .modalDetails { grid-template-columns: 1fr; }
 }

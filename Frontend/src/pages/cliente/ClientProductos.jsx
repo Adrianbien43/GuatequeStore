@@ -143,6 +143,7 @@ export default function ClientProductos() {
     setError("");
 
     try {
+      // ✅ ESTRUCTURA LIMPIA: solo los campos que el backend necesita
       const pedidoData = {
         usuario: { id: user.id },
         almacen: { id: 1 },
@@ -151,11 +152,13 @@ export default function ClientProductos() {
         lineas: [
           {
             productoId: selectedProduct.id,
-            cantidad,
+            cantidad: cantidad,
             precioUnitarioVenta: selectedProduct.precioUnitario,
           },
         ],
       };
+
+      console.log("📦 Enviando pedido:", JSON.stringify(pedidoData, null, 2));
 
       const nuevoPedido = await crearPedido(pedidoData);
       setSuccess(

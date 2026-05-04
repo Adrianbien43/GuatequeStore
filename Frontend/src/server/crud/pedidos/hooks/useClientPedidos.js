@@ -1,3 +1,4 @@
+// useClientPedidos.js — VERSIÓN SIMPLIFICADA
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../../context/AuthContext";
 import * as clientePedidoService from "../services/clientePedidoService";
@@ -9,12 +10,10 @@ export function useClientPedidos() {
   const [error, setError] = useState(null);
 
   const fetchPedidos = async () => {
-    if (!user || !user.id) {
-      setError("Usuario no autenticado");
+    if (!user?.id) {
       setLoading(false);
       return;
     }
-
     setLoading(true);
     setError(null);
     try {
@@ -23,7 +22,6 @@ export function useClientPedidos() {
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error cargando pedidos";
       setError(msg);
-      console.error("Error fetchPedidos:", err);
       setPedidos([]);
     } finally {
       setLoading(false);
@@ -31,49 +29,24 @@ export function useClientPedidos() {
   };
 
   const crearPedido = async (pedido) => {
-    if (!user || !user.id) {
-      const errorMsg = "Usuario no autenticado. No se puede crear el pedido.";
-      setError(errorMsg);
-      throw new Error(errorMsg);
+    if (!user?.id) {
+      throw new Error("Usuario no autenticado");
     }
-
     try {
       setError(null);
-      const pedidoConUsuario = {
-        ...pedido,
-        usuarioId: user.id,
-        fechaPedido: pedido.fechaPedido || new Date().toISOString(),
-        estadoPedido: pedido.estadoPedido || "PENDIENTE"
-      };
-      const data = await clientePedidoService.createPedidoCliente(pedidoConUsuario);
-      setPedidos(prevPedidos => [data, ...prevPedidos]);
+      const data = await clientePedidoService.createPedidoCliente(pedido);
+      setPedidos(prev => [data, ...prev]);
       return data;
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error creando pedido";
       setError(msg);
-      console.error("Error crearPedido:", err);
-      throw err;
-    }
-  };
-
-  const obtenerPedido = async (id) => {
-    try {
-      setError(null);
-      const data = await clientePedidoService.getPedidoById(id);
-      return data;
-    } catch (err) {
-      const msg = err.response?.data?.message || err.message || "Error obteniendo pedido";
-      setError(msg);
-      console.error("Error obtenerPedido:", err);
       throw err;
     }
   };
 
   useEffect(() => {
-    if (user?.id) {
-      fetchPedidos();
-    }
+    if (user?.id) fetchPedidos();
   }, [user?.id]);
 
-  return { pedidos, loading, error, crearPedido, obtenerPedido, fetchPedidos, setError };
+  return { pedidos, loading, error, crearPedido, fetchPedidos, setError };
 }

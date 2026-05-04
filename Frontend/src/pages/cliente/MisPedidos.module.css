@@ -1,18 +1,34 @@
-/* ─── TOKENS (mismos que ClientProductos) ─────────────────────────────────── */
+/* ─── TOKENS (misma paleta marrón) ───────────────────────────────────────── */
 :root {
-  --bg: #0e0e0e;
-  --surface: #161616;
-  --card: #1a1a1a;
-  --card-hover: #1f1f1f;
-  --border: #2a2a2a;
-  --accent: #c8a96e;
-  --accent-light: #e8d5b0;
-  --text: #f0ece4;
-  --muted: #888;
-  --white: #ffffff;
-  --error-bg: rgba(200, 80, 80, 0.1);
-  --error-border: rgba(200, 80, 80, 0.3);
-  --error-text: #ff9999;
+  --brown-dark-1: #3B2F2F;
+  --brown-dark-2: #4A3A34;
+  --brown-dark-3: #5A4637;
+  --brown-dark-4: #211612;
+  --brown-dark-5: #6B5244;
+  --brown-mid-1: #8B5E3C;
+  --brown-mid-2: #A47148;
+  --brown-mid-3: #7A5330;
+  --brown-mid-4: #B38A68;
+  --brown-mid-5: #9C6E4F;
+  --brown-light-1: #D6C0A8;
+  --brown-light-2: #E7D7C5;
+  --brown-light-3: #C8AB8F;
+  --brown-light-4: #E4CDB8;
+  --brown-light-5: #F0E2D2;
+
+  --bg: var(--brown-dark-4);
+  --surface: var(--brown-dark-1);
+  --card: var(--brown-dark-2);
+  --card-hover: var(--brown-dark-3);
+  --border: var(--brown-dark-5);
+  --accent: var(--brown-mid-2);
+  --accent-light: var(--brown-mid-4);
+  --text: var(--brown-light-5);
+  --muted: var(--brown-light-3);
+  --white: var(--brown-light-2);
+  --error-bg: rgba(180, 100, 80, 0.12);
+  --error-border: rgba(180, 100, 80, 0.3);
+  --error-text: #e0b4a4;
 }
 
 /* ─── LAYOUT ──────────────────────────────────────────────────────────────── */
@@ -122,7 +138,6 @@
   background: var(--card-hover);
 }
 
-/* Número decorativo de índice */
 .orderIndex {
   position: absolute;
   top: 20px;
@@ -130,13 +145,12 @@
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 48px;
   font-weight: 900;
-  color: rgba(200, 169, 110, 0.07);
+  color: rgba(164, 113, 72, 0.07);
   line-height: 1;
   pointer-events: none;
   user-select: none;
 }
 
-/* ─── CARD HEADER ─────────────────────────────────────────────────────────── */
 .cardHeader {
   display: flex;
   justify-content: space-between;
@@ -166,7 +180,6 @@
   letter-spacing: 0.05em;
 }
 
-/* Badge de estado */
 .estado {
   display: flex;
   align-items: center;
@@ -184,7 +197,6 @@
   font-style: normal;
 }
 
-/* ─── CARD CONTENT ────────────────────────────────────────────────────────── */
 .cardContent {
   padding: 24px 28px;
 }
@@ -267,13 +279,12 @@
   padding-left: 8px;
 }
 
-/* ─── CARD FOOTER ─────────────────────────────────────────────────────────── */
 .cardFooter {
   padding: 18px 28px;
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: flex-end;
-  background: rgba(200, 169, 110, 0.03);
+  background: rgba(164, 113, 72, 0.03);
 }
 
 .total {
@@ -298,29 +309,9 @@
 
 /* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .container {
-    padding: 32px 16px;
-  }
-
-  .cardHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 20px;
-  }
-
-  .cardContent {
-    padding: 20px;
-  }
-
-  .cardFooter {
-    padding: 16px 20px;
-    justify-content: flex-start;
-  }
-
-  .orderIndex {
-    top: 14px;
-    right: 16px;
-    font-size: 36px;
-  }
+  .container { padding: 32px 16px; }
+  .cardHeader { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; }
+  .cardContent { padding: 20px; }
+  .cardFooter { padding: 16px 20px; justify-content: flex-start; }
+  .orderIndex { top: 14px; right: 16px; font-size: 36px; }
 }
