@@ -185,6 +185,8 @@ Abre la carpeta `Android/` en Android Studio, sincroniza Gradle y presiona Run.
 GuatequeStore sigue una arquitectura de **3 capas**:
 ![Portada GuatequeStore](./imagen/Arquitectura.png)
 
+---
+
 **¿Por qué esta arquitectura?**
 
 Permite que el Frontend y Android usen las mismas APIs, lo que facilita la escalabilidad y el mantenimiento.
@@ -425,5 +427,3 @@ Este proyecto está bajo la **MIT License**, lo que significa que puedes usarlo,
 Desarrollado por el equipo de GuatequeStore.
 
 ---
-
-**¿Preguntas?** Revisa los archivos README en cada subcarpeta (Backend/, Frontend/, Android/) o abre un issue en GitHub.
