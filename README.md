@@ -6,8 +6,7 @@
 
 ---
 
-### **
-![Portada GuatequeStore](./imagen/GuatequeStore.png)**
+### **![Portada GuatequeStore](./imagen/GuatequeStore.png)**
 
 ---
 
@@ -184,23 +183,7 @@ Abre la carpeta `Android/` en Android Studio, sincroniza Gradle y presiona Run.
 ## Arquitectura
 
 GuatequeStore sigue una arquitectura de **3 capas**:
-
-```
-┌─────────────────────────────┐
-│  Presentación (Web/Android) │  ← Interfaz de usuario
-└──────────────┬──────────────┘
-               │
-┌──────────────▼──────────────┐
-│  Backend (APIs REST)        │  ← Lógica de negocio
-│  - Controllers              │
-│  - Services                 │
-│  - Repositories             │
-└──────────────┬──────────────┘
-               │
-┌──────────────▼──────────────┐
-│  Base de Datos (MySQL)      │  ← Almacenamiento
-└─────────────────────────────┘
-```
+![Portada GuatequeStore](./imagen/Arquitectura.png)
 
 **¿Por qué esta arquitectura?**
 
