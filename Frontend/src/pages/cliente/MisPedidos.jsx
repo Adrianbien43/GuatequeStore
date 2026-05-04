@@ -16,110 +16,111 @@ export default function MisPedidos() {
 
   if (loading) return <Cargando />;
 
-  const getEstadoColor = (estado) => {
-    const colores = {
-      PENDIENTE: "#ff9800",
-      CONFIRMADO: "#2196f3",
-      EN_PREPARACION: "#9c27b0",
-      ENVIADO: "#03a9f4",
-      ENTREGADO: "#4caf50",
-      CANCELADO: "#f44336"
-    };
-    return colores[estado] || "#999";
+  const ESTADO_CONFIG = {
+    PENDIENTE:      { color: "#c8a96e", label: "Pendiente",      icon: "⏳" },
+    CONFIRMADO:     { color: "#60a5fa", label: "Confirmado",     icon: "✓"  },
+    EN_PREPARACION: { color: "#a78bfa", label: "En preparación", icon: "⚙" },
+    ENVIADO:        { color: "#38bdf8", label: "Enviado",        icon: "→"  },
+    ENTREGADO:      { color: "#4ade80", label: "Entregado",      icon: "✓"  },
+    CANCELADO:      { color: "#f87171", label: "Cancelado",      icon: "✕"  },
   };
 
-  const getEstadoEmoji = (estado) => {
-    const emojis = {
-      PENDIENTE: "⏳",
-      CONFIRMADO: "✅",
-      EN_PREPARACION: "⚙️",
-      ENVIADO: "🚚",
-      ENTREGADO: "📦",
-      CANCELADO: "❌"
-    };
-    return emojis[estado] || "📋";
-  };
+  const getEstado = (estado) =>
+    ESTADO_CONFIG[estado] || { color: "#888", label: estado, icon: "·" };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Mis Pedidos</h1>
+        <span className={styles.eyebrow}>Cuenta · Historial</span>
+        <h1>Mis <em>Pedidos</em></h1>
         <p>Historial y estado de tus compras</p>
       </div>
 
-      {error && (
-        <div className={styles.errorAlert}>{error}</div>
-      )}
+      {error && <div className={styles.errorAlert}>{error}</div>}
 
       {pedidos.length === 0 ? (
         <div className={styles.emptyState}>
-          <div className={styles.emptyIcon}>🛒</div>
-          <h2>No tienes pedidos</h2>
-          <p>Aún no has realizado ningún pedido. ¡Comienza a comprar ahora!</p>
+          <div className={styles.emptyIcon}>◻</div>
+          <h2>Sin pedidos aún</h2>
+          <p>Cuando realices tu primer pedido aparecerá aquí.</p>
         </div>
       ) : (
         <div className={styles.pedidosList}>
-          {pedidos.map(pedido => (
-            <div key={pedido.id} className={styles.pedidoCard}>
-              <div className={styles.cardHeader}>
-                <div className={styles.orderNumber}>
-                  <h3>Pedido #{pedido.id}</h3>
-                  <p className={styles.fecha}>
-                    {new Date(pedido.fechaPedido).toLocaleDateString('es-ES', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </p>
-                </div>
-                <div 
-                  className={styles.estado}
-                  style={{ borderColor: getEstadoColor(pedido.estadoPedido) }}
-                >
-                  <span style={{ color: getEstadoColor(pedido.estadoPedido) }}>
-                    {getEstadoEmoji(pedido.estadoPedido)} {pedido.estadoPedido}
-                  </span>
-                </div>
-              </div>
+          {pedidos.map((pedido, index) => {
+            const cfg = getEstado(pedido.estadoPedido);
+            const total = pedido.lineas
+              ?.reduce((sum, l) => sum + l.precioUnitarioVenta * l.cantidad, 0)
+              .toFixed(2) ?? "0.00";
 
-              <div className={styles.cardContent}>
-                {pedido.lineas && pedido.lineas.length > 0 ? (
-                  <div className={styles.productos}>
-                    <h4>Productos:</h4>
-                    <ul>
-                      {pedido.lineas.map((linea, idx) => (
-                        <li key={idx}>
-                          <span className={styles.productoNombre}>
-                            {linea.producto?.nombre || `Producto ID: ${linea.productoId}`}
-                          </span>
-                          <span className={styles.productoDetalles}>
-                            x{linea.cantidad} - ${(linea.precioUnitarioVenta * linea.cantidad).toFixed(2)}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+            return (
+              <div key={pedido.id} className={styles.pedidoCard}>
+                {/* Número de índice decorativo */}
+                <span className={styles.orderIndex}>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <div className={styles.cardHeader}>
+                  <div className={styles.orderNumber}>
+                    <h3>Pedido <em>#{pedido.id}</em></h3>
+                    <p className={styles.fecha}>
+                      {new Date(pedido.fechaPedido).toLocaleDateString("es-ES", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </p>
                   </div>
-                ) : (
-                  <p className={styles.sinDetalles}>Detalles del pedido no disponibles</p>
-                )}
 
-                {pedido.almacen && (
-                  <div className={styles.almacen}>
-                    <strong>Almacén:</strong> {pedido.almacen.nombre}
+                  <div
+                    className={styles.estado}
+                    style={{ borderColor: cfg.color, color: cfg.color }}
+                  >
+                    <span className={styles.estadoIcon}>{cfg.icon}</span>
+                    {cfg.label}
                   </div>
-                )}
-              </div>
+                </div>
 
-              <div className={styles.cardFooter}>
-                <div className={styles.total}>
-                  <span>Total:</span>
-                  <strong>
-                    ${pedido.lineas?.reduce((sum, linea) => sum + (linea.precioUnitarioVenta * linea.cantidad), 0).toFixed(2) || "0.00"}
-                  </strong>
+                <div className={styles.cardContent}>
+                  {pedido.lineas?.length > 0 ? (
+                    <div className={styles.productos}>
+                      <p className={styles.productosLabel}>Productos</p>
+                      <ul>
+                        {pedido.lineas.map((linea, idx) => (
+                          <li key={idx}>
+                            <span className={styles.productoNombre}>
+                              {linea.producto?.nombre || `Producto #${linea.productoId}`}
+                            </span>
+                            <span className={styles.productoDetalles}>
+                              ×{linea.cantidad}
+                              <strong>
+                                ${(linea.precioUnitarioVenta * linea.cantidad).toFixed(2)}
+                              </strong>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p className={styles.sinDetalles}>Detalles no disponibles</p>
+                  )}
+
+                  {pedido.almacen && (
+                    <div className={styles.almacen}>
+                      <span className={styles.almacenLabel}>Almacén</span>
+                      {pedido.almacen.nombre}
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.cardFooter}>
+                  <div className={styles.total}>
+                    <span>Total del pedido</span>
+                    <strong>${total}</strong>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

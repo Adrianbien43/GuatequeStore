@@ -81,6 +81,12 @@ export default function WelcomeClient() {
                 <h3>Catálogo Femenino</h3>
                 <p>Colección exclusiva para mujer</p>
               </Link>
+              {/* ✅ NUEVO LINK PARA HOMBRE */}
+              <Link to="/hombre" className={styles.card}>
+                <span className={styles.cardIcon}>👔</span>
+                <h3>Catálogo Masculino</h3>
+                <p>Colección exclusiva para hombre</p>
+              </Link>
             </>
           )}
         </div>

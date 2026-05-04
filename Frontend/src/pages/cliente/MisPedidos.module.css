@@ -1,124 +1,200 @@
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
+/* ─── TOKENS (mismos que ClientProductos) ─────────────────────────────────── */
+:root {
+  --bg: #0e0e0e;
+  --surface: #161616;
+  --card: #1a1a1a;
+  --card-hover: #1f1f1f;
+  --border: #2a2a2a;
+  --accent: #c8a96e;
+  --accent-light: #e8d5b0;
+  --text: #f0ece4;
+  --muted: #888;
+  --white: #ffffff;
+  --error-bg: rgba(200, 80, 80, 0.1);
+  --error-border: rgba(200, 80, 80, 0.3);
+  --error-text: #ff9999;
 }
 
+/* ─── LAYOUT ──────────────────────────────────────────────────────────────── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+}
+
+/* ─── HEADER ──────────────────────────────────────────────────────────────── */
 .header {
-  text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 56px;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
 }
 
 .header h1 {
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 0.5rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 900;
+  line-height: 0.92;
+  color: var(--white);
+  margin: 0 0 20px;
+}
+
+.header h1 em {
+  font-style: italic;
+  color: var(--accent);
 }
 
 .header p {
-  font-size: 1.1rem;
-  color: #666;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 300;
+  margin: 0;
+  line-height: 1.7;
 }
 
+/* ─── ALERTA ──────────────────────────────────────────────────────────────── */
 .errorAlert {
-  padding: 1rem;
-  background-color: #fee;
-  color: #c33;
-  border: 1px solid #fcc;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+  padding: 14px 20px;
+  margin-bottom: 28px;
+  font-size: 14px;
   font-weight: 500;
 }
 
+/* ─── EMPTY STATE ─────────────────────────────────────────────────────────── */
 .emptyState {
   text-align: center;
-  padding: 4rem 2rem;
-  background: #f9f9f9;
-  border-radius: 12px;
+  padding: 80px 24px;
+  border: 1px solid var(--border);
+  background: var(--surface);
 }
 
 .emptyIcon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+  font-size: 48px;
+  color: var(--border);
+  margin-bottom: 20px;
+  line-height: 1;
 }
 
 .emptyState h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin: 0 0 0.5rem 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 12px;
 }
 
 .emptyState p {
-  color: #666;
-  font-size: 1.1rem;
+  color: var(--muted);
+  font-size: 15px;
   margin: 0;
 }
 
+/* ─── LISTA ───────────────────────────────────────────────────────────────── */
 .pedidosList {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2px;
 }
 
+/* ─── CARD ────────────────────────────────────────────────────────────────── */
 .pedidoCard {
-  background: white;
-  border-radius: 12px;
+  background: var(--card);
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #667eea;
-  transition: all 0.3s ease;
+  border-left: 2px solid var(--accent);
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .pedidoCard:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  transform: translateX(4px);
+  background: var(--card-hover);
 }
 
+/* Número decorativo de índice */
+.orderIndex {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(200, 169, 110, 0.07);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ─── CARD HEADER ─────────────────────────────────────────────────────────── */
 .cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  background: #f9f9f9;
-  border-bottom: 1px solid #eee;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
 }
 
 .orderNumber h3 {
-  font-size: 1.3rem;
-  color: #333;
-  margin: 0 0 0.25rem 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 4px;
+  line-height: 1;
+}
+
+.orderNumber h3 em {
+  font-style: normal;
+  color: var(--accent);
 }
 
 .fecha {
-  font-size: 0.9rem;
-  color: #999;
+  font-size: 12px;
+  color: var(--muted);
   margin: 0;
+  letter-spacing: 0.05em;
 }
 
+/* Badge de estado */
 .estado {
-  padding: 0.5rem 1rem;
-  border: 2px solid;
-  border-radius: 20px;
-  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.cardContent {
-  padding: 1.5rem;
-}
-
-.productos {
-  margin-bottom: 1rem;
-}
-
-.productos h4 {
-  font-size: 1rem;
-  color: #333;
-  margin: 0 0 0.75rem 0;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   font-weight: 600;
+}
+
+.estadoIcon {
+  font-size: 13px;
+  font-style: normal;
+}
+
+/* ─── CARD CONTENT ────────────────────────────────────────────────────────── */
+.cardContent {
+  padding: 24px 28px;
+}
+
+.productosLabel {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
 }
 
 .productos ul {
@@ -131,9 +207,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #eee;
-  font-size: 0.95rem;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
 }
 
 .productos li:last-child {
@@ -141,80 +217,110 @@
 }
 
 .productoNombre {
-  color: #333;
+  color: var(--text);
+  font-size: 14px;
   font-weight: 500;
   flex: 1;
 }
 
 .productoDetalles {
-  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
   text-align: right;
-  min-width: 120px;
+  white-space: nowrap;
+}
+
+.productoDetalles strong {
+  color: var(--accent-light);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .sinDetalles {
-  color: #999;
+  color: var(--muted);
+  font-size: 13px;
   font-style: italic;
   margin: 0;
 }
 
 .almacen {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-  font-size: 0.95rem;
-  color: #666;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text);
 }
 
-.almacen strong {
-  color: #333;
+.almacenLabel {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-left: 2px solid var(--accent);
+  padding-left: 8px;
 }
 
+/* ─── CARD FOOTER ─────────────────────────────────────────────────────────── */
 .cardFooter {
-  padding: 1.5rem;
-  background: #f9f9f9;
-  border-top: 1px solid #eee;
+  padding: 18px 28px;
+  border-top: 1px solid var(--border);
   display: flex;
   justify-content: flex-end;
+  background: rgba(200, 169, 110, 0.03);
 }
 
 .total {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 1.1rem;
+  align-items: baseline;
+  gap: 16px;
 }
 
 .total span {
-  color: #666;
-  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .total strong {
-  font-size: 1.3rem;
-  color: #667eea;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--accent);
 }
 
+/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
-  }
-
-  .header h1 {
-    font-size: 1.8rem;
+    padding: 32px 16px;
   }
 
   .cardHeader {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 14px;
+    padding: 20px;
   }
 
-  .estado {
-    align-self: flex-start;
+  .cardContent {
+    padding: 20px;
   }
 
   .cardFooter {
+    padding: 16px 20px;
     justify-content: flex-start;
+  }
+
+  .orderIndex {
+    top: 14px;
+    right: 16px;
+    font-size: 36px;
   }
 }
