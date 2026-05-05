@@ -20,7 +20,6 @@
   z-index: 10;
 }
 
-/* ── Sección 1 ── */
 .seccion1 {
   position: relative;
   height: 80vh;
@@ -56,10 +55,6 @@
 .contenedor_i_1 h2 { font-size: clamp(1.4rem, 5vw, 2.3rem); margin-bottom: 15px; margin-left: 15px; }
 .contenedor_i_1 p  { font-size: clamp(1rem, 3.5vw, 1.4rem); margin-bottom: 6px;  margin-left: 15px; }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   CARRUSEL — Título centrado fijo, texto justificado, botón centrado
-   ═══════════════════════════════════════════════════════════════════════ */
-
 .carouselWrapper {
   position: relative;
   width: 100%;
@@ -69,7 +64,6 @@
   border-radius: 16px;
 }
 
-/* ── CAPA 1: banda infinita ── */
 .carouselAuto {
   position: absolute;
   top: 0;
@@ -101,12 +95,11 @@
   position: relative;
   background-size: cover;
   background-position: center;
-
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
 
-/* ── CAPA 2: carta fija ── */
 .carouselManual {
   position: absolute;
   inset: 0;
@@ -130,7 +123,6 @@
   overflow: hidden;
 }
 
-/* Overlay para legibilidad */
 .cardOverlay {
   position: absolute;
   inset: 0;
@@ -143,10 +135,6 @@
   z-index: 1;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   CONTENIDO DEL CARRUSEL — 3 zonas fijas
-   ═══════════════════════════════════════════════════════════════════════ */
-
 .cardContent {
   position: absolute;
   inset: 0;
@@ -157,13 +145,12 @@
   color: #fff;
 }
 
-/* ZONA 1: Título — centrado verticalmente en la mitad superior */
 .cardTitleWrap {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 160px;           /* Altura fija para alinear todos los títulos */
+  height: 160px;
   padding-top: 20px;
 }
 
@@ -177,7 +164,6 @@
   max-width: 90%;
 }
 
-/* ZONA 2: Texto — justificado, posición fija debajo del título */
 .cardTextWrap {
   flex: 1 1 auto;
   display: flex;
@@ -196,7 +182,6 @@
   hyphens: auto;
 }
 
-/* ZONA 3: Botón — centrado en la parte inferior */
 .cardBtnWrap {
   flex: 0 0 auto;
   display: flex;
@@ -230,7 +215,6 @@
   transform: translateY(0);
 }
 
-/* ── Fondos de cartas ── */
 .card1 { background-image: url('../../src/assets/co2.webp'); }
 .card2 { background-image: url('../../src/assets/co3.webp'); }
 .card3 { background-image: url('../../src/assets/co1.webp'); }
@@ -238,16 +222,12 @@
 .card5 { background-image: url('../../src/assets/co5.webp'); }
 .card6 { background-image: url('../../src/assets/co6.webp'); }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   BARRA DE NAVEGACIÓN
-   ═══════════════════════════════════════════════════════════════════════ */
-
 .navSection {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px 10px;
+  padding: 20px 10px;
   margin-top: 5px;
 }
 
@@ -255,8 +235,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(8px, 2vw, 20px);
-  padding: 14px clamp(12px, 3vw, 28px);
+  gap: clamp(10px, 2vw, 18px);
+  padding: 12px clamp(14px, 3vw, 24px);
   border-radius: 50px;
   flex-wrap: wrap;
   max-width: 100%;
@@ -268,47 +248,38 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.navInner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  position: relative;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
 }
 
-.navItem:hover  { transform: scale(1.12); }
-.navItemActive  { transform: scale(1.15); }
+.navItem:hover .navInner  { transform: scale(1.15); }
+.navItemActive .navInner  { transform: scale(1.2); }
 
 .navThumb {
-  width: clamp(44px, 9vw, 60px);
-  height: clamp(44px, 9vw, 60px);
+  width: clamp(48px, 10vw, 64px);
+  height: clamp(48px, 10vw, 64px);
   border-radius: 50%;
   background-size: cover;
   background-position: center;
   border: 3px solid rgba(255,255,255,0.6);
   transition: all 0.3s ease;
   box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+  flex-shrink: 0;
 }
 
 .navItem:hover  .navThumb { border-color: rgba(255,255,255,0.95); box-shadow: 0 5px 18px rgba(0,0,0,0.4); }
 .navItemActive  .navThumb { border-color: #E7D7C5; box-shadow: 0 0 20px rgba(231,215,197,0.7); }
-
-.navLabel {
-  font-size: 10px;
-  color: #666;
-  max-width: 70px;
-  text-align: center;
-  line-height: 1.2;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-  display: none;
-}
-
-.navItemActive .navLabel {
-  color: #2c1810;
-  font-weight: 600;
-  opacity: 1;
-}
 
 .navDot {
   width: 6px;
@@ -316,6 +287,7 @@
   border-radius: 50%;
   background: rgba(0,0,0,0.2);
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .navItemActive .navDot {
@@ -324,7 +296,6 @@
   border-radius: 3px;
 }
 
-/* ── Sección 2 ── */
 .seccion2 {
   height: auto;
   color: white;
@@ -373,12 +344,8 @@
   justify-content: center;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════════════════════════ */
-
 @media (max-width: 480px) {
-  .carouselWrapper { height: 320px; border-radius: 0; margin: 10px 0; }
+  .carouselWrapper { height: 320px; border-radius: 0; }
   .autoSlide       { flex: 0 0 85vw; height: 320px; margin-right: 10px; border-radius: 12px; }
   
   .cardContent     { padding: 0 16px; }
@@ -389,9 +356,9 @@
   .cardBtnWrap     { padding-bottom: 20px; }
   .cardBtn         { padding: 10px 28px; font-size: 13px; }
 
-  .navSection  { padding: 14px 4px; }
-  .navBar      { gap: 10px; padding: 10px; }
-  .navThumb    { width: 40px; height: 40px; }
+  .navSection  { padding: 14px 6px; }
+  .navBar      { gap: 8px; padding: 10px; }
+  .navThumb    { width: 44px; height: 44px; }
 
   .contenedor_i_1 { top: 280px; }
 
@@ -406,8 +373,4 @@
   .autoSlide       { flex: 0 0 320px; height: 360px; }
   .cardTitleWrap   { height: 140px; }
   .cardContent     { padding: 0 22px; }
-}
-
-@media (min-width: 769px) {
-  .navLabel { display: block; }
 }

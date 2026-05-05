@@ -76,13 +76,11 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* CARRUSEL */}
       <div
         className={styles.carouselWrapper}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {/* CAPA 1 — Banda infinita */}
         <div
           className={`${styles.carouselAuto} ${isPaused ? styles.hidden : ""}`}
           aria-hidden={isPaused}
@@ -105,7 +103,6 @@ export default function Inicio() {
           ))}
         </div>
 
-        {/* CAPA 2 — Carta fija al hacer clic */}
         <div
           className={`${styles.carouselManual} ${isPaused ? styles.visible : ""}`}
           aria-hidden={!isPaused}
@@ -127,7 +124,6 @@ export default function Inicio() {
         </div>
       </div>
 
-      {/* Barra de navegación */}
       <div className={styles.navSection}>
         <div className={styles.navBar}>
           {cards.map((card, index) => (
@@ -138,18 +134,18 @@ export default function Inicio() {
               title={card.title}
               aria-label={`Ir a ${card.title}`}
             >
-              <div
-                className={styles.navThumb}
-                style={{ backgroundImage: `url('../../src/assets/${card.img}')` }}
-              />
-              <span className={styles.navLabel}>{card.title}</span>
-              <span className={styles.navDot} />
+              <div className={styles.navInner}>
+                <div
+                  className={styles.navThumb}
+                  style={{ backgroundImage: `url('../../src/assets/${card.img}')` }}
+                />
+                <span className={styles.navDot} />
+              </div>
             </button>
           ))}
         </div>
       </div>
 
-      {/* ── Sección 2 ── */}
       <section className={styles.seccion2}>
         <div className={styles.container_seccion2}>
           <div className={styles.seccion2_info}>
