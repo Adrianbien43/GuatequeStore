@@ -1,13 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import styles from "./Inicio.module.css";
 
-/**
- * Adrián Bienvenido Morales Perdomo.
- *
- * Carrusel unificado:
- *  - En reposo: animación CSS infinita scrolling automático
- *  - Al pulsar nav: salta a esa carta, pausa 6 s, retoma la animación
- */
 export default function Inicio() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused,    setIsPaused]    = useState(false);
@@ -30,10 +23,9 @@ export default function Inicio() {
   ];
 
   const TOTAL    = cards.length;
-  const AUTO_MS  = 3500;  // velocidad auto-avance
-  const PAUSE_MS = 6000;  // pausa tras pulsar nav
+  const AUTO_MS  = 3500;
+  const PAUSE_MS = 6000;
 
-  // ─── Auto-avance ─────────────────────────────────────────────────────────
   const startAutoPlay = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -47,13 +39,11 @@ export default function Inicio() {
     return () => clearInterval(intervalRef.current);
   }, [isPaused, startAutoPlay]);
 
-  // ─── Limpieza al desmontar ────────────────────────────────────────────────
   useEffect(() => () => {
     clearTimeout(resumeTimer.current);
     clearInterval(intervalRef.current);
   }, []);
 
-  // ─── Pulsar barra de navegación ──────────────────────────────────────────
   const goTo = useCallback((index) => {
     setActiveIndex(index);
     setIsPaused(true);
@@ -61,7 +51,6 @@ export default function Inicio() {
     resumeTimer.current = setTimeout(() => setIsPaused(false), PAUSE_MS);
   }, []);
 
-  // ─── Swipe táctil ────────────────────────────────────────────────────────
   const touchX = useRef(null);
   const onTouchStart = e => { touchX.current = e.touches[0].clientX; };
   const onTouchEnd   = e => {
@@ -77,7 +66,6 @@ export default function Inicio() {
       <span className={styles.pre1}><h1>BIENVENIDOS</h1></span>
       <span className={styles.pre2}><h6>Viste bien todos los días</h6></span>
 
-      {/* ── Sección 1 ── */}
       <section className={styles.seccion1}>
         <div className={styles.contenedor_i_1}>
           <div className={styles.info_container_1}>
@@ -88,17 +76,7 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/*
-        ── Carrusel ──────────────────────────────────────────────────────────
-        Dos capas superpuestas con crossfade:
-
-        CAPA 1 (.carouselAuto)  → banda infinita CSS, siempre corriendo.
-                                   Se muestra cuando isPaused=false.
-        CAPA 2 (.carouselManual)→ la carta concreta seleccionada, fija.
-                                   Se muestra cuando isPaused=true.
-
-        La transición opacity:0.6s hace el fade suave entre ambas.
-      */}
+      {/* CARRUSEL */}
       <div
         className={styles.carouselWrapper}
         onTouchStart={onTouchStart}
@@ -111,10 +89,17 @@ export default function Inicio() {
         >
           {[...cards, ...cards].map((card, i) => (
             <div key={`auto-${i}`} className={`${styles.autoSlide} ${card.className}`}>
-              <div className={styles.card_Info}>
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-                <button>Ver más</button>
+              <div className={styles.cardOverlay} />
+              <div className={styles.cardContent}>
+                <div className={styles.cardTitleWrap}>
+                  <h3>{card.title}</h3>
+                </div>
+                <div className={styles.cardTextWrap}>
+                  <p>{card.text}</p>
+                </div>
+                <div className={styles.cardBtnWrap}>
+                  <button className={styles.cardBtn}>Ver más</button>
+                </div>
               </div>
             </div>
           ))}
@@ -126,16 +111,23 @@ export default function Inicio() {
           aria-hidden={!isPaused}
         >
           <div className={`${styles.manualSlide} ${cards[activeIndex].className}`}>
-            <div className={styles.card_Info}>
-              <h3>{cards[activeIndex].title}</h3>
-              <p>{cards[activeIndex].text}</p>
-              <button>Ver más</button>
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardContent}>
+              <div className={styles.cardTitleWrap}>
+                <h3>{cards[activeIndex].title}</h3>
+              </div>
+              <div className={styles.cardTextWrap}>
+                <p>{cards[activeIndex].text}</p>
+              </div>
+              <div className={styles.cardBtnWrap}>
+                <button className={styles.cardBtn}>Ver más</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Barra de navegación ── */}
+      {/* Barra de navegación */}
       <div className={styles.navSection}>
         <div className={styles.navBar}>
           {cards.map((card, index) => (
@@ -150,6 +142,7 @@ export default function Inicio() {
                 className={styles.navThumb}
                 style={{ backgroundImage: `url('../../src/assets/${card.img}')` }}
               />
+              <span className={styles.navLabel}>{card.title}</span>
               <span className={styles.navDot} />
             </button>
           ))}

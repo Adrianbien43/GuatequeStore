@@ -1,7 +1,7 @@
 .inicio {
   position: relative;
   width: 100%;
-  overflow-x: hidden; /* evita que la banda del carrusel cree scroll horizontal */
+  overflow-x: hidden;
 }
 
 .pre1 {
@@ -56,14 +56,17 @@
 .contenedor_i_1 h2 { font-size: clamp(1.4rem, 5vw, 2.3rem); margin-bottom: 15px; margin-left: 15px; }
 .contenedor_i_1 p  { font-size: clamp(1rem, 3.5vw, 1.4rem); margin-bottom: 6px;  margin-left: 15px; }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   CARRUSEL — Título centrado fijo, texto justificado, botón centrado
+   ═══════════════════════════════════════════════════════════════════════ */
 
 .carouselWrapper {
   position: relative;
   width: 100%;
-  height: 301px;
+  height: 420px;
   overflow: hidden;
-  /* Crea contexto de apilamiento para que absolute children no escapen */
   isolation: isolate;
+  border-radius: 16px;
 }
 
 /* ── CAPA 1: banda infinita ── */
@@ -78,11 +81,9 @@
   width: max-content;
   opacity: 1;
   transition: opacity 0.6s ease;
-  /* No permite que sus hijos creen scroll en el documento */
   will-change: transform;
 }
 
-/* Pausa la banda cuando isPaused */
 .carouselAuto.hidden {
   opacity: 0;
   animation-play-state: paused;
@@ -90,19 +91,22 @@
 
 @keyframes scrollBand {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); } /* -50% porque son 12 slides (6 dup) */
+  to   { transform: translateX(-50%); }
 }
 
 .autoSlide {
-  flex: 0 0 326px;       /* ancho de cada carta en la banda */
-  height: 301px;
-  margin-right: 12px;
+  flex: 0 0 380px;
+  height: 420px;
+  margin-right: 16px;
   position: relative;
   background-size: cover;
   background-position: center;
+
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
 
-/* ── CAPA 2: carta fija al hacer clic ── */
+/* ── CAPA 2: carta fija ── */
 .carouselManual {
   position: absolute;
   inset: 0;
@@ -122,25 +126,109 @@
   background-size: cover;
   background-position: center;
   position: relative;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-/* ── Overlay de texto en ambas capas ── */
-.card_Info {
+/* Overlay para legibilidad */
+.cardOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0,0,0,0.08), black);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: rgb(213, 213, 213);
-  text-align: center;
-  padding: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.15) 0%,
+    rgba(0,0,0,0.35) 40%,
+    rgba(0,0,0,0.75) 100%
+  );
+  z-index: 1;
 }
 
-.card_Info h3     { font-size: clamp(18px, 4vw, 30px); font-weight: bold; }
-.card_Info p      { font-size: clamp(13px, 3vw, 18px); padding: clamp(6px, 2vw, 15px); }
-.card_Info button { margin-top: 8px; padding: 8px 24px; cursor: pointer; }
+/* ═══════════════════════════════════════════════════════════════════════
+   CONTENIDO DEL CARRUSEL — 3 zonas fijas
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.cardContent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 0 28px;
+  color: #fff;
+}
+
+/* ZONA 1: Título — centrado verticalmente en la mitad superior */
+.cardTitleWrap {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;           /* Altura fija para alinear todos los títulos */
+  padding-top: 20px;
+}
+
+.cardTitleWrap h3 {
+  font-size: clamp(20px, 4vw, 35px);
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  line-height: 1.25;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  max-width: 90%;
+}
+
+/* ZONA 2: Texto — justificado, posición fija debajo del título */
+.cardTextWrap {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8px 0 16px 0;
+}
+
+.cardTextWrap p {
+  font-size: clamp(12px, 2.2vw, 18px);
+  line-height: 1.65;
+  text-align: justify;
+  margin: 0;
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  hyphens: auto;
+}
+
+/* ZONA 3: Botón — centrado en la parte inferior */
+.cardBtnWrap {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 28px;
+}
+
+.cardBtn {
+  background: linear-gradient(135deg, #E7D7C5 0%, #d4b896 100%);
+  color: #2c1810;
+  border: none;
+  padding: 12px 36px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(231, 215, 197, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(231, 215, 197, 0.6);
+  background: linear-gradient(135deg, #f0e4d8 0%, #e7d7c5 100%);
+}
+
+.cardBtn:active {
+  transform: translateY(0);
+}
 
 /* ── Fondos de cartas ── */
 .card1 { background-image: url('../../src/assets/co2.webp'); }
@@ -150,16 +238,16 @@
 .card5 { background-image: url('../../src/assets/co5.webp'); }
 .card6 { background-image: url('../../src/assets/co6.webp'); }
 
-/* ============================================================
-   Barra de navegación
-   ============================================================ */
+/* ═══════════════════════════════════════════════════════════════════════
+   BARRA DE NAVEGACIÓN
+   ═══════════════════════════════════════════════════════════════════════ */
 
 .navSection {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 10px;
+  padding: 24px 10px;
   margin-top: 5px;
 }
 
@@ -167,11 +255,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(6px, 2vw, 16px);
-  padding: 10px clamp(8px, 3vw, 20px);
+  gap: clamp(8px, 2vw, 20px);
+  padding: 14px clamp(12px, 3vw, 28px);
   border-radius: 50px;
   flex-wrap: wrap;
   max-width: 100%;
+  background: rgba(0,0,0,0.03);
 }
 
 .navItem {
@@ -179,41 +268,59 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  position: relative;
 }
 
-.navItem:hover  { transform: scale(1.15); }
-.navItemActive  { transform: scale(1.2); }
+.navItem:hover  { transform: scale(1.12); }
+.navItemActive  { transform: scale(1.15); }
 
 .navThumb {
-  width: clamp(36px, 8vw, 50px);
-  height: clamp(36px, 8vw, 50px);
+  width: clamp(44px, 9vw, 60px);
+  height: clamp(44px, 9vw, 60px);
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  border: 2px solid rgba(255,255,255,0.5);
+  border: 3px solid rgba(255,255,255,0.6);
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
 }
 
-.navItem:hover  .navThumb { border-color: rgba(255,255,255,0.9); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-.navItemActive  .navThumb { border-color: #E7D7C5; box-shadow: 0 0 15px rgba(231,215,197,0.6); }
+.navItem:hover  .navThumb { border-color: rgba(255,255,255,0.95); box-shadow: 0 5px 18px rgba(0,0,0,0.4); }
+.navItemActive  .navThumb { border-color: #E7D7C5; box-shadow: 0 0 20px rgba(231,215,197,0.7); }
+
+.navLabel {
+  font-size: 10px;
+  color: #666;
+  max-width: 70px;
+  text-align: center;
+  line-height: 1.2;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.navItemActive .navLabel {
+  color: #2c1810;
+  font-weight: 600;
+  opacity: 1;
+}
 
 .navDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.2);
   transition: all 0.3s ease;
 }
 
 .navItemActive .navDot {
   background: #E7D7C5;
-  width: 20px;
+  width: 24px;
   border-radius: 3px;
 }
 
@@ -266,13 +373,25 @@
   justify-content: center;
 }
 
-/* ── Responsive ── */
-@media (max-width: 480px) {
-  .carouselWrapper { height: 220px; }
-  .autoSlide       { flex: 0 0 calc(85vw + 6px); height: 220px; }
+/* ═══════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════ */
 
-  .navSection  { padding: 12px 4px; }
-  .navBar      { gap: 8px; padding: 8px; }
+@media (max-width: 480px) {
+  .carouselWrapper { height: 320px; border-radius: 0; margin: 10px 0; }
+  .autoSlide       { flex: 0 0 85vw; height: 320px; margin-right: 10px; border-radius: 12px; }
+  
+  .cardContent     { padding: 0 16px; }
+  .cardTitleWrap   { height: 120px; padding-top: 16px; }
+  .cardTitleWrap h3{ font-size: clamp(17px, 5vw, 22px); }
+  .cardTextWrap    { padding: 4px 0 10px 0; }
+  .cardTextWrap p  { font-size: 12px; line-height: 1.55; }
+  .cardBtnWrap     { padding-bottom: 20px; }
+  .cardBtn         { padding: 10px 28px; font-size: 13px; }
+
+  .navSection  { padding: 14px 4px; }
+  .navBar      { gap: 10px; padding: 10px; }
+  .navThumb    { width: 40px; height: 40px; }
 
   .contenedor_i_1 { top: 280px; }
 
@@ -283,6 +402,12 @@
 }
 
 @media (max-width: 768px) and (min-width: 481px) {
-  .carouselWrapper { height: 260px; }
-  .autoSlide       { flex: 0 0 286px; height: 260px; }
+  .carouselWrapper { height: 360px; }
+  .autoSlide       { flex: 0 0 320px; height: 360px; }
+  .cardTitleWrap   { height: 140px; }
+  .cardContent     { padding: 0 22px; }
+}
+
+@media (min-width: 769px) {
+  .navLabel { display: block; }
 }
