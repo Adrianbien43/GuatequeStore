@@ -185,7 +185,7 @@ Abre la carpeta `Android/` en Android Studio, sincroniza Gradle y presiona Run.
 GuatequeStore sigue una arquitectura de **3 capas**:
 ![Portada GuatequeStore](./imagen/Arquitectura.png)
 
----
+
 
 **¿Por qué esta arquitectura?**
 
