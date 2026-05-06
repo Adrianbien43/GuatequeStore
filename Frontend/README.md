@@ -1,235 +1,290 @@
+﻿# GuatequeStore - Frontend
 
-# 🛍️ GuatequeStore - Frontend
+![Portada GuatequeStore](../imagen/GuatequeStore.png)
 
-<div align="center">
+GuatequeStore es la interfaz de cliente y administración de una plataforma de comercio electrónico enfocada en moda sostenible. En este README describimos el alcance real del proyecto, las decisiones técnicas, los criterios de calidad y los resultados que hemos alcanzado tras corregir la primera entrega.
 
-  <img src="../imagen/GuatequeStore.png" width="100%" alt="GuatequeStore Portada" style="border-radius: 12px;"/>
+## Descripción del proyecto
 
-  <div style="position: relative; margin-top: -180px; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); border-radius: 0 0 12px 12px;">
-    
-  <h2 style="color: white; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-       Los GuatequeStore - Frontend
-    </h2>
-    
-  <p style="color: #e0e0e0; font-style: italic; margin: 8px 0 16px 0;">
-      Interfaz principal de la plataforma GuatequeStore - Inicio de sesión y catálogo
-    </p>
+Nuestro frontend está desarrollado con React, Vite y Material-UI. Ofrece una experiencia de usuario fluida, accesible y coherente tanto para visitantes como para clientes autenticados y administradores.
 
-  <p>
-      <a href="https://react.dev">
-        <img src="https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react" alt="React"/>
-      </a>
-      <a href="https://vitejs.dev">
-        <img src="https://img.shields.io/badge/Vite-7.2.4-646CFF?logo=vite" alt="Vite"/>
-      </a>
-      <a href="https://nodejs.org">
-        <img src="https://img.shields.io/badge/Node.js-18+-339933?logo=node.js" alt="Node.js"/>
-      </a>
-      <a href="LICENSE">
-        <img src="https://img.shields.io/badge/License-MIT-green" alt="License"/>
-      </a>
-    </p>
+Para visitantes no autenticados, la aplicación muestra un escaparate público de inspiración con colecciones por temporada, sin precios ni tallas. Solo los clientes autenticados acceden al catálogo real con precios, tallas, marcas e imágenes.
 
-  </div>
+Hemos trabajado para que la aplicación sea clara desde el primer uso: navegación sencilla, retroalimentación inmediata, validaciones robustas y un flujo de pedido directo ágil. Además, el panel administrativo permite gestionar productos, proveedores e inventario con seguridad basada en roles.
 
-</div>
+### Propósito principal
 
----
+Construir una solución de comercio electrónico completa que funcione sin fricciones y que sea fácil de mantener.
 
-## 📄 Descripción del Proyecto
+Nos planteamos un producto que cubriera tanto las necesidades del comprador como las de un gestor de tienda, sin sobrecargar la arquitectura.
 
-GuatequeStore es una plataforma web de e-commerce profesional enfocada en la gestión y venta de productos de moda, pero con un enfoque más actual y consciente. Está desarrollada utilizando React 19, Vite y Material-UI, lo que permite ofrecer una experiencia de usuario bastante fluida, rápida y bien optimizada, tanto en ordenador como en móvil.
+### Público objetivo
 
-La idea del proyecto no es solo montar una tienda online típica, sino crear algo que sea fácil de usar, accesible y que realmente invite a la gente a interactuar sin complicarse la vida. Vamos, que entras y más o menos sabes por dónde moverte sin tener que pensar demasiado.
+- Clientes autenticados que acceden al catálogo real con precios, tallas, marcas e imágenes.
+- Visitantes que solo ven un escaparate público de inspiración y colecciones por temporada sin precios.
+- Administradores que requieren un panel con CRUD de productos, gestión de proveedores e inventario.
+- Usuarios móviles y de escritorio que valoran una interfaz responsiva y accesible.
 
-### Propósito Principal
+### Despliegue
 
-Proporcionar una solución completa de comercio electrónico accesible para todo el mundo. Da igual si estás solo o nadie te apoya — esta es tu página para empezar a despegar, mi niño. ¿A qué esperas?
+Desplegado en: https://guateque.yarcrasy.com/
 
-- 👕 **Experiencia cliente**: Catálogo intuitivo, carrito funcional, historial de pedidos
-- 🔧 **Panel administrativo**: Gestión de productos, proveedores, inventario y análisis
-- 🔐 **Seguridad**: Autenticación JWT, rutas protegidas por roles, validaciones
-- 🌱 **Moda responsable**: Programa de reciclaje y economía circular
+En este momento, el frontend también se puede probar localmente con `npm run dev`.
 
-### 👥 ¿Para quién es GuatequeStore?
+## Tabla de contenidos
 
-**Clientes finales**: Gente de a pie que quiere comprar moda de calidad sin complicaciones. Desde el chaval de La Laguna que busca un look para la uni, hasta la señora de Puerto del Rosario que quiere renovar el armario sin moverse del sofá.
+- [Estado del proyecto](#estado-del-proyecto)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Arquitectura y diseño](#arquitectura-y-diseño)
+- [Instalación](#instalación)
+- [Variables de entorno](#variables-de-entorno)
+- [Diseño y experiencia de usuario](#diseño-y-experiencia-de-usuario)
+- [Accesibilidad](#accesibilidad)
+- [Autenticación y seguridad](#autenticación-y-seguridad)
+- [Testing](#testing)
+- [Endpoints de API](#endpoints-de-api)
+- [Limitaciones conocidas](#limitaciones-conocidas)
+- [Lecciones aprendidas](#lecciones-aprendidas)
+- [Autor y contacto](#autor-y-contacto)
 
-**Administradores**: Emprendedores canarios que necesitan una herramienta potente para gestionar su negocio online. Control total del catálogo, inventario al día y análisis de ventas sin tener que ser ingeniero de la NASA.
+## Estado del proyecto
 
-**Usuarios móviles**: Porque en Canarias vivimos con el móvil en la mano, ya sea en la guagua, en la playa o en el terrao tomando un café. La app complementaria te sigue donde vayas.
-
----
-
-## 📋 Tabla de Contenidos
-
-- [Descripción del Proyecto](#descripción-del-proyecto)
-- [Estado del Proyecto](#-estado-del-proyecto)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Arquitectura y Diseño](#-arquitectura-y-diseño)
-- [Instalación](#-instalación)
-- [Diseño y UX](#-diseño-y-ux)
-- [Accesibilidad](#-accesibilidad)
-- [Autenticación y Seguridad](#-autenticación-y-seguridad)
-- [Testing](#-testing)
-- [Endpoints de API](#-endpoints-de-api)
-- [Limitaciones Conocidas](#-limitaciones-conocidas)
-- [Autor y Contacto](#-autor-y-contacto)
-
----
-
-## ✅ Estado del Proyecto
-
-### Funcionalidades Implementadas
+### Funcionalidades implementadas
 
 | Módulo | Funcionalidad | Estado |
 |--------|--------------|--------|
-| **Autenticación** | Registro con validación completa | ✅ |
-| **Autenticación** | Login con JWT tokens | ✅ |
-| **Autenticación** | Gestión de sesiones y logout | ✅ |
-| **Autenticación** | Protección de rutas por rol | ✅ |
-| **Cliente** | Catálogo filtrable (Hombre/Mujer) | ✅ |
-| **Cliente** | Búsqueda y filtrado de productos | ✅ |
-| **Cliente** | Carrito de compras funcional | ✅ |
-| **Cliente** | Historial de pedidos | ✅ |
-| **Cliente** | Programa de reciclaje | ✅ |
-| **Admin** | Panel de control con métricas | ✅ |
-| **Admin** | CRUD completo de productos | ✅ |
-| **Admin** | Gestión de proveedores | ✅ |
-| **Admin** | Control de inventario | ✅ |
-| **Técnicas** | Diseño responsive mobile-first | ✅ |
-| **Técnicas** | Testing automatizado con Vitest | ✅ |
-| **Técnicas** | Build optimizado con Vite | ✅ |
+| Autenticación | Registro con validación completa | Implementado |
+| Autenticación | Login con JWT | Implementado |
+| Autenticación | Gestión de sesión y logout | Implementado |
+| Autenticación | Protección de rutas por rol | Implementado |
+| Cliente | Catálogo filtrable por género | Implementado |
+| Cliente | Búsqueda y filtrado de productos | Implementado |
+| Visitante | Escaparate público para visitantes | Implementado |
+| Cliente | Pedido directo de productos (sin carrito) | Implementado |
+| Cliente | Visualización de líneas de pedido en historial | Implementado |
+| Cliente | Historial de pedidos | Implementado |
+| Cliente | Programa de reciclaje | Implementado |
+| Admin | Panel de control con métricas | Implementado |
+| Admin | CRUD completo de productos | Implementado |
+| Admin | Gestión de proveedores | Implementado |
+| Admin | Control de inventario | Implementado |
+| Técnicas | Diseño responsive mobile-first | Implementado |
+| Técnicas | Testing automatizado con Vitest | Implementado |
+| Técnicas | Build optimizado con Vite | Implementado |
 
-### 🔧 Correcciones desde Primera Entrega
+### Correcciones desde la primera entrega
 
-| Error Detectado (1ª Entrega) | Solución Aplicada | Estado |
-|------------------------------|-------------------|--------|
-| El carrito se vaciaba al recargar la página | Implementado `localStorage` para persistencia del carrito | ✅ Corregido |
-| No había feedback visual en formularios | Añadidos estados de carga, errores y confirmaciones con MUI `Alert` y `CircularProgress` | ✅ Corregido |
-| El responsive se rompía en tablets | Ajustados breakpoints de MUI Grid (`sm`, `md`, `lg`) y tamaños de fuente escalables | ✅ Corregido |
-| Los tests no cubrían validaciones de formularios | Añadidos tests unitarios para `registro.validator.js` con casos límite | ✅ Corregido |
-| El panel admin no filtraba productos por stock bajo | Implementado endpoint `/api/inventario/bajo-stock/{limite}` y vista filtrada | ✅ Corregido |
+Hemos aplicado mejoras concretas a partir del feedback recogido en la primera entrega:
 
-**Versión**: 1.0.0  
-**Estado**: 🟢 Completo y funcional  
-**Última actualización**: Mayo 2026
+- El modelo de pedido directo ofrecido por el proyecto se ajusta a la necesidad real de agilidad del grupo musical, evitando la complejidad de un carrito tradicional.
+- La experiencia de los formularios no ofrecía suficiente feedback. Hemos añadido estados de carga, mensajes de error claros y alertas de éxito con MUI.
+- El responsive se rompía en tablets. Ajustamos los breakpoints y el escalado tipográfico para mantener consistencia en `sm`, `md` y `lg`.
+- Los tests iniciales no cubrían las validaciones clave. Añadimos pruebas de `registro.validator.js` con casos límite y errores esperados.
+- El panel administrativo no mostraba correctamente filtros de stock bajo. Implementamos la vista y el endpoint correspondiente.
 
----
+### Mejoras adicionales
 
-## 🛠️ Tecnologías Utilizadas
+- Refinamos la navegación interna para que las rutas protegidas se comporten sin redirecciones inesperadas.
+- Consolidamos componentes reutilizables para reducir duplicación y mejorar la mantenibilidad.
+- Añadimos interceptores de Axios para gestión automática de tokens y manejo centralizado de errores 401.
+- Mejoramos el control de acceso por roles para evitar que componentes administrativos sean accesibles a usuarios sin permisos.
+- Al consultar un pedido en el historial del cliente, mostramos sus líneas de pedido con productos, cantidades y precios históricos.
 
-| Capa | Tecnología | Versión | Justificación |
-|------|-----------|---------|---------------|
-| **Core** | React | 19.2.0 | Hooks modernos, rendimiento |
-| **Core** | Vite | 7.2.4 | Build rápido, HMR instantáneo |
-| **Core** | React Router DOM | 6.30.3 | Enrutamiento declarativo |
-| **UI** | Material-UI (MUI) | 7.3.7 | Componentes accesibles listos |
-| **UI** | Emotion | ^11.14.0 | CSS-in-JS dinámico |
-| **HTTP** | Axios | 1.13.5 | Interceptores para JWT |
-| **Testing** | Vitest | 4.0.18 | Integración nativa con Vite |
-| **Testing** | React Testing Library | 16.3.2 | Tests orientados a comportamiento |
-| **Calidad** | ESLint | 9.39.1 | Código consistente |
+## Tecnologías utilizadas
 
----
+| Capa | Tecnología | Uso |
+|------|-----------|-----|
+| Core | React 19.2.0 | Interfaz declarativa y hooks |
+| Core | Vite 7.2.4 | Build y desarrollo rápido |
+| Core | React Router DOM 6.30.3 | Enrutamiento y protección de rutas |
+| UI | Material-UI (MUI) 7.3.7 | Componentes accesibles y consistentes |
+| UI | Emotion | Estilos dinámicos y temas |
+| HTTP | Axios 1.13.5 | Interceptores, gestión de JWT y peticiones |
+| Testing | Vitest 4.0.18 | Pruebas unitarias y de integración |
+| Testing | React Testing Library 16.3.2 | Pruebas de componentes orientadas al comportamiento |
+| Calidad | ESLint 9.39.1 | Consistencia de código |
 
-## 🏗️ Arquitectura y Diseño
+## Arquitectura y diseño
 
-### Capas del Proyecto
+### Capas del proyecto
 
-```
-┌─────────────────────────────────────────┐
-│  PRESENTACIÓN  →  Components / Pages     │
-│  (PrivateRoute, Header, ProductCard...)  │
-├─────────────────────────────────────────┤
-│  LÓGICA        →  Hooks / Context        │
-│  (AuthContext, useAuth, validadores)     │
-├─────────────────────────────────────────┤
-│  COMUNICACIÓN  →  Axios + Interceptores  │
-│  (JWT automático, manejo de errores)     │
-├─────────────────────────────────────────┤
-│  PERSISTENCIA  →  localStorage           │
-│  (token, datos de usuario)               │
-└─────────────────────────────────────────┘
-```
+- Presentación: componentes y páginas.
+- Lógica: hooks, validadores y contexto.
+- Comunicación: servicios API y manejo de tokens.
+- Persistencia: `localStorage` para token de sesión y datos de usuario.
 
-### Decisiones Técnicas Clave
+### Decisiones técnicas
 
-| Decisión | Alternativa Rechazada | Justificación |
-|----------|----------------------|---------------|
-| **Context API** | Redux / Zustand | Estado simple, sin overhead |
-| **Vite** | Create React App | 10x más rápido, mejor DX |
-| **Vitest** | Jest | Integración nativa Vite |
-| **Material-UI** | Tailwind | Componentes accesibles de fábrica |
-| **Axios** | Fetch API | Interceptores, timeout, retry |
+En la gestión de estado global valoramos Redux y Zustand, pero elegimos Context API porque el estado no es excesivamente complejo y queríamos evitar sobreingeniería.
 
-### Estructura de Carpetas
+- Context API: suficiente para auth y sesión, con bajo coste de mantenimiento.
+- Vite: elegido por su tiempo de arranque y build optimizado.
+- MUI: elegido por la accesibilidad de sus componentes y el soporte para temas.
+- Axios: elegido por los interceptores, la capacidad de centralizar headers y el manejo de errores.
+
+### Estructura de carpetas
 
 ```
 Frontend/
 ├── src/
 │   ├── main.jsx                 # Punto de entrada
 │   ├── App.jsx                  # Router principal
-│   ├── api.js                   # Axios configurado
+│   ├── api.js                   # Axios configurado con interceptores
 │   ├── index.css                # Estilos globales
+│   ├── assets/                  # Recursos estáticos (imágenes, fuentes)
 │   ├── components/
-│   │   ├── PrivateRoute.jsx     # Guard de rutas por rol
-│   │   ├── header/              # Navegación responsive
-│   │   ├── footer/              # Pie de página
-│   │   └── reusable/            # ProductCard, FormInput...
+│   │   ├── reusable/            # Componentes reutilizables
+│   │   │   ├── ConfirmDialog.jsx
+│   │   │   ├── ConfirmDialog.module.css
+│   │   │   ├── Table.jsx
+│   │   │   ├── Table.module.css
+│   │   │   └── index.js
+│   │   └── structural/          # Componentes estructurales
+│   │       ├── admin-layout/
+│   │       │   ├── AdminLayout.jsx
+│   │       │   ├── AdminLayout.module.css
+│   │       │   ├── Sidebar.jsx
+│   │       │   ├── TopBar.jsx
+│   │       │   └── index.js
+│   │       ├── cargando/        # Componente de carga
+│   │       ├── error/           # ErrorBoundary y estilos
+│   │       │   ├── ErrorBoundary.jsx
+│   │       │   ├── ErrorBoundary.module.css
+│   │       │   └── ErrorBoundary.test.jsx
+│   │       ├── footer/          # Pie de página
+│   │       │   ├── Footer.jsx
+│   │       │   └── Footer.module.css
+│   │       ├── header/          # Cabecera y navegación
+│   │       │   ├── Header.jsx
+│   │       │   └── Header.module.css
+│   │       ├── main/            # Layout principal
+│   │       │   ├── Main.jsx
+│   │       │   └── Main.module.css
+│   │       └── PrivateRoute.jsx # Guard de rutas por rol
 │   ├── context/
-│   │   └── AuthContext.jsx      # Estado global auth
+│   │   ├── AuthContext.jsx      # Estado global de autenticación
+│   │   └── AuthContext.test.jsx
 │   ├── pages/
 │   │   ├── inicio/              # Landing pública
-│   │   ├── login/               # Formulario login
-│   │   ├── registro/            # Formulario registro
-│   │   ├── hombre/              # Catálogo hombre
-│   │   ├── mujer/               # Catálogo mujer
-│   │   ├── cliente/             # Panel cliente
+│   │   │   ├── Inicio.jsx
+│   │   │   ├── Inicio.module.css
+│   │   │   └── Inicio.test.jsx
+│   │   ├── login/               # Formulario de login
+│   │   │   ├── Login.jsx
+│   │   │   ├── Login.module.css
+│   │   │   └── Login.test.jsx
+│   │   ├── registro/            # Formulario de registro
+│   │   │   ├── Registro.jsx
+│   │   │   ├── Registro.module.css
+│   │   │   └── Registro.test.jsx
+│   │   ├── hombre/              # Catálogo hombre (escaparate)
+│   │   │   ├── Hombre.jsx
+│   │   │   ├── Hombre.module.css
+│   │   │   └── Hombre.test.jsx
+│   │   ├── mujer/               # Catálogo mujer (escaparate)
+│   │   │   ├── Mujer.jsx
+│   │   │   ├── Mujer.module.css
+│   │   │   └── Mujer.test.jsx
+│   │   ├── welcome/             # Panel del cliente autenticado
+│   │   │   ├── WelcomeClient.jsx
+│   │   │   └── WelcomeClient.module.css
+│   │   ├── cliente/             # Secciones del cliente
 │   │   │   ├── ClientProductos.jsx
-│   │   │   └── MisPedidos.jsx
-│   │   └── panel/               # Dashboard admin
+│   │   │   ├── ClientProductos.module.css
+│   │   │   ├── MisPedidos.jsx
+│   │   │   └── MisPedidos.module.css
+│   │   └── panel/               # Dashboard administrativo
+│   │       ├── Panel.jsx
+│   │       ├── Panel.module.css
+│   │       └── Panel.test.jsx
 │   ├── server/
-│   │   └── crud/                # Servicios API
+│   │   └── crud/                # Servicios de API por entidad
+│   │       ├── almacenes/
+│   │       │   ├── components/
+│   │       │   │   └── AlmacenesCRUD.jsx
+│   │       │   ├── hooks/
+│   │       │   │   └── useAlmacenes.js
+│   │       │   └── services/
+│   │       │       └── almacenService.js
+│   │       ├── clientes/
+│   │       │   ├── components/
+│   │       │   │   └── ClientesCRUD.jsx
+│   │       │   ├── hooks/
+│   │       │   │   └── useClientes.js
+│   │       │   └── services/
+│   │       │       ├── clienteService.js
+│   │       │       └── clienteService.test.js
+│   │       ├── inventarios/
+│   │       │   ├── components/
+│   │       │   │   └── InventariosCRUD.jsx
+│   │       │   ├── hooks/
+│   │       │   │   └── useInventarios.js
+│   │       │   └── services/
+│   │       │       └── inventarioService.js
+│   │       ├── pedidos/
+│   │       │   ├── components/
+│   │       │   │   └── PedidosCRUD.jsx
+│   │       │   ├── hooks/
+│   │       │   │   ├── usePedidos.js
+│   │       │   │   └── useClientPedidos.js
+│   │       │   └── services/
+│   │       │       ├── pedidoService.js
+│   │       │       └── clientePedidoService.js
+│   │       ├── productos/
+│   │       │   ├── components/
+│   │       │   │   └── ProductosCRUD.jsx
+│   │       │   ├── hooks/
+│   │       │   │   ├── useProductos.js
+│   │       │   │   └── useClientProductos.js
+│   │       │   └── services/
+│   │       │       ├── productoService.js
+│   │       │       └── clienteProductoService.js
+│   │       └── proveedores/
+│   │           ├── components/
+│   │           │   └── ProveedoresCRUD.jsx
+│   │           ├── hooks/
+│   │           │   └── useProveedores.js
+│   │           └── services/
+│   │               └── proveedorService.js
 │   ├── test/
-│   │   ├── setup.js             # Config Vitest
-│   │   └── *.test.js            # Tests unitarios
+│   │   ├── setup.js             # Configuración de Vitest
+│   │   └── ejemplo.test.js      # Test de verificación
 │   └── validators/
-│       └── registro.validator.js # Validaciones puras
+│       ├── registro.validator.js         # Validaciones de registro
+│       └── registro.validator.test.js    # Tests de validaciones
 ├── package.json
 ├── vite.config.js
 ├── eslint.config.js
 └── .env
 ```
 
----
+## Instalación
 
-## ⚙️ Instalación
+### Requisitos previos
 
-### Requisitos Previos
-
-- **Node.js** 18.x o superior
-- **Backend** ejecutándose en `http://localhost:8080`
+- Node.js 18.x o superior.
+- Backend en ejecución en `http://localhost:8080`.
 
 ### Pasos
 
-```bash
-# 1. Clonar
-git clone https://github.com/Adrianbien43/GuatequeStore.git
-cd GuatequeStore/Frontend
+1. Clonar el repositorio.
+2. Navegar a `GuatequeStore/Frontend`.
+3. Ejecutar `npm install`.
+4. Copiar el archivo de ejemplo de variables de entorno con `cp .env.example .env`.
+5. Ejecutar `npm run dev`.
 
-# 2. Dependencias
-npm install
+### Comandos disponibles
 
-# 3. Variables de entorno (crear .env)
-cp .env.example .env
+- `npm run dev`: inicia el servidor de desarrollo.
+- `npm run build`: genera la build de producción.
+- `npm run preview`: sirve la build de producción.
+- `npm run test`: ejecuta las pruebas unitarias.
+- `npm run test:coverage`: genera el reporte de cobertura.
+- `npm run lint`: ejecuta ESLint.
 
-# 4. Iniciar
-npm run dev
-# → http://localhost:5173
-```
+## Variables de entorno
 
-### Variables de Entorno
+Las variables necesarias son:
 
 ```env
 VITE_API_BASE_URL=http://localhost:8080/api
@@ -237,451 +292,182 @@ VITE_JWT_STORAGE_KEY=token
 VITE_USER_STORAGE_KEY=user
 ```
 
-### Comandos Disponibles
+Estas variables controlan la URL de la API y las claves de almacenamiento local.
 
-| Comando | Descripción |
-|---------|-------------|
-| `npm run dev` | Servidor desarrollo (HMR) |
-| `npm run build` | Build producción |
-| `npm run preview` | Preview build |
-| `npm run test` | Tests unitarios |
-| `npm run test:coverage` | Reporte de cobertura |
-| `npm run lint` | Verificación ESLint |
+## Diseño y experiencia de usuario
 
----
+### Intención de diseño
 
-## 🎨 Diseño y UX
+A la hora de elegir la paleta de colores, pensamos en transmitir cercanía y confianza. Descartamos tonos demasiado agresivos o saturados. Elegimos una gama basada en verdes suaves y acentos neutros para reforzar la idea de sostenibilidad y crecimiento.
 
-En este apartado mostramos imágenes de diseño de la web actual. Esperamos que sea de vuestro agrado.
+La tipografía se definió para que el contenido sea fácil de leer y para que los bloques de información se distingan con claridad. Se utilizaron tamaños escalables para mejorar la lectura en móviles y tablets.
 
-![Diseños](../imagen/diseños.png)
+![Diseños de interfaz](../imagen/diseños.png)
 
-### Paleta de Colores
+![Paleta de colores](../imagen/colores.png)
 
-La paleta de colores queríamos mantener algo agradable y hermoso. El fichero de estilos es `index.css`.
-
-![Colores](../imagen/colores.png)
-
-### Tipografía
-
-- **Headlines**: Roboto Bold (32px, 24px, 20px)
-- **Subtítulos**: Roboto Regular (18px, 16px)
-- **Body**: Roboto Regular (14px, 12px)
-
-### Breakpoints Responsive
+### Breakpoints responsive
 
 | Nombre | Min-width | Uso típico |
 |--------|-----------|------------|
-| `xs` | 0px | Móvil portrait |
-| `sm` | 600px | Móvil landscape |
-| `md` | 960px | Tablet |
-| `lg` | 1280px | Desktop |
-| `xl` | 1920px | Monitor grande |
+| xs | 0px | Móvil portrait |
+| sm | 600px | Móvil landscape |
+| md | 960px | Tablet |
+| lg | 1280px | Desktop |
+| xl | 1920px | Monitor grande |
 
-Ejemplo de uso en componentes:
-```javascript
-<Grid item xs={12} sm={6} md={4} lg={3}>
-  <ProductCard />
-</Grid>
-```
+### Usabilidad
 
----
+- La navegación es clara: se accede fácilmente a catálogo, login, registro y panel administrativo.
+- Los formularios muestran errores específicos y estados de carga.
+- El modelo de pedido directo es ágil y evita la complejidad de un carrito tradicional.
+- Los mensajes de acción son directos y no dejan duda sobre el resultado.
 
-## ♿ Accesibilidad (WCAG 2.1 AA)
+### Atención al detalle
 
-### Checklist de Cumplimiento
+- Hemos mantenido una consistencia visual en botones, tarjetas y formularios.
+- Las etiquetas son claras y los placeholders son descriptivos.
+- Las rutas protegidas evitan accesos no autorizados sin generar saltos bruscos.
 
-- [x] Contraste de color ≥ 4.5:1 (verificado con WebAIM)
-- [x] Todos los inputs con `<label>` asociado
-- [x] Navegación completa por teclado (`Tab`, `Enter`, `Escape`)
-- [x] Focus visible en elementos interactivos
-- [x] Texto alternativo en imágenes de producto
-- [x] Estructura HTML5 semántica (`<header>`, `<nav>`, `<main>`, `<footer>`)
-- [x] Mensajes de error asociados a campos (`aria-describedby`)
-- [x] Feedback visual + textual (no solo color)
+## Accesibilidad
 
----
+### Cumplimiento WCAG 2.1 AA
 
-## 🔐 Autenticación y Seguridad
+Hemos verificado los principales puntos de accesibilidad:
+
+- Uso de HTML semántico con `header`, `nav`, `main` y `footer`.
+- Etiquetas asociadas a todos los campos de formulario.
+- Textos alternativos en imágenes de producto.
+- Contraste suficiente en botones y textos.
+- Navegación completa con teclado.
+- Indicadores de foco visibles.
+
+## Autenticación y seguridad
 
 ### Flujo JWT
 
-```javascript
-// 1. Usuario inicia sesión
-POST /api/auth/login
-Body: { email, contraseña }
-Response: { token, idUsuario, nombre, email, rol }
+1. El usuario inicia sesión en `/api/auth/login`.
+2. El backend devuelve un token JWT.
+3. Guardamos el token en `localStorage` y en el contexto de autenticación.
+4. Cada petición incluye `Authorization: Bearer <token>`.
+5. Si el token expira, el interceptor de Axios fuerza el cierre de sesión.
 
-// 2. Token se guarda en Context + localStorage
-localStorage.setItem('token', token);
+### Roles y rutas protegidas
 
-// 3. Cada petición incluye el token
-Authorization: Bearer <token>
+El frontend distingue entre clientes y administradores:
 
-// 4. Si expira, devuelve 401 → logout automático
-```
+- Rutas de cliente disponibles para el rol `CLIENTE`.
+- Rutas administrativas disponibles para el rol `ADMINISTRADOR`.
 
-### Implementación en api.js
+La protección se implementa en `PrivateRoute.jsx`, que evalúa el rol del usuario antes de permitir el acceso.
 
-```javascript
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+## Testing
 
-api.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/iniciar';
-    }
-    return Promise.reject(error);
-  }
-);
-```
+### Qué hemos testeado
 
-### Roles de Usuario y Rutas Protegidas
+- Validaciones del formulario de registro con `registro.validator.js`.
+- Comportamiento de los componentes de autenticación y acceso restringido.
+- Persistencia de la sesión de usuario y recuperación de datos con `localStorage`.
+- Interceptores de Axios para el manejo de tokens y errores.
 
-```javascript
-// CLIENTE - Acceso a:
-<PrivateRoute roles={["CLIENTE"]}>
-  <ClientProductos />      // Catálogo
-  <MisPedidos />           // Mis pedidos
-  <Carrito />              // Carrito
-</PrivateRoute>
+### Por qué la cobertura es suficiente
 
-// ADMINISTRADOR - Acceso a:
-<PrivateRoute roles={["ADMINISTRADOR"]}>
-  <Panel />                // Dashboard admin
-  <GestionProductos />     // CRUD productos
-  <GestionProveedores />   // Gestión proveedores
-</PrivateRoute>
-```
+Hemos cubierto las rutas críticas de la aplicación y los casos de error más relevantes. La prioridad fue asegurar que el flujo de login, registro, pedido directo y panel administrativo funcionen sin fallos.
 
----
+### Ejecución
 
-## 🧪 Testing
+- `npm run test`: ejecuta las pruebas unitarias.
+- `npm run test:coverage`: genera el reporte de cobertura.
 
-### Librerías
-
-- **Vitest** — Framework de testing
-- **React Testing Library** — Tests de componentes
-- **jsdom** — Entorno DOM para Node.js
-
-### Ejecutar
-
-```bash
-npm run test          # Tests una vez
-npm run test:watch    # Modo watch
-npm run test:coverage # Cobertura
-```
-
----
-
-## 🌐 Endpoints de API
+## Endpoints de API
 
 ### Base URL
 
-| Entorno | URL |
-|---------|-----|
-| Desarrollo (local) | `http://localhost:8080/api` |
-| Producción | `https://guateque.yarcrasy.com/api` |
+- Desarrollo local: `http://localhost:8080/api`
 
 ### Autenticación
 
-La mayoría de endpoints requieren token JWT en el header:
-```
-Authorization: Bearer <token>
-Content-Type: application/json
-```
+- `POST /api/auth/login`: inicio de sesión.
+- `POST /api/auth/register`: registro de usuario.
+- `POST /api/auth/validate`: validación del token.
 
-Orígenes CORS permitidos: `http://localhost:3000`, `http://localhost:4200`, `http://localhost:5173`
+### Productos
 
----
+- `GET /api/productos`: lista de productos.
+- `GET /api/productos/{id}`: detalle de producto.
+- `POST /api/productos`: crear producto (ADMIN).
+- `PUT /api/productos/{id}`: actualizar producto (ADMIN).
+- `DELETE /api/productos/{id}`: eliminar producto (ADMIN).
 
-### 🔐 Auth — `/api/auth`
+### Proveedores
 
-| Método | Endpoint | Auth | Descripción | Body Ejemplo |
-|--------|----------|------|-------------|--------------|
-| `POST` | `/api/auth/login` | ❌ No | Inicia sesión, devuelve JWT | `{"email":"admin@admin.com", "contraseña":"Admin1234!"}` |
-| `POST` | `/api/auth/register` | ❌ No | Registra nuevo usuario | `{"nombre":"Nuevo", "email":"user@mail.com", "contraseña":"pass123", "direccion":"Calle 123"}` |
-| `POST` | `/api/auth/validate` | ❌ No | Valida si un token JWT es válido | `"eyJhbGciOiJIUzI1NiIs..."` |
+- `GET /api/proveedores`: lista de proveedores.
+- `GET /api/proveedores/{id}`: detalle de proveedor.
+- `GET /api/proveedores/{id}/productos`: productos de proveedor.
+- `POST /api/proveedores`: crear proveedor (ADMIN).
+- `PUT /api/proveedores/{id}`: actualizar proveedor (ADMIN).
+- `DELETE /api/proveedores/{id}`: eliminar proveedor (ADMIN).
 
-**Respuesta login:**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "idUsuario": 1,
-  "email": "admin@admin.com",
-  "nombre": "Administrador",
-  "rol": "ADMIN"
-}
-```
+### Inventario
 
----
+- `GET /api/inventario`: lista de inventario (ADMIN).
+- `GET /api/inventario/almacen/{almacenId}`: inventario por almacén (ADMIN).
+- `GET /api/inventario/producto/{productoId}`: inventario por producto (ADMIN).
+- `GET /api/inventario/bajo-stock/{limite}`: productos con stock bajo (ADMIN).
+- `POST /api/inventario`: crear asociación producto-almacén (ADMIN).
+- `PUT /api/inventario/almacen/{aId}/producto/{pId}`: actualizar cantidad (ADMIN).
+- `POST /api/inventario/almacen/{aId}/producto/{pId}/incrementar`: añadir stock (ADMIN).
+- `POST /api/inventario/almacen/{aId}/producto/{pId}/decrementar`: reducir stock (ADMIN).
+- `DELETE /api/inventario/almacen/{aId}/producto/{pId}`: eliminar asociación (ADMIN).
 
-### 📦 Almacenes — `/api/almacenes`
+### Pedidos
 
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| `GET` | `/api/almacenes` | ✅ JWT | Lista todos los almacenes |
-| `GET` | `/api/almacenes/{id}` | ✅ JWT | Obtiene un almacén por ID |
-| `POST` | `/api/almacenes` | ✅ ADMIN | Crea un nuevo almacén |
-| `PUT` | `/api/almacenes/{id}` | ✅ ADMIN | Actualiza un almacén |
-| `DELETE` | `/api/almacenes/{id}` | ✅ ADMIN | Elimina un almacén |
+- `GET /api/pedidos`: lista todos los pedidos (ADMIN).
+- `GET /api/pedidos/{id}`: detalle de pedido.
+- `GET /api/pedidos/cliente/{usuarioId}`: pedidos del cliente.
+- `POST /api/pedidos`: crear pedido (CLIENTE).
+- `PUT /api/pedidos/{id}`: actualizar estado (ADMIN).
+- `DELETE /api/pedidos/{id}`: eliminar pedido (ADMIN).
 
-**Body POST/PUT:**
-```json
-{
-  "nombre": "Almacén Norte",
-  "direccion": "Calle Mayor 123",
-  "capacidad": 1000
-}
-```
+### Usuarios
 
----
+- `GET /api/usuarios`: lista de usuarios (ADMIN).
+- `GET /api/usuarios/{id}`: detalle de usuario.
+- `POST /api/usuarios`: crear usuario (ADMIN).
+- `PUT /api/usuarios/{id}`: actualizar usuario (ADMIN).
+- `DELETE /api/usuarios/{id}`: eliminar usuario (ADMIN).
 
-### 📊 Inventario — `/api/inventario`
+### Estado HTTP relevantes
 
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| `GET` | `/api/inventario` | ✅ ADMIN | Lista todo el inventario |
-| `GET` | `/api/inventario/almacen/{almacenId}` | ✅ ADMIN | Inventario de un almacén |
-| `GET` | `/api/inventario/producto/{productoId}` | ✅ ADMIN | Dónde está un producto |
-| `GET` | `/api/inventario/almacen/{aId}/producto/{pId}` | ✅ ADMIN | Cantidad específica |
-| `GET` | `/api/inventario/bajo-stock/{limite}` | ✅ ADMIN | Productos con stock bajo |
-| `POST` | `/api/inventario` | ✅ ADMIN | Crea registro (asocia producto-almacén) |
-| `PUT` | `/api/inventario/almacen/{aId}/producto/{pId}` | ✅ ADMIN | Actualiza cantidad |
-| `POST` | `/api/inventario/almacen/{aId}/producto/{pId}/incrementar` | ✅ ADMIN | Añade stock |
-| `POST` | `/api/inventario/almacen/{aId}/producto/{pId}/decrementar` | ✅ ADMIN | Reduce stock |
-| `DELETE` | `/api/inventario/almacen/{aId}/producto/{pId}` | ✅ ADMIN | Elimina asociación |
+- `200 OK`: petición correcta.
+- `201 CREATED`: recurso creado.
+- `204 NO CONTENT`: eliminación correcta.
+- `400 BAD REQUEST`: datos inválidos.
+- `401 UNAUTHORIZED`: falta token o token inválido.
+- `403 FORBIDDEN`: rol insuficiente.
+- `404 NOT FOUND`: recurso inexistente.
 
-**Body POST (crear asociación):**
-```json
-{
-  "almacen": {"idAlmacen": 1},
-  "producto": {"idProducto": 1},
-  "cantidad": 50
-}
-```
+## Limitaciones conocidas
 
-**Body POST (incrementar/decrementar):**
-```json
-{"cantidad": 5}
-```
+- El modelo de compra directa no utiliza carrito: el cliente selecciona un producto, indica la cantidad y confirma el pedido en el mismo momento.
+- No hay pasarela de pago integrada. Los pedidos se registran como `PENDIENTE` y el administrador contacta al cliente por correo para tramitar el pago de forma externa.
+- La búsqueda funciona por nombre de producto; no se ha extendido a descripción ni etiquetas.
 
----
+## Lecciones aprendidas
 
-### 🛒 Pedidos — `/api/pedidos`
+En este proyecto hemos aprendido a priorizar la mantenibilidad sin perder funcionalidad. Lo que más nos costó fue decidir el nivel de abstracción adecuado: no queríamos un frontend demasiado rígido ni un código excesivamente complejo.
 
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| `GET` | `/api/pedidos` | ✅ ADMIN | Lista todos los pedidos |
-| `GET` | `/api/pedidos/{id}` | ✅ JWT | Obtiene un pedido por ID |
-| `GET` | `/api/pedidos/cliente/{usuarioId}` | ✅ JWT | Pedidos de un cliente |
-| `POST` | `/api/pedidos` | ✅ CLIENTE | Crea un nuevo pedido |
-| `PUT` | `/api/pedidos/{id}` | ✅ ADMIN | Actualiza estado del pedido |
-| `DELETE` | `/api/pedidos/{id}` | ✅ ADMIN | Elimina un pedido |
+Si volviéramos a empezar, dedicaríamos más tiempo al diseño del estado global y a la estrategia de manejo de datos, para tener las reglas de negocio más claras desde el primer sprint.
 
-**Body POST/PUT:**
-```json
-{
-  "cliente": {"idUsuario": 1},
-  "almacen": {"idAlmacen": 1},
-  "fechaPedido": "2024-01-15",
-  "estadoPedido": "PENDIENTE"
-}
-```
+Estamos especialmente orgullosos de haber cerrado las principales deficiencias de la primera entrega: el feedback de formularios, la accesibilidad en tablas y formularios, y el soporte completo del modelo de pedido directo.
 
----
+## Autor y contacto
 
-### 👕 Productos — `/api/productos`
+**Desarrollado por**: Adrián Bienvenido y Gorka Jesús
 
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| `GET` | `/api/productos` | ✅ CLIENTE/ADMIN | Lista todos los productos |
-| `GET` | `/api/productos/{id}` | ✅ CLIENTE/ADMIN | Obtiene un producto |
-| `POST` | `/api/productos` | ✅ ADMIN | Crea un producto |
-| `PUT` | `/api/productos/{id}` | ✅ ADMIN | Actualiza un producto |
-| `DELETE` | `/api/productos/{id}` | ✅ ADMIN | Elimina un producto |
+- Adrián: adrianbienvenidomoralesperdomo@alumno.ieselrincon.es
+- Gorka: gorkajesusquesadavega@alumno.ieselrincon.es
 
-**Body POST/PUT:**
-```json
-{
-  "nombre": "Camiseta Concierto",
-  "categoria": "CAMISETA",
-  "genero": "HOMBRE",
-  "talla": "L",
-  "precioUnitario": 25.99,
-  "marca": "Nike",
-  "fechaFabricacion": "2024-01-01",
-  "proveedor": {"idProveedor": 1}
-}
-```
+Repositorio: https://github.com/Adrianbien43/GuatequeStore
 
-**Valores permitidos:**
-- `categoria`: `CAMISETA`, `GORRA`, `PANTALON`, `SUDADERA`
-- `genero`: `HOMBRE`, `MUJER`
-
----
-
-### 🏭 Proveedores — `/api/proveedores`
-
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| `GET` | `/api/proveedores` | ✅ JWT | Lista todos los proveedores |
-| `GET` | `/api/proveedores/{id}` | ✅ JWT | Obtiene un proveedor |
-| `GET` | `/api/proveedores/{id}/productos` | ✅ JWT | Productos de un proveedor |
-| `POST` | `/api/proveedores` | ✅ ADMIN | Crea un proveedor |
-| `PUT` | `/api/proveedores/{id}` | ✅ ADMIN | Actualiza un proveedor |
-| `DELETE` | `/api/proveedores/{id}` | ✅ ADMIN | Elimina (solo si no tiene productos) |
-
-**Body POST/PUT:**
-```json
-{
-  "nombre": "Proveedor Textil S.L.",
-  "direccion": "Calle Industria 45"
-}
-```
-
----
-
-### 👤 Usuarios — `/api/usuarios`
-
-| Método | Endpoint | Auth | Descripción |
-|--------|----------|------|-------------|
-| `GET` | `/api/usuarios` | ✅ ADMIN | Lista todos los usuarios |
-| `GET` | `/api/usuarios/{id}` | ✅ JWT | Obtiene un usuario |
-| `POST` | `/api/usuarios` | ✅ ADMIN | Crea un usuario |
-| `PUT` | `/api/usuarios/{id}` | ✅ ADMIN | Actualiza un usuario |
-| `DELETE` | `/api/usuarios/{id}` | ✅ ADMIN | Elimina un usuario |
-
-**Body POST/PUT:**
-```json
-{
-  "nombre": "Usuario Ejemplo",
-  "email": "usuario@ejemplo.com",
-  "direccion": "Calle Ejemplo 123",
-  "rol": "CLIENTE",
-  "activo": true
-}
-```
-
-> 🔒 **Nota de seguridad:** La contraseña nunca se incluye en las respuestas JSON. Solo se envía en peticiones de creación o actualización.
-
----
-
-### 🔢 Códigos de Respuesta HTTP
-
-| Código | Significado | Cuándo ocurre |
-|--------|-------------|---------------|
-| `200 OK` | Éxito | GET, PUT completados |
-| `201 CREATED` | Recurso creado | POST exitoso |
-| `204 NO CONTENT` | Sin contenido | DELETE exitoso |
-| `400 BAD REQUEST` | Datos inválidos | Body incorrecto o incompleto |
-| `401 UNAUTHORIZED` | Sin autenticación | Falta token o token inválido |
-| `403 FORBIDDEN` | Sin permisos | Token válido pero rol insuficiente |
-| `404 NOT FOUND` | No encontrado | El recurso no existe |
-
----
-
-### 🧪 Ejemplos con cURL
-
-**1. Login:**
-```bash
-curl -X POST http://localhost:8080/api/auth/login \\
-  -H "Content-Type: application/json" \\
-  -d '{"email":"admin@admin.com", "contraseña":"Admin1234!"}'
-```
-
-**2. Listar productos:**
-```bash
-curl -X GET http://localhost:8080/api/productos \\
-  -H "Authorization: Bearer <TOKEN>"
-```
-
-**3. Crear proveedor:**
-```bash
-curl -X POST http://localhost:8080/api/proveedores \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer <TOKEN>" \\
-  -d '{"nombre":"Nuevo Proveedor", "direccion":"Calle Ejemplo 123"}'
-```
-
-**4. Incrementar stock:**
-```bash
-curl -X POST http://localhost:8080/api/inventario/almacen/1/producto/1/incrementar \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer <TOKEN>" \\
-  -d '{"cantidad":10}'
-```
-
-**5. Pedidos de un cliente:**
-```bash
-curl -X GET http://localhost:8080/api/pedidos/cliente/2 \\
-  -H "Authorization: Bearer <TOKEN>"
-```
-
----
-
-### 📋 Resumen Rápido por Entidad
-
-| Entidad | Base | Operaciones |
-|---------|------|-------------|
-| **Auth** | `/api/auth` | `POST /login`, `POST /register`, `POST /validate` |
-| **Almacenes** | `/api/almacenes` | `GET`, `GET /{id}`, `POST`, `PUT /{id}`, `DELETE /{id}` |
-| **Inventario** | `/api/inventario` | `GET`, `GET /almacen/{id}`, `GET /producto/{id}`, `GET /bajo-stock/{limite}`, `POST`, `PUT`, `POST /incrementar`, `POST /decrementar`, `DELETE` |
-| **Pedidos** | `/api/pedidos` | `GET`, `GET /{id}`, `GET /cliente/{id}`, `POST`, `PUT /{id}`, `DELETE /{id}` |
-| **Productos** | `/api/productos` | `GET`, `GET /{id}`, `POST`, `PUT /{id}`, `DELETE /{id}` |
-| **Proveedores** | `/api/proveedores` | `GET`, `GET /{id}`, `GET /{id}/productos`, `POST`, `PUT /{id}`, `DELETE /{id}` |
-| **Usuarios** | `/api/usuarios` | `GET`, `GET /{id}`, `POST`, `PUT /{id}`, `DELETE /{id}` |
-
----
-
-## ⚠️ Limitaciones Conocidas
-
-| Limitación | Impacto | Solución Temporal |
-|------------|---------|-------------------|
-| Carrito no persiste en servidor | Se pierde al cambiar de dispositivo | `localStorage` |
-| Sin pasarela de pago real | Pedidos quedan en estado "PENDIENTE" | Simulación |
-| Búsqueda solo por nombre | No filtra por descripción | Mejora futura |
-
-**Requisitos técnicos:**
-- Backend requiere `http://localhost:8080`
-- `localStorage` debe estar habilitado
-- HTTPS necesario en producción para cookies seguras
-- Navegadores soportados: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-
----
-
-## 👤 Autor y Contacto
-
-**Desarrollado por**: Adrián Bienvenido & Gorka Jesús
-
-Somos un equipo muy pequeño, por eso agradecemos cualquier colaboración externa.
-
-| | Adrián | Gorka |
-|--|--------|-------|
-| **Email** | adrianbienvenidomoralesperdomo@alumno.ieselrincon.es | gorkajesusquesadavega@alumno.ieselrincon.es |
-| **GitHub** | [@Adrianbien43](https://github.com/Adrianbien43) | [@GorkaJesus](https://github.com/GorkaJesus) |
-
-**Repositorio**: [github.com/Adrianbien43/GuatequeStore](https://github.com/Adrianbien43/GuatequeStore)  
-**Diseño Figma**: [figma.com/design/vbEG6WmzHaxsk2JROq9KnC](https://www.figma.com/design/vbEG6WmzHaxsk2JROq9KnC/KORA-DESIGN)
-
-**Agradecimientos**: Guillermo (profesor)
-
----
-
-
-> *"Nadie te regala nada chaval, pero tampoco nadie te quita las ganas de conseguirlo."*  
-> **¡Desde Canarias para el mundo entero!** 🌴🔥
-
----
-
-**¡Gracias por usar GuatequeStore! ⭐**
-
-Si este proyecto te ayudó, considera dejarle una ⭐ en este pedazo de GitHub.
+Diseño de referencia: https://www.figma.com/design/vbEG6WmzHaxsk2JROq9KnC/KORA-DESIGN
